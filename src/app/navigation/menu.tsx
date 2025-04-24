@@ -25,12 +25,12 @@ export function Menu() {
     <div><footer className="row-start-3 sm:p-2 p-4 text-white bg-black sm:rounded-t-lg flex gap-[24px] text-sm flex-wrap items-center justify-center">
       <div className="text-sm sm:block hidden">Follow us on social media</div>
     <a
-      className="flex items-center gap-2 font-bold tracking-tight hover:underline hover:underline-offset-4"
+      className="flex items-center sm:gap-2 font-bold tracking-tight hover:underline hover:underline-offset-4"
       href="https://www.linkedin.com/company/pakwach-fm/about"
       target="_blank"
       rel="noopener noreferrer"
     >
-    <div className="font-bold rounded-full border w-7 h-7 grid items-center justify-center">ln</div>
+    <div className="font-bold rounded-full border w-9 h-9 grid items-center justify-center">ln</div>
       <span className="sm:block hidden">linkedIn</span>
     </a>
     <a
@@ -39,15 +39,15 @@ export function Menu() {
       target="_blank"
       rel="noopener noreferrer"
     >
-    <div className="font-bold rounded-full border w-7 h-7 grid items-center justify-center">i</div>
+    <div className="font-bold rounded-full border w-9 h-9 grid items-center justify-center">i</div>
     <span className="sm:block hidden">instagram</span>
     </a>
     <a
-      className="flex items-center font-bold tracking-tight gap-2 hover:underline hover:underline-offset-4"
+      className="flex items-center font-bold tracking-tight sm:gap-2 hover:underline hover:underline-offset-4"
       href="https://www.facebook.com/100.2pakwachfm"
       target="_blank"
       rel="noopener noreferrer">
-    <div className="font-bold rounded-full border w-7 h-7 grid items-center justify-center">f</div>
+    <div className="font-bold rounded-full border w-9 h-9 grid items-center justify-center">f</div>
     <span className="sm:block hidden">facebook</span>
     </a>
   </footer>
@@ -58,7 +58,7 @@ export function Menu() {
     </div>
   </div>
   <div className="bg-transparent p-3 flex justify-between"><Link href='/programming'><Button className="bg-primary">Schedule <ChevronRight size={18}/></Button></Link><SearchBar/></div>
-    <div className="sm:bg-background bg-secondary p-3 rounded-b-lg">
+    <div className="sm:bg-background bg-secondary p-3 sm:rounded-b-lg">
         <div className="justify-between flex">
             <div className="w-30 h-10 hidden sm:block"><Link href='/'><Image src={Logo} alt="logo"/></Link></div>
     <NavigationMenu className="hidden sm:block">
@@ -102,22 +102,22 @@ export function Menu() {
     </NavigationMenu>
     <div className="sm:block hidden"><Link href='/videos'><Button><Video/> Videos</Button></Link></div>
     </div>
-    <div className="sm:hidden overflow-x-auto w-full px-4">
+    <div className="sm:hidden overflow-x-auto w-full scrollbar-hidden scrollbar-hide">
   <ul className="flex gap-2 min-w-max">
     <li className="shrink-0">
-      <Link href="/" className="block px-4 py-2 bg-background rounded-md">Home</Link>
+      <Link href="/" className="block px-4 py-2 bg-background rounded-md"><div className="text-sm">Home</div></Link>
     </li>
     <li className="shrink-0">
-      <Link href="/news" className="block px-4 py-2 bg-background rounded-md">News</Link>
+      <Link href="/news" className="block px-4 py-2 bg-background rounded-md"><div className="text-sm">News</div></Link>
     </li>
     <li className="shrink-0">
-      <Link href="/programming" className="block px-4 py-2 bg-background rounded-md">Presenters</Link>
+      <Link href="/programming" className="block px-4 py-2 bg-background rounded-md"><div className="text-sm">Presenters</div></Link>
     </li>
     <li className="shrink-0">
-      <Link href="/events" className="block px-4 py-2 bg-background rounded-md">Events</Link>
+      <Link href="/events" className="block px-4 py-2 bg-background rounded-md"><div className="text-sm">Events</div></Link>
     </li>
     <li className="shrink-0">
-      <Link href="/news#sports" className="block px-4 py-2 bg-background rounded-md">Sports</Link>
+      <Link href="/news#sports" className="block px-4 py-2 bg-background rounded-md"><div className="text-sm">Sports</div></Link>
     </li>
     <li className="shrink-0">
       <Link href="/adverts" className="block rounded"><Button><Megaphone size={18}/> Advertise</Button></Link>

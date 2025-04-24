@@ -6,7 +6,7 @@ import Link from "next/link";
 export default function Menu1(){
     return(
         <div>
-        <NavigationMenu className=" rounded-lg hidden sm:block">
+        <NavigationMenu className="rounded-lg hidden sm:block">
           <NavigationMenuList>
           <NavigationMenuItem>
           <Button><Mail size={18}/> Subscribe</Button>

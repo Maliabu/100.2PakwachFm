@@ -31,26 +31,26 @@ export default function Footer(){
             <div className="text-lg font-bold tracking-tight">Studio Lines</div>
             <div className="sm:flex sm:justify-between">
             <ul className="text-sm mt-6">
-                <li>News</li>
-                <li>programming & presenters</li>
-                <li>Events</li>
-                <li>Sports</li>
-                <li>Contact Us</li>
+                <li>Administration:</li>
+                <li>+256-776-994301,</li>
+                <li>Spo+256-753-994300rts</li>
                 </ul>
             <ul className="text-sm mt-6">
-                <li>News</li>
-                <li>programming & presenters</li>
-                <li>Events</li>
-                <li>Sports</li>
-                <li>Contact Us</li>
+                <li>Newsroom:</li>
+                <li>+256-783-584234</li>
                 </ul>
             <ul className="text-sm mt-6">
-                <li>News</li>
-                <li>programming & presenters</li>
-                <li>Events</li>
-                <li>Sports</li>
-                <li>Contact Us</li>
-                </ul></div>
+                <li>Sales:</li>
+                <li>+256-772-748172</li>
+                <li>+256-772-331128,</li>
+                <li>+256-702-632200</li>
+                </ul>
+                <ul className="text-sm mt-6">
+                <li>Studio Lines:</li>
+                <li>+256-786-223233</li>
+                <li>+256-758-991623</li>
+                </ul>
+                </div>
         </div>
         <footer className="row-start-3 p-6 bg-black flex gap-[24px] text-white text-sm flex-wrap items-center justify-center">
         <a

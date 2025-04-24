@@ -9,6 +9,7 @@ import { db } from "@/db/db";
 import { eq } from "drizzle-orm";
 import { programmingTable } from "@/db/schema";
 import Menu1 from "../navigation/menu1";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 export default async function Events() {
   const weekdays = await db.query.programmingTable.findMany({
@@ -32,25 +33,45 @@ export default async function Events() {
       <div className="sm:col-span-9 bg-background sm:p-8 p-4 rounded-lg mt-2">
         <div className="text-sm text-muted-foreground uppercase">programming </div>
         <div className="text-3xl tracking-tight leading-10 font-bold my-4 capitalize">Weekdays (Mon - Fri)</div>
-        {
-          weekdays.length > 0 && weekdays.map((weekday, index) => (
-            <div key={index} className="grid sm:grid-cols-12 gap-2 bg-secondary rounded-md mt-1 p-4">
-              <div className="col-span-4 text-sm font-bold tracking-tight">{weekday.programme}</div>
-              <div className="col-span-4 text-sm">{weekday.startTime}</div>
-              <div className="col-span-4 text-sm">{weekday.endTime}</div>
-              </div>
-          ))
-        }
+        <div className="overflow-x-auto w-full">
+        <Table className="min-w-full">
+                <TableHeader>
+                    <TableRow >
+                    <TableHead >Programme</TableHead>
+                    <TableHead >Start Time</TableHead>
+                    <TableHead >End Time</TableHead>
+                    </TableRow>
+                </TableHeader>
+                <TableBody>
+                {weekdays.length > 0 && weekdays.map((weekday, index) => (
+                    <TableRow key={index}>
+                        <TableCell>{weekday.programme}</TableCell>
+                        <TableCell>{weekday.startTime}</TableCell>
+                        <TableCell className="font-medium">{weekday.endTime}</TableCell>
+                        </TableRow>
+                    ))}
+                </TableBody>
+                </Table>
+                </div>
         <div className="text-3xl tracking-tight leading-10 font-bold my-4 mt-8 capitalize">Weekends (Sat & Sun)</div>
-        {
-          weekends.length > 0 && weekends.map((weekday, index) => (
-            <div key={index} className="grid sm:grid-cols-12 gap-2 bg-secondary rounded-md mt-1 p-4">
-              <div className="col-span-4 text-sm font-bold tracking-tight">{weekday.programme}</div>
-              <div className="col-span-4 text-sm">{weekday.startTime}</div>
-              <div className="col-span-4 text-sm">{weekday.endTime}</div>
-              </div>
-          ))
-        }
+        <Table>
+                <TableHeader>
+                    <TableRow >
+                    <TableHead >Programme</TableHead>
+                    <TableHead >Start Time</TableHead>
+                    <TableHead >End Time</TableHead>
+                    </TableRow>
+                </TableHeader>
+                <TableBody>
+                {weekends.length > 0 && weekends.map((weekday, index) => (
+                    <TableRow key={index}>
+                        <TableCell>{weekday.programme}</TableCell>
+                        <TableCell>{weekday.startTime}</TableCell>
+                        <TableCell className="font-medium">{weekday.endTime}</TableCell>
+                        </TableRow>
+                    ))}
+                </TableBody>
+                </Table>
         {/* <div style={{ position: 'relative', width: '100%', height: '500px' }}>
         <Image
             src={Sports}

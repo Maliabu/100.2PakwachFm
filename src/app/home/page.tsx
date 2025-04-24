@@ -31,7 +31,7 @@ export default async function Page() {
     <div className="rounded-lg">
       <Menu1/>
     <div className="grid grid-cols-12 gap-2">
-      <div className="col-span-12 bg-background sm:p-8 p-4 rounded-lg sm:mt-2">
+      <div className="col-span-12 bg-background sm:p-8 p-2 rounded-lg sm:mt-2">
         <div className="text-sm text-muted-foreground">HEADLINES | APRIL 1 2025 </div>
         <HeadlineTabs articles={votes}/>
         {/* <div style={{ position: 'relative', width: '100%', height: '500px' }}>

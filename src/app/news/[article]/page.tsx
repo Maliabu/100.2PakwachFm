@@ -27,11 +27,11 @@ export default async function Page({
 
   if (!article) return <div>no articles</div>
 
-    return <div className="sm:px-16 bg-muted">
+    return <div className="sm:px-16 sm:bg-muted">
       <Menu/>
-      <div className=" p-8 rounded-lg bg-background my-2">
-        <div className="grid grid-cols-12">
-          <div className="col-span-8">
+      <div className=" sm:p-8 rounded-lg bg-background my-2">
+        <div className="grid sm:grid-cols-12">
+          <div className="sm:col-span-8">
         <ArticlesCard 
               id={article.id}
               title={article.title}
@@ -46,7 +46,7 @@ export default async function Page({
               updatedAt={article.updatedAt} 
               createdAt={article.createdAt} 
               /></div>
-              <div className="col-span-4">
+              <div className="sm:col-span-4">
               {
           articles.map((article: { id: number; title: string; 
             facebookLink: string | null;

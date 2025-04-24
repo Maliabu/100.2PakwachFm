@@ -129,7 +129,7 @@ export function HeadlineTabs(
                 </div>
               </div>
     </div>
-        <div className="col-span-4 hidden sm:block">
+        <div className="sm:col-span-4 hidden sm:block">
       <Card className=" border-none bg-secondary p-2">
       <CardHeader>
         <div className="text-2xl font-bold tracking-tight leading-6 mt-4">Highlights</div>
@@ -176,9 +176,9 @@ export function HeadlineTabs(
     </div>
     </div>
     <div className="sm:hidden sm:mt-12">
-      <Card className="border-none">
+      <Card className="border-none shadow-none">
       <CardHeader>
-        <div className="text-3xl font-bold tracking-tight leading-6">Recommended Articles</div>
+        <div className="text-3xl font-bold tracking-tight leading-6">What you missed</div>
       </CardHeader>
       <div className="scroll-y-blog bg-white py-4">
         {

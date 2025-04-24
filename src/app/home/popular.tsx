@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 export default function Popular(){
     return(
         <div>
-        <div className="bg-background p-8 rounded-lg mt-2">
+        <div className="bg-background sm:p-8 p-2 rounded-lg mt-2">
             <div className="flex justify-between"><Star size={18} className="text-primary"/>
             <div className="text-sm uppercase text-muted-foreground"> OUR MOST POPULAR YET</div>
             <Button className="bg-secondary text-muted-foreground"><ThumbsUp/> Voted</Button>
