@@ -4,13 +4,14 @@ import mysql from "mysql2/promise";
 import * as schema from './schema'
 
 const connection = await mysql.createPool({
-  host: "pakwachfm.com",
+  host: "15.204.206.213",
   user: "pakwachfm_pakwachfm",
   database: "pakwachfm_pos",
   password: 'w9E5Tws?=yQ0',
   port: 3306,
   waitForConnections: true,
-  connectionLimit: 10
+  connectionLimit: 10,
+  connectTimeout: 10000,
 });
 
 export const db = drizzle(connection, {schema, mode: 'default'});
