@@ -1,0 +1,1 @@
+ALTER TABLE `programming` DROP COLUMN `presenter`;

@@ -1,0 +1,1 @@
+ALTER TABLE `programming` MODIFY COLUMN `weekday?` text DEFAULT ('true');

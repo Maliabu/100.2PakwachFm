@@ -1,0 +1,62 @@
+{
+  "version": "7",
+  "dialect": "mysql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1745396550461,
+      "tag": "0000_glamorous_martin_li",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1745433320021,
+      "tag": "0001_thin_bruce_banner",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1745433874036,
+      "tag": "0002_pretty_mad_thinker",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1745434740131,
+      "tag": "0003_smart_big_bertha",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1745444314289,
+      "tag": "0004_bright_hulk",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1745477684105,
+      "tag": "0005_previous_prodigy",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1745480965583,
+      "tag": "0006_fair_network",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "5",
+      "when": 1745481831371,
+      "tag": "0007_next_kinsey_walden",
+      "breakpoints": true
+    }
+  ]
+}

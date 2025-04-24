@@ -1,0 +1,1 @@
+ALTER TABLE `articles_table` ADD `type` text DEFAULT ('highlight') NOT NULL;
