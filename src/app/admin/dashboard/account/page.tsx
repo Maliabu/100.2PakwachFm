@@ -13,6 +13,7 @@ export default function Page(){
     const [name, setName] = useState("")
     const [userType, setUserType] = useState("")
     useEffect(() => {
+        console.log(tokenise()[4])
         setEmail(tokenise()[2])
         setUsername(tokenise()[1])
         setName(tokenise()[0])
@@ -23,6 +24,9 @@ export default function Page(){
         if(data){
             act.push(data)
         } else return []
+
+        console.log(data)
+
 
     return<div className="bg-secondary p-8 rounded-lg mt-2">
         <div className="grid sm:grid-cols-3 gap-2">
@@ -39,20 +43,20 @@ export default function Page(){
             </div>
         </div>
         {userType=="admin" &&
-        <div className="mt-4 sm:p-8 p-4 bg-muted rounded-lg">
+        <div className="mt-4 sm:p-8 p-4 bg-secondary rounded-lg">
             <div className="text-2xl font-bold tracking-tight">User Activity / Timeline (Logging)</div>
             <div className="text-sm font-medium text-muted-foreground">Logging user activities on the platform, visible only to the administrator</div>
             <div className="bg-background p-6 mt-6 rounded-md overflow-auto h-[300px]">
-                <div className="text-sm flex justify-between text-muted-foreground my-4 p-2 bg-muted rounded-md">
+                <div className="text-sm flex justify-between text-muted-foreground my-4 p-2 bg-secondary rounded-md">
                     <p>User</p>
                     <p>Activities</p>
                     <p>Date of activity</p>
                 </div>
-                {data.map((activity:{activity: string, createdAt: string, id:number, users: {name: string}}) => (
-                    <div className="text-sm py-2 border-b grid grid-cols-3" key={activity.id}>
-                         <p>{activity.users.name}</p>
-                         <p className="text-left">{activity.activity}</p>
-                        <p className="text-right">{date(activity.createdAt)}</p>
+                {data.map((item: {activity:{activity: string, createdAt: string, id:number, user: number}, users_table:{name: string}}) => (
+                    <div className="text-sm py-2 border-b grid grid-cols-3" key={item.activity.id}>
+                         <p>{item.users_table?.name}</p>
+                         <p className="text-left">{item.activity.activity}</p>
+                        <p className="text-right">{date(item.activity.createdAt)}</p>
                     </div>
                 ))}
             </div>

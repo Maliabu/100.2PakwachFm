@@ -9,7 +9,7 @@ export default function Profile(){
         setToken(tokenise()[0][0].toUpperCase())
     }, [])
     return(
-        <Link href="/dashboard/account">
+        <Link href="/admin/dashboard/account">
           <div className="flex flex-row justify-between rounded-md">
             <div className="h-10 w-10 bg-primary text-background grid font-bold rounded-full justify-center items-center">{token.toUpperCase()}</div>
 

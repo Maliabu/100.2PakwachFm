@@ -18,7 +18,7 @@ import { eq } from "drizzle-orm"
 import { articlesTable } from "@/db/schema"
 import { ArticlesTabsProps } from "../admin/dashboard/types"
 
-export default async function Business({articles}: ArticlesTabsProps) {
+export default function Business({articles}: ArticlesTabsProps) {
   function path(image: string | null){
     if(image !== null){
     return image} else{return ''}
@@ -42,9 +42,7 @@ export default async function Business({articles}: ArticlesTabsProps) {
                   </div>
                   <div className="text-2xl mt-4 font-bold tracking-tight leading-5 hover:text-primary lowercase capitalize"><Link href={'/news/'+encodeURIComponent(news.title)}>{news.title}</Link></div>
                   <div className="text-sm my-4">{news.writer}</div>
-                  <div className="text-xs uppercase text-muted-foreground">{news.writer} | {
-      getMyDay(news.updatedAt.getDay())}, {getMyMonth(news.updatedAt.getMonth())} {news.updatedAt.getDate()}, {news.updatedAt.getFullYear()
-      }</div>
+                  <div className="text-xs uppercase text-muted-foreground">{news.writer} | {news.date}</div>
                 </CardContent>
               </Card>
             </div>

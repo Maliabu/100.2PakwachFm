@@ -15,22 +15,22 @@ import { Programming } from "../types"
     startTime,
     endTime,
     createdAt,
-    updatedAt
+    updatedAt,
+    weekday
   }: Programming){
 
     return (
-      <div className="flex flex-row justify-between">
-      <Card className="w-5/6 grid grid-cols-5 gap-4 p-6 mt-1 border-none shadow-none bg-secondary ">
+      <div className="flex flex-row justify-between border-b">
+      <Card className="sm:w-5/6 grid sm:grid-cols-5 gap-4 p-4 mt-1 border-none shadow-none border-b bg-background ">
         <div className="items-start">
-          <p className="text-sm">Programme</p>
-        <p className="mt-2 text-sm">{programme}</p></div>
+        <p className=" text-sm font-bold tracking-tight">{programme}</p></div>
         <div>
-          <p className="text-sm">Starts</p>
-          <p className="mt-2 text-wrap text-sm">{startTime}</p>
+          <p className=" text-sm">{startTime}</p>
         </div>
         <div>
-        <p className="text-sm">Ends</p>
-        <p className="mt-2 text-sm">{endTime}</p></div>
+        <p className=" text-sm">{endTime}</p></div>
+        <div>
+        <p className=" text-sm bg-secondary p-2 rounded uppercase flex justify-center">{weekday=='true'?'weekday':"weekend"}</p></div>
       </Card>
       <DeletePage id={id} submitId={programme}/>      
       </div>

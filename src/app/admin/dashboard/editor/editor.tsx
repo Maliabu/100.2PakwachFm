@@ -57,7 +57,7 @@ const Editor = ({ content, placeholder, onChange,  }: EditorProps) => {
       }), Image.configure({
         inline: false,
         HTMLAttributes:{
-          class: 'w-full aspect-square h-full'
+          class: 'w-full aspect-square h-64'
         }
       })],
     editorProps: {
@@ -78,6 +78,7 @@ const Editor = ({ content, placeholder, onChange,  }: EditorProps) => {
   // editor?.commands.setContent(" ")
 
   if (!editor) return <></>
+  console.log(editor.getHTML())
 
   return (
     <ImageProvider>

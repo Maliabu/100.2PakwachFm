@@ -26,10 +26,10 @@ export default function Header(){
     }
     if (!data) return <div className="flex bg-background rounded-md justify-center items-center mt-2"><Loader2 className="animate-spin"/>Loading Users ...</div>;
     return <div className="">
-        <div className="bg-background rounded-lg grid sm:grid-cols-2 gap-2">
+        <div className=" rounded-lg grid sm:grid-cols-2 gap-2">
             <div className="sm:col-span-1">
             {tokenise()[4]=="admin" && 
-            <div className=" bg-muted py-1 px-4 rounded-md flex justify-between items-center">
+            <div className=" bg-secondary py-1 px-4 rounded-md flex justify-between items-center">
                 <div className="text-sm">Logged in users: {logged.length}</div>
                 <div className="flex">{logged.map(user => (
                     <div key={user.id} className="h-8 w-8 -ml-4 border border-2 border-muted bg-primary text-background grid font-bold rounded-full justify-center items-center">{user.name[0].toUpperCase()}</div>
@@ -44,7 +44,7 @@ export default function Header(){
                             <div className="flex justify-center border-none items-center">
                         <Sun className="h-[1.2rem] w-full rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
                         <Moon className="mr-3 h-[1.2rem] w-full rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-                        <span className="">Toggle theme</span></div>
+                        <span className="">Light/Dark</span></div>
                         </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">

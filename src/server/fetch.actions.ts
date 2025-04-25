@@ -179,45 +179,49 @@ export async function readEditorFiles(){
 }
 
 export async function loginUser(unsafeData: z.infer<typeof loginUserSchema>){
-   const {success, data} = loginUserSchema.safeParse(unsafeData)
-
-   if (!success){
-    return ["error"]
-   }
-
-   //goal is to get token
-   let token = ''
-   let encrPass = ''
-   let initVector = ''
-   let usertype = ''
-   let email = ''
-   let username = ''
-   let name = ''
-   let profile = ''
-
-   const checkEmail = await db.query.usersTable.findFirst({
-    where: eq(usersTable.email, data.email)
-   })
-   if(checkEmail && checkEmail.isActive === true){
-    encrPass = checkEmail.password
-    initVector = checkEmail.decInit
-    token = checkEmail.token
-    usertype = checkEmail.userType
-    email = checkEmail.email
-    username = checkEmail.username
-    name = checkEmail.name
-    profile = checkEmail.profilePicture!==null?checkEmail.profilePicture:""
-
-    // before login, update isloggedin and lastlogin
-    await db.update(usersTable).set({
-            isLoggedIn: true,
-            lastLogin: today
-        }).where(
-            eq(usersTable.email, data.email)
-        )
-   }
-   return [token, encrPass, initVector, usertype, email, username, name, profile]
-}
+    const {success, data} = loginUserSchema.safeParse(unsafeData)
+ 
+    if (!success){
+     return ["error"]
+    }
+ 
+    //goal is to get token
+    let token = ''
+    let encrPass = ''
+    let initVector = ''
+    let usertype = ''
+    let email = ''
+    let username = ''
+    let name = ''
+    let id = 0
+    let userType = ''
+ 
+    const checkEmail = await db.query.usersTable.findFirst({
+     where: eq(usersTable.email, data.email)
+    })
+    if(checkEmail && checkEmail.isActive === true){
+     encrPass = checkEmail.password
+     initVector = checkEmail.decInit
+     token = checkEmail.token
+     usertype = checkEmail.userType
+     email = checkEmail.email
+     username = checkEmail.username
+     name = checkEmail.name
+     id = checkEmail.id
+     userType = checkEmail.userType
+ 
+     // before login, update isloggedin and lastlogin
+     await db.update(usersTable).set({
+         isLoggedIn: true,
+         lastLogin: today
+     }).where(
+         eq(usersTable.email, data.email)
+     )
+    }
+    await logActivity(name+" Logged in", id.toString())
+    
+    return [token, encrPass, initVector, usertype, email, username, name, id.toString(), userType]
+ }
 
 export async function addEvents(unsafeData: z.infer<typeof addEventSchema>, formData: FormData) : 
 Promise<{error: boolean | undefined}> {

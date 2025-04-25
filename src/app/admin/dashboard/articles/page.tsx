@@ -76,19 +76,25 @@ export default function AddArticle() {
     }
 
     function formBuild(){
-      return(
-      <div className="admin pb-36">
+    }
+
+  return (
+    <div className="">
+      {/* <ReusableDrawer page="Article" form={formBuild()}/> */}
+
+      <div className="admin p-16">
       <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <div className="grid grid-cols-3 w-full gap-4">
-          <div className="col-span-1">
-              <div className="flex flex-col space-y-1.5">
+        <div className="text-2xl font-bold tracking-tight my-4">Add Stroy/Article</div>
+        <div className="grid sm:grid-cols-3 w-full gap-2">
+          <div className="sm:col-span-1">
+              <div className="flex flex-col space-y-2">
               <FormField
                   control={form.control}
                   name="title"
                   render={({ field }) => (
                       <FormItem>
-                      <FormLabel>Title</FormLabel>
+                      <FormLabel>Title - heading of article *</FormLabel>
                       <FormControl>
                           <Input 
                           type="text" 
@@ -99,7 +105,8 @@ export default function AddArticle() {
                   )}
                   />
               </div>
-              <div className="flex flex-col my-2 space-y-1.5">
+              <div className="text-xs my-2 text-muted-foreground">These social media links below will follow every article if the story happens to be on social media as well (optional)</div>
+              <div className="flex flex-col my-3 space-y-2">
               <FormField
                   control={form.control}
                   name="facebookLink"
@@ -114,7 +121,7 @@ export default function AddArticle() {
                   )}
                   />
               </div>
-              <div className="flex flex-col my-2 space-y-1.5">
+              <div className="flex flex-col my-3 space-y-2">
               <FormField
                   control={form.control}
                   name="twitterLink"
@@ -129,7 +136,7 @@ export default function AddArticle() {
                   )}
                   />
               </div>
-              <div className="flex flex-col my-2 space-y-1.5">
+              <div className="flex flex-col my-3 space-y-2">
               <FormField
                   control={form.control}
                   name="instagramLink"
@@ -144,13 +151,13 @@ export default function AddArticle() {
                   )}
                   />
               </div>
-              <div className="flex flex-col mt-2 space-y-1.5">
+              <div className="flex flex-col mt-3 space-y-2">
               <FormField
                   control={form.control}
                   name="image1"
                   render={({ field: { value, onChange, ...fieldProps } }) => (
                       <FormItem>
-                      <FormLabel>Image</FormLabel>
+                      <FormLabel>Image - displayed before the story *</FormLabel>
                       <FormControl
                       >
                           <Input type="file" {...fieldProps} onChange={(event) =>
@@ -162,7 +169,7 @@ export default function AddArticle() {
                   )}
                   />
               </div>
-              <div className="flex flex-col space-y-1.5 my-2">
+              <div className="flex flex-col space-y-2 my-3">
               <FormField
                   control={form.control}
                   name="articleType"
@@ -187,7 +194,7 @@ export default function AddArticle() {
                   )}
                   />
               </div>
-              <div className="flex flex-col my-2 space-y-1.5">
+              <div className="flex flex-col my-3 space-y-2">
               <FormField
                   control={form.control}
                   name="date"
@@ -203,7 +210,7 @@ export default function AddArticle() {
                   />
               </div>
           </div>
-          <div className="col-span-2">
+          <div className="sm:col-span-2">
               <div className="flex flex-col mt-2 space-y-1.5">
               <FormField
                   control={form.control}
@@ -238,15 +245,7 @@ export default function AddArticle() {
         )}
       </form>
       </Form>
-        </div>)
-    }
-
-  return (
-    <div className="">
-      <ReusableDrawer page="Article" form={formBuild()}/>
-      <div>
-        <Articles/>
-      </div>
+        </div>
     </div>
   )
 }

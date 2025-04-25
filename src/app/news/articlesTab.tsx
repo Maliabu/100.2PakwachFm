@@ -127,7 +127,7 @@ export function ArticlesTabs(
       <CardHeader>
         <div className="text-3xl font-bold tracking-tight leading-6">Recommended Articles</div>
       </CardHeader>
-      <div className="scroll-y-blog bg-white py-4">
+      <div className="scroll-y-blog bg-background py-4">
         {
           allArticles.map((article: { id: number; title: string; content: string; writer: string, 
             facebookLink: string | null,

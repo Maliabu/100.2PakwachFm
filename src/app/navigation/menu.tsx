@@ -22,7 +22,7 @@ import { SearchBar } from "./search"
 
 export function Menu() {
   return (
-    <div><footer className="row-start-3 sm:p-2 p-4 text-white bg-black sm:rounded-t-lg flex gap-[24px] text-sm flex-wrap items-center justify-center">
+    <div><footer className="row-start-3 sm:p-3 p-4 text-white bg-black sm:rounded-t-lg flex gap-[24px] text-sm flex-wrap items-center justify-center">
       <div className="text-sm sm:block hidden">Follow us on social media</div>
     <a
       className="flex items-center sm:gap-2 font-bold tracking-tight hover:underline hover:underline-offset-4"

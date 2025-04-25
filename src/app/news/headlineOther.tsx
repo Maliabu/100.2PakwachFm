@@ -12,6 +12,7 @@ import { date, fetcher } from "@/services/services"
 import { Loader2, MessageCircle, MessageCircleDashed } from "lucide-react"
 import { ArticleVotesComments } from "../admin/dashboard/types"
 import { Button } from "@/components/ui/button"
+import { useRouter } from "next/navigation"
 
 type ArticleCardProp = {
   id: number
@@ -43,6 +44,8 @@ type ArticleCardProp = {
     articleType,
   }: ArticleCardProp){
 
+    const router = useRouter()
+
     let articleId = id
     let article: ArticleVotesComments[] = []
     const { data: articles, error: articleError } = useSWR(
@@ -56,6 +59,10 @@ type ArticleCardProp = {
       }
 
     const path = image!==null?image:''
+    const handleReadMore = (article: string) => {
+      router.push(`/news/${article}`)
+    }
+
     return (
       <div>
       <Card className="border-none shadow-none background-none" id={title}>
@@ -70,14 +77,8 @@ type ArticleCardProp = {
       <div className="">
       <div className="text-2xl tracking-tight font-bold leading-7 lowercase">{title}</div>
       <div className="my-4">
-            <Button>Read full article</Button>
+            <Button onClick={() => handleReadMore(title)}>Read full article</Button>
         </div>
-      {/* <span className="mt-6 sm:float-right sm:mx-12"> {}</span>
-      <p className="py-4 border-b text-sm">: {writer}</p>
-      <p className="py-4 float-right text-sm"> {
-      getMyDay(updatedAt.getDay())}, {getMyMonth(updatedAt.getMonth())} {updatedAt.getDate()}, {updatedAt.getFullYear()
-      }</p>
-      <div className="text-wrap lh-1 mt-20 prose prose-sm sm:prose-base lg:prose-lg xl:prose-2xl focus:outline-none">{parse(content)}</div> */}
       </div>
       </Card>
       </div>

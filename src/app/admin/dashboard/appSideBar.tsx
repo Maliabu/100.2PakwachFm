@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client"
 
-import { BarChart, ChartBar, ChartBarIcon, Delete, File, FileArchive, FileEdit, Home, LineChart, List, ListChecks, Mic, PenToolIcon, Pill, Play, Plus, Receipt, Settings2, ShoppingBasket, Store, StoreIcon, Sun, Tag, TruckIcon, User, Video, View, Wallet } from "lucide-react"
+import { BarChart, ChartBar, ChartBarIcon, Delete, File, FileArchive, FileEdit, Home, LineChart, List, ListChecks, Mic, Paperclip, PenToolIcon, Pill, Play, Plus, Receipt, Settings2, ShoppingBasket, Store, StoreIcon, Sun, Tag, TruckIcon, User, UserCheck2, Users, Video, View, Wallet } from "lucide-react"
 
 import {
   Sidebar,
@@ -42,6 +42,11 @@ const data = {
           title: "Add",
           icon: Plus,
           url: "/admin/dashboard/articles",
+        },        
+        {
+          title: "View",
+          icon: Paperclip,
+          url: "/admin/dashboard/articles/view",
         },
       ],
     },
@@ -94,6 +99,24 @@ const data = {
           title: "Add",
           icon: Plus,
           url: "/admin/dashboard/music",
+        },
+      ],
+    },
+    {
+      title: "Users",
+      url: "#",
+      icon: Users,
+      isActive: false,
+      items: [
+        {
+          title: "Add",
+          icon: Plus,
+          url: "/admin/dashboard/user",
+        },
+        {
+          title: "View",
+          icon: UserCheck2,
+          url: "/admin/dashboard/users",
         },
       ],
     },

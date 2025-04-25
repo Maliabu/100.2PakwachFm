@@ -32,7 +32,7 @@ export type Programming = {
     programme: string
     startTime: string
     endTime: string | null
-    weekday: boolean
+    weekday: string
     createdAt: Date
     updatedAt: Date
 }

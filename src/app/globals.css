@@ -224,13 +224,13 @@ pre {
 .scroll-x::-webkit-scrollbar {
   display: none;
 }
-/* Hide scrollbar for all browsers */
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
-
-/* Firefox */
 .scrollbar-hide {
   scrollbar-width: none;
 }
 
+/* .prose p {
+  margin-bottom: 1rem;
+} */

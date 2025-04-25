@@ -18,7 +18,7 @@ export default function UserPage(){
     }
     if (!data) return <div className="flex p-6 bg-background rounded-md justify-center items-center mt-2"><Loader2 className="animate-spin"/>Loading Users ...</div>;
     
-    return<div className="bg-background p-8 rounded-lg mt-2">
+    return<div className="bg-background rounded-lg mt-2">
         <div>
             <div className="text-3xl tracking-tight font-bold">Users</div>
             <div>

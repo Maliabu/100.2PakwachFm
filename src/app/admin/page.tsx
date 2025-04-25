@@ -86,15 +86,15 @@ export default function Login(){
         })
         }
     return(
-            <div className="sm:p-16 p-2 sm:grid sm:grid-cols-2 bg-muted">
-            <div className="p-10 sm:rounded-l-3xl sr:rounded-t-2xl flex flex-col justify-center items-center bg-background text-muted sm:columns-1"> 
-               <Image src={Logo} alt="logo"/>                  
+            <div className="sm:p-16 p-2 bg-muted flex flex-col items-center">
+            <div className="p-4 sm:rounded-l-3xl sr:rounded-t-2xl flex flex-col justify-center items-center text-muted sm:columns-1"> 
+               <Image src={Logo} width={150} height={150} alt="logo"/>                  
             </div>
-                <div className="p-8 sm:p-12 sm:rounded-r-2xl sr:rounded-b-2xl bg-background dark:bg-muted">
-                  <div className="text-4xl tracking-tight font-bold sm:my-8 grid justify-center items-center">Login</div>
+                <div className=" pb-4 w-[350px] bg-background dark:bg-muted">
+                  <div className="text-2xl p-4 tracking-tight font-bold sm:mb-8 grid justify-center items-center">Login</div>
                     <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)}>
-                    <div className="grid w-full items-center">
+                    <div className="grid w-full items-center px-8">
                         <div>
                             <div className="">
                             <FormField
@@ -128,18 +128,21 @@ export default function Login(){
                                 )}
                                 />
                                 <div className="flex justify-between cursor-pointer">
-                                <p className="desc mt-2" id="see" onClick={() => togglePasswordVisibility()}><EyeOff/> Toggle password</p>
+                                <div className="text-sm mt-2" id="see" onClick={() => togglePasswordVisibility()}><EyeOff/> see password</div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <Button className="my-4 text-white w-full" id="submit" type="submit">Login</Button>
+                        <Button className=" text-white w-full mt-4" id="submit" type="submit">Login</Button>
+                        </div>
+
+                    <div className="text-sm text-muted py-4 px-8">Forgot password?</div>
                     {form.formState.errors.root && (
                         <div className="border border-primary text-primary p-2 text-center rounded-md">{form.formState.errors.root.message}</div>
                     )}
                     </form>
                     </Form>
                 </div>
+                <div className="text-xs py-4">This portal is a copyright of Pakwach FM Radio Station. Only authorised personnel can have access to it.</div>
             </div>
     )
 }

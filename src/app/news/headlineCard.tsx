@@ -62,12 +62,6 @@ import { useRouter } from "next/navigation"
       <div className="my-4">
             <Button onClick={() => handleReadMore(title)}>Read full article</Button>
         </div>
-      {/* <span className="mt-6 sm:float-right sm:mx-12"> {}</span>
-      <p className="py-4 border-b text-sm">: {writer}</p>
-      <p className="py-4 float-right text-sm"> {
-      getMyDay(updatedAt.getDay())}, {getMyMonth(updatedAt.getMonth())} {updatedAt.getDate()}, {updatedAt.getFullYear()
-      }</p>
-      <div className="text-wrap lh-1 mt-20 prose prose-sm sm:prose-base lg:prose-lg xl:prose-2xl focus:outline-none">{parse(content)}</div> */}
       </div>
       </Card>
       </div>

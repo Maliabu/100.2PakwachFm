@@ -9,7 +9,6 @@ import {
 } from "@/components/ui/card"
 import { useState } from "react"
 import Image from "next/image"
-import { getMyDay, getMyMonth } from "@/services/success"
 import parse from 'html-react-parser'
 import { HeadLineCard } from "./headlineCard"
 import { HeadLineOtherCard } from "./headlineOther"
@@ -180,7 +179,7 @@ export function HeadlineTabs(
       <CardHeader>
         <div className="text-3xl font-bold tracking-tight leading-6">What you missed</div>
       </CardHeader>
-      <div className="scroll-y-blog bg-white py-4">
+      <div className="scroll-y-blog bg-background py-4">
         {
           allArticles.map((article: { id: number; 
             facebookLink: string | null,
@@ -208,9 +207,7 @@ export function HeadlineTabs(
               {parse(article.content)}
               </div>
               <div className="py-8 border-b">
-              <p className="desc float-right"> {
-              getMyDay(article.updatedAt.getDay())}, {getMyMonth(article.updatedAt.getMonth())} {article.updatedAt.getDate()}, {article.updatedAt.getFullYear()
-              }</p>
+              <p className="desc float-right"> {article.date}</p>
               </div>
               </div>
               </div>
