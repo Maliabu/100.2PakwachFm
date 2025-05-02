@@ -137,7 +137,7 @@ export default function Login(){
 
                     <div className="text-sm text-muted py-4 px-8">Forgot password?</div>
                     {form.formState.errors.root && (
-                        <div className="border border-primary text-primary p-2 text-center rounded-md">{form.formState.errors.root.message}</div>
+                        <div className="border border-primary text-sm mx-4 text-primary p-2 text-center rounded-md">{form.formState.errors.root.message}</div>
                     )}
                     </form>
                     </Form>

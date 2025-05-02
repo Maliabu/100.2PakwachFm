@@ -26,8 +26,8 @@ export default function Header(){
     }
     if (!data) return <div className="flex bg-background rounded-md justify-center items-center mt-2"><Loader2 className="animate-spin"/>Loading Users ...</div>;
     return <div className="">
-        <div className=" rounded-lg grid sm:grid-cols-2 gap-2">
-            <div className="sm:col-span-1">
+        <div className=" rounded-lg sm:grid sm:grid-cols-12 gap-2">
+            <div className="sm:col-span-6">
             {tokenise()[4]=="admin" && 
             <div className=" bg-secondary py-1 px-4 rounded-md flex justify-between items-center">
                 <div className="text-sm">Logged in users: {logged.length}</div>
@@ -36,7 +36,7 @@ export default function Header(){
                 ))}</div>
             </div>}
             </div>
-            <div className="sm:col-span-1">
+            <div className="sm:col-span-6">
                 <div className="flex items-center justify-end">
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>

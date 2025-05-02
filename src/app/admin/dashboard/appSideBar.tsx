@@ -73,6 +73,11 @@ const data = {
           title: "Add",
           icon: Plus,
           url: "/admin/dashboard/ads",
+        },       
+        {
+          title: "View",
+          icon: Paperclip,
+          url: "/admin/dashboard/ads/view",
         },
       ],
     },

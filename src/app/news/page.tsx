@@ -7,6 +7,10 @@ import { articlesTable } from "@/db/schema";
 import { ArticlesTabs } from "./articlesTab";
 import Menu1 from "../navigation/menu1";
 import Popular from "../home/popular";
+import Image from "next/image";
+import mtn1 from '../images/mtn1.jpg'
+import mtn2 from '../images/mtn2.jpg'
+import { Ads } from "./ads";
 
 export default async function News() {
   const votes =  await db.select().from(articlesTable)
@@ -15,7 +19,7 @@ export default async function News() {
       <div className="sm:p-2">
         <Menu/>
       </div>
-    <div className="flex justify-between items-center mx-2">
+    <div className=" mx-2">
       <Menu1/>
     </div>
       <div className="px-2">
@@ -27,7 +31,7 @@ export default async function News() {
         <ArticlesTabs articles={votes}/>
       </div>
       <div className="col-span-2 sm:p-4 rounded-lg">
-        <div>Ads</div>
+        <Ads/>
       </div>
     </div>
     {/* <div className="p-2 absolute left-1/5 top-1/6 bg-background w-80 rounded-lg transform -translate-x-1/2 -translate-y-1/2"><Search size={18} className="text-muted-foreground"/></div> */}

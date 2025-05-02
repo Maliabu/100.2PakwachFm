@@ -1,49 +1,38 @@
+"use client"
+
 import { Button } from "@/components/ui/button";
 import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
 import { Mail, Mic } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+// import { getAdImages } from "../admin/dashboard/ads/view/helper";
 
 export default function Menu1(){
+  const [images, setImages] = useState<string[]>([]);
+
+  useEffect(() => {
+    async function fetchImages() {
+      const res = await fetch('/api/menuAd');
+      const data: string[] = await res.json();
+
+      // Shuffle and take up to 3
+      const shuffled = data.sort(() => 0.5 - Math.random());
+      const selected = shuffled.slice(0, 3);
+
+      setImages(selected);
+    }
+
+    fetchImages();
+  }, []);
     return(
-        <div>
+        <div className="sm:grid sm:grid-cols-12">
+          <div className="sm:col-span-6">
         <NavigationMenu className="rounded-lg hidden sm:block">
           <NavigationMenuList>
           <NavigationMenuItem>
           <Button><Mail size={18}/> Subscribe</Button>
             </NavigationMenuItem>
-            {/* <NavigationMenuItem>
-              <NavigationMenuTrigger>Subscribe</NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-                  <li className="row-span-3">
-                    <NavigationMenuLink asChild>
-                      <Link
-                        className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                        href="/"
-                      >
-                        <File className="h-6 w-6" />
-                        <div className="mb-2 mt-4 text-lg font-medium">
-                          shadcn/ui
-                        </div>
-                        <p className="text-sm leading-tight text-muted-foreground">
-                          Beautifully designed components built with Radix UI and
-                          Tailwind CSS.
-                        </p>
-                      </Link>
-                    </NavigationMenuLink>
-                  </li>
-                  <ListItem href="/docs" title="Introduction">
-                    Re-usable components built using Radix UI and Tailwind CSS.
-                  </ListItem>
-                  <ListItem href="/docs/installation" title="Installation">
-                    How to install dependencies and structure your app.
-                  </ListItem>
-                  <ListItem href="/docs/primitives/typography" title="Typography">
-                    Styles for headings, paragraphs, lists...etc
-                  </ListItem>
-                </ul>
-              </NavigationMenuContent>
-            </NavigationMenuItem> */}
             <NavigationMenuItem>
                 <NavigationMenuLink asChild>
                 <Link href="/services" className={navigationMenuTriggerStyle()}>
@@ -64,6 +53,20 @@ export default function Menu1(){
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
+        </div>
+        <div className="sm:col-span-6">
+      {images.map((src, index) => (
+        <div key={index} className="flex relative w-full h-24">
+          <Image
+            src={src}
+            alt={`Ad ${index}`}
+            fill
+            className="object-cover"
+            unoptimized
+          />
+        </div>
+      ))}
+    </div>
         </div>
     )
 }

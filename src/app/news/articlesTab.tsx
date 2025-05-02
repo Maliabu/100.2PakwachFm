@@ -84,7 +84,7 @@ export function ArticlesTabs(
               />
     </div>
         <div className="col-span-4 hidden sm:block">
-      <Card className=" border-none bg-secondary p-2">
+      <Card className=" border-none p-2">
       <CardHeader>
         <div className="text-2xl font-bold tracking-tight leading-6 mt-4">Highlights</div>
       </CardHeader>
@@ -110,8 +110,9 @@ export function ArticlesTabs(
                     unoptimized
                     className="object-cover"/>
                   </div>
-                  <Link href={ref(article.title)} className="text-lg font-bold tracking-tight mt-4 leading-5 text-dark pointer blog capitalize">
-              {article.title}</Link>
+                  <Link href={ref(article.title)} className="text-xl font-bold tracking-tight leading-5 text-dark pointer">
+                  <div className="my-4">
+                  {article.title}</div></Link>
               <div className="line-clamp-4 text-sm leading-4 mt-2">
               {parse(article.content)}
               </div></div>}/>

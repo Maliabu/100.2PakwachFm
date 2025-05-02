@@ -23,15 +23,15 @@ import { NavItem } from "./navItem"
 
 export function Menu() {
   return (
-    <div><footer className="row-start-3 sm:p-3 p-4 text-white bg-black sm:rounded-t-lg flex gap-[24px] text-sm flex-wrap items-center justify-center">
-      <div className="text-sm sm:block hidden">Follow us on social media</div>
+    <div><footer className="row-start-3 sm:p-3 p-4 bg-secondary sm:rounded-t-lg flex gap-[24px] text-sm flex-wrap items-center justify-center">
+      <div className="text-sm">Follow us on:</div>
     <a
       className="flex items-center sm:gap-2 font-bold tracking-tight hover:underline hover:underline-offset-4"
       href="https://www.linkedin.com/company/pakwach-fm/about"
       target="_blank"
       rel="noopener noreferrer"
     >
-    <div className="font-bold rounded-full border w-9 h-9 grid items-center justify-center">ln</div>
+    <div className="font-bold rounded-full border-2 w-9 h-9 grid items-center justify-center">ln</div>
       <span className="sm:block hidden">linkedIn</span>
     </a>
     <a
@@ -40,7 +40,7 @@ export function Menu() {
       target="_blank"
       rel="noopener noreferrer"
     >
-    <div className="font-bold rounded-full border w-9 h-9 grid items-center justify-center">i</div>
+    <div className="font-bold rounded-full border-2 w-9 h-9 grid items-center justify-center">i</div>
     <span className="sm:block hidden">instagram</span>
     </a>
     <a
@@ -48,7 +48,7 @@ export function Menu() {
       href="https://www.facebook.com/100.2pakwachfm"
       target="_blank"
       rel="noopener noreferrer">
-    <div className="font-bold rounded-full border w-9 h-9 grid items-center justify-center">f</div>
+    <div className="font-bold rounded-full border-2 w-9 h-9 grid items-center justify-center">f</div>
     <span className="sm:block hidden">facebook</span>
     </a>
   </footer>
@@ -103,7 +103,7 @@ export function Menu() {
     </NavigationMenu>
     <div className="sm:block hidden"><Link href='/videos'><Button><Video/> Videos</Button></Link></div>
     </div>
-    <div className="sm:hidden overflow-x-auto w-full scrollbar-hidden scrollbar-hide bg-background">
+    <div className="sm:hidden overflow-x-auto w-full py-2 scrollbar-hidden scrollbar-hide bg-background">
   <ul className="flex gap-2 min-w-max">
     <li className="shrink-0">
       <NavItem href="/" label="Home"/>

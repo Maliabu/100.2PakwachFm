@@ -98,6 +98,14 @@ export const addArticleSchema = z.object({
     articleType: z.string()
 })
 
+export const adSchema = z.object({
+    image: z.string(),
+    image1: z.any(),
+    folder: z.string({required_error: "Please select a folder.",}).min(2, {
+        message: "folder name should be atleast a character"
+    }).max(200)
+})
+
 export const addProgrammingSchema = z.object({
     programme: z.string({required_error: "Please enter a title.",}).min(2, {
         message: "title should be atleast a character"

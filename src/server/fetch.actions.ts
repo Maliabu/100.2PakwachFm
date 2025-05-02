@@ -166,6 +166,26 @@ export async function  uploadEditorFile(formData: FormData) {
     }
 }
 
+export async function  uploadAds(formData: FormData) {
+    const file = formData.get("file") as unknown as File;
+    const folder = formData.get('folder')
+    const arrayBuffer = await file.arrayBuffer();
+    const buffer = new Uint8Array(arrayBuffer);
+    const data = {
+        "image": file.name
+    }        
+
+    try {
+        await fs.writeFile(`./public/${folder}/${file.name}`, buffer);
+        return {"image": data.image}
+    }
+    catch{
+        await fs.mkdir(`./public/${folder}`)
+        await fs.writeFile(`./public/${folder}/${file.name}`, buffer);
+        return {"image": data.image}
+    }
+}
+
 export async function readEditorFiles(){
     try{
         const res = await db.query.editorImagesTable.findMany()
