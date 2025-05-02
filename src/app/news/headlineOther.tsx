@@ -66,16 +66,16 @@ type ArticleCardProp = {
     return (
       <div>
       <Card className="border-none shadow-none background-none" id={title}>
-      <div className="relative w-full h-64">
-        <Image
+      <div className="relative w-full h-36">
+      <Image
             src={path}
             alt="article image"
             fill
             unoptimized
-            objectFit="cover"
+            objectFit="contain"
             className="object-cover"/></div>
       <div className="">
-      <div className="text-2xl tracking-tight font-bold leading-7 lowercase">{title}</div>
+      <div className="text-3xl tracking-tight font-bold leading-7 lowercase">{title}</div>
       <div className="my-4">
             <Button onClick={() => handleReadMore(title)}>Read full article</Button>
         </div>

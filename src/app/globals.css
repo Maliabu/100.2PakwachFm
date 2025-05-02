@@ -234,3 +234,7 @@ pre {
 /* .prose p {
   margin-bottom: 1rem;
 } */
+
+.rounded-0{
+  border-radius: 0px !important;
+}

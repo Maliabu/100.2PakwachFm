@@ -57,7 +57,7 @@ const Editor = ({ content, placeholder, onChange,  }: EditorProps) => {
       }), Image.configure({
         inline: false,
         HTMLAttributes:{
-          class: 'w-full aspect-square h-64'
+          class: 'w-full aspect-square h-80 py-6'
         }
       })],
     editorProps: {

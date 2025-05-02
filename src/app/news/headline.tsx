@@ -129,7 +129,7 @@ export function HeadlineTabs(
               </div>
     </div>
         <div className="sm:col-span-4 hidden sm:block">
-      <Card className=" border-none bg-secondary p-2">
+      <Card className=" border-none p-2">
       <CardHeader>
         <div className="text-2xl font-bold tracking-tight leading-6 mt-4">Highlights</div>
       </CardHeader>
@@ -206,8 +206,8 @@ export function HeadlineTabs(
               <div className="line-clamp-4 text-md leading-5 mt-2">
               {parse(article.content)}
               </div>
-              <div className="py-8 border-b">
-              <p className="desc float-right"> {article.date}</p>
+              <div className="py-8">
+              <p className="text-sm text-muted-foreground float-right"> {article.date}</p>
               </div>
               </div>
               </div>

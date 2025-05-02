@@ -55,7 +55,7 @@ export default async function Articles() {
         ))}
       </CarouselContent>
       <CarouselPrevious className="text-white bg-primary ml-4"/>
-      <CarouselNext className="text-white bg-primary mr-4"/>
+      <CarouselNext className="text-white bg-primary sm:mr-4 mr-6"/>
     </Carousel>
   )
 }

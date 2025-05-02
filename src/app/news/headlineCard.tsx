@@ -49,7 +49,7 @@ import { useRouter } from "next/navigation"
     return (
       <div>
       <Card className="border-none shadow-none background-none" id={title}>
-      <div className="relative w-full h-96">
+      <div className="relative w-full sm:h-96 h-80">
         <Image
             src={path}
             alt="article image"
@@ -58,7 +58,7 @@ import { useRouter } from "next/navigation"
             objectFit="cover"
             className="object-cover"/></div>
       <div className="">
-      <div className="sm:text-6xl text-4xl tracking-tight font-bold sm:leading-13 leading-10 lowercase">{title}</div>
+      <div className="sm:text-6xl text-5xl tracking-tight font-bold sm:leading-12 leading-9 lowercase">{title}</div>
       <div className="my-4">
             <Button onClick={() => handleReadMore(title)}>Read full article</Button>
         </div>

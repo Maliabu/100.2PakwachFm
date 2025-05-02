@@ -46,14 +46,14 @@ import { Button } from "@/components/ui/button"
     const insta = instagramLink!==null?instagramLink:''
     return (
       <div>
-      <Card className="border-none shadow-none background-none p-6" id={title}>
-      <div className="relative w-full h-96">
+      <Card className="border-none shadow-none background-none sm:p-6" id={title}>
+      <div className="relative w-full sm:h-96 h-80">
         <Image
             src={path}
             alt="article image"
             fill
             unoptimized
-            objectFit="cover"
+            objectFit="contain"
             className="object-cover"/></div>
             <div className="row-start-3 p-2 bg-secondary flex gap-[24px] text-sm flex-wrap items-center justify-center">
             <a
@@ -62,8 +62,8 @@ import { Button } from "@/components/ui/button"
       target="_blank"
       rel="noopener noreferrer"
     >
-    <div className="font-bold rounded-full border w-7 h-7 grid items-center justify-center">x</div>
-      twitter
+    <div className="font-bold rounded- bg-black text-white w-7 h-7 grid items-center justify-center">x</div>
+      
     </a>
     <a
       className="flex items-center gap-2 font-bold tracking-tight hover:underline hover:underline-offset-4"
@@ -71,24 +71,24 @@ import { Button } from "@/components/ui/button"
       target="_blank"
       rel="noopener noreferrer"
     >
-    <div className="font-bold rounded-full border w-7 h-7 grid items-center justify-center">i</div>
+    <div className="font-bold rounded- bg-pink-400 text-white w-7 h-7 grid items-center justify-center">i</div>
 
-      instagram
+      
     </a>
     <a
       className="flex items-center font-bold tracking-tight gap-2 hover:underline hover:underline-offset-4"
       href={twitter}
       target="_blank"
       rel="noopener noreferrer">
-    <div className="font-bold rounded-full border w-7 h-7 grid items-center justify-center">f</div>
-      facebook
+    <div className="font-bold rounded- bg-blue-600 text-white w-7 h-7 grid items-center justify-center">f</div>
+      
     </a>
             </div>
-      <div className="">
+      <div className="px-2 sm:px-0">
       <div className="text-5xl tracking-tight font-bold leading-10 lowercase">{title}</div>
       <span className="mt-6 sm:float-right sm:mx-12"> {}</span>
-      <p className="py-4 border-b text-sm">: {writer}</p>
-      <p className="py-4 float-right text-sm"> {
+      <p className="py-4 border-b text-sm text-muted-foreground">By {writer}</p>
+      <p className="py-4 float-right text-sm text-muted-foreground"> {
       getMyDay(updatedAt.getDay())}, {getMyMonth(updatedAt.getMonth())} {updatedAt.getDate()}, {updatedAt.getFullYear()
       }</p>
       <div className="text-wrap lh-1 mt-20 prose prose-sm sm:prose-base lg:prose-lg xl:prose-2xl focus:outline-none">{parse(content)}</div>

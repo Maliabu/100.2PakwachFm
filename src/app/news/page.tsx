@@ -22,7 +22,7 @@ export default async function News() {
     <div>
     <div className="rounded-lg">
     <div className="grid sm:grid-cols-12 gap-2 mt-2">
-      <div className="sm:col-span-10 bg-background p-8 rounded-lg">
+      <div className="sm:col-span-10 bg-background sm:p-8 p-4 rounded-lg">
         <div className="text-sm text-muted-foreground uppercase mb-2">news </div>
         <ArticlesTabs articles={votes}/>
       </div>

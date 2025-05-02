@@ -47,7 +47,7 @@ const highlight = [
 
 export function Concerts() {
   return (
-    <Carousel className="w-full bg-muted rounded-lg p-4" 
+    <Carousel className="w-full sm:bg-secondary rounded-lg p-4" 
       >
       <CarouselContent className="-ml-1">
         {highlight.map((news, index) => (

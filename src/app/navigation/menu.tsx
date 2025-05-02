@@ -19,6 +19,7 @@ import { ModeToggle } from "./theme/mode"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { SearchBar } from "./search"
+import { NavItem } from "./navItem"
 
 export function Menu() {
   return (
@@ -57,8 +58,8 @@ export function Menu() {
     <Image src={Logo} alt="logo"/></div>
     </div>
   </div>
-  <div className="bg-transparent p-3 flex justify-between"><Link href='/programming'><Button className="bg-primary">Schedule <ChevronRight size={18}/></Button></Link><SearchBar/></div>
-    <div className="sm:bg-background bg-secondary p-3 sm:rounded-b-lg">
+  <div className="bg-secondary p-3 flex justify-between"><Link href='/programming'><Button className="bg-primary">Schedule <ChevronRight size={18}/></Button></Link><SearchBar/></div>
+    <div className="sm:bg-background bg-secondary sm:p-3 sm:rounded-b-lg">
         <div className="justify-between flex">
             <div className="w-30 h-10 hidden sm:block"><Link href='/'><Image src={Logo} alt="logo"/></Link></div>
     <NavigationMenu className="hidden sm:block">
@@ -102,22 +103,22 @@ export function Menu() {
     </NavigationMenu>
     <div className="sm:block hidden"><Link href='/videos'><Button><Video/> Videos</Button></Link></div>
     </div>
-    <div className="sm:hidden overflow-x-auto w-full scrollbar-hidden scrollbar-hide">
+    <div className="sm:hidden overflow-x-auto w-full scrollbar-hidden scrollbar-hide bg-background">
   <ul className="flex gap-2 min-w-max">
     <li className="shrink-0">
-      <Link href="/" className="block px-4 py-2 bg-background rounded-md"><div className="text-sm">Home</div></Link>
+      <NavItem href="/" label="Home"/>
     </li>
     <li className="shrink-0">
-      <Link href="/news" className="block px-4 py-2 bg-background rounded-md"><div className="text-sm">News</div></Link>
+    <NavItem href="/news" label="News"/>
     </li>
     <li className="shrink-0">
-      <Link href="/programming" className="block px-4 py-2 bg-background rounded-md"><div className="text-sm">Presenters</div></Link>
+    <NavItem href="/programming" label="Programming"/>
     </li>
     <li className="shrink-0">
-      <Link href="/events" className="block px-4 py-2 bg-background rounded-md"><div className="text-sm">Events</div></Link>
+    <NavItem href="/events" label="Events"/>
     </li>
     <li className="shrink-0">
-      <Link href="/news#sports" className="block px-4 py-2 bg-background rounded-md"><div className="text-sm">Sports</div></Link>
+    <NavItem href="/news#sports" label="Sports"/>
     </li>
     <li className="shrink-0">
       <Link href="/adverts" className="block rounded"><Button><Megaphone size={18}/> Advertise</Button></Link>

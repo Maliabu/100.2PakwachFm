@@ -29,7 +29,7 @@ export default async function Page({
 
     return <div className="sm:px-16 sm:bg-muted">
       <Menu/>
-      <div className=" sm:p-8 rounded-lg bg-background my-2">
+      <div className=" sm:p-8 p-2 rounded-lg bg-background my-2">
         <div className="grid sm:grid-cols-12">
           <div className="sm:col-span-8">
         <ArticlesCard 

@@ -21,6 +21,7 @@ export function ReadMoreCard({ article }: { article: { id: number;
 
   return (
     <CardContent className="" key={article.id}>
+      <div className="text-sm uppercase my-8 text-muted-foreground">Read more articles</div>
       <div className="mt-1 pb-6 cursor-pointer" onClick={handleReadMore}>
         <div>
           <div className="relative h-36 w-full">
@@ -28,6 +29,7 @@ export function ReadMoreCard({ article }: { article: { id: number;
               alt="article image"
               src={path}
               fill
+              objectFit='cover'
               unoptimized
               className="object-cover"
             />

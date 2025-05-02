@@ -66,8 +66,8 @@ export function ArticlesTabs(
     return(
         <div>
         <div className="">
-            <div className="grid grid-cols-12 gap-2">
-    <div className=" col-span-8 rounded-xl">
+            <div className="grid sm:grid-cols-12 gap-2">
+    <div className=" sm:col-span-8 rounded-xl">
           <ArticlesCard 
               id={contents.id}
               title={contents.title}
@@ -123,7 +123,7 @@ export function ArticlesTabs(
     </div>
     </div>
     <div className="sm:hidden mt-12">
-      <Card className="border-none">
+      <Card className="border-none shadow-none bg-secondary">
       <CardHeader>
         <div className="text-3xl font-bold tracking-tight leading-6">Recommended Articles</div>
       </CardHeader>
@@ -137,11 +137,11 @@ export function ArticlesTabs(
             articleType: string, image: string | null, updatedAt: Date, createdAt: Date}
           ) => (
             <CardContent className="" key={article.id}>
-            <div className="mt-1 pb-4" 
+            <div className="" 
             onClick={() => getContent(article)}>
               <TabNavItem id="tab1" activeTab={activeTab} setActiveTab={setActiveTab} 
               title={<div>
-                <div className="relative h-36 sm:w-92">
+                <div className="relative h-36 sm:w-92 mt-6">
                 <Image
                     alt="article image"
                     src={path(article.image)}
@@ -149,13 +149,14 @@ export function ArticlesTabs(
                     unoptimized
                     className="object-cover"/>
                   </div>
-                  <Link href={ref(article.title)} className="text-lg font-bold tracking-tight mt-4 leading-5 text-dark pointer blog capitalize">
-              {article.title}</Link>
+                  <Link href={ref(article.title)} className="text-xl font-bold tracking-tight leading-5 text-dark pointer capitalize">
+                  <div className="pt-4">
+                  {article.title}</div></Link>
               <div className="line-clamp-4 text-md leading-5 mt-2">
               {parse(article.content)}
               </div>
-              <div className="py-8 border-b">
-              <p className="desc float-right"> {
+              <div className="py-4">
+              <p className=" float-right text-sm text-muted-foreground"> {
               getMyDay(article.updatedAt.getDay())}, {getMyMonth(article.updatedAt.getMonth())} {article.updatedAt.getDate()}, {article.updatedAt.getFullYear()
               }</p>
               </div>
