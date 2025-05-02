@@ -22,8 +22,24 @@ import { SearchBar } from "./search"
 import { NavItem } from "./navItem"
 
 export function Menu() {
+  const [images, setImages] = React.useState<string[]>([]);
+
+  React.useEffect(() => {
+    async function fetchImages() {
+      const res = await fetch('/api/menuAd');
+      const data: string[] = await res.json();
+
+      // Shuffle and take up to 3
+      const shuffled = data.sort(() => 0.5 - Math.random());
+      const selected = shuffled.slice(0, 3);
+
+      setImages(selected);
+    }
+
+    fetchImages();
+  }, []);
   return (
-    <div><footer className="row-start-3 sm:p-3 p-4 bg-secondary sm:rounded-t-lg flex gap-[24px] text-sm flex-wrap items-center justify-center">
+    <div><footer className="row-start-3 sm:p-3 p-4 bg-black text-white sm:rounded-t-lg flex gap-[24px] text-sm flex-wrap items-center justify-center">
       <div className="text-sm">Follow us on:</div>
     <a
       className="flex items-center sm:gap-2 font-bold tracking-tight hover:underline hover:underline-offset-4"
@@ -58,7 +74,18 @@ export function Menu() {
     <Image src={Logo} alt="logo"/></div>
     </div>
   </div>
-  <div className="bg-secondary p-3 flex justify-between"><Link href='/programming'><Button className="bg-primary">Schedule <ChevronRight size={18}/></Button></Link><SearchBar/></div>
+  <div className="bg-secondary p-3 flex justify-between">
+    <Link href='/programming'><Button className="bg-primary">Schedule <ChevronRight size={18}/></Button></Link>
+        <div className="relative w-full h-24 mx-8">
+          {images.length > 0? <Image
+            src={images[0]}
+            alt={`Ad ${images[0]}`}
+            fill
+            className="object-cover"
+            unoptimized
+          />: 'ad'}
+    </div>
+  <SearchBar/></div>
     <div className="sm:bg-background bg-secondary sm:p-3 sm:rounded-b-lg">
         <div className="justify-between flex">
             <div className="w-30 h-10 hidden sm:block"><Link href='/'><Image src={Logo} alt="logo"/></Link></div>

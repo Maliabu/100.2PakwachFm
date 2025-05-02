@@ -27,7 +27,7 @@ export default function Footer(){
                 <li className="hover:text-primary hover:font-bold hover:underline"><Link href='/events'>Events</Link></li>
                 </ul>
         </div>
-        <div className="bg-secondary mt-16 p-6">
+        <div className="bg-secondary py-20 px-16">
             <div className="text-lg font-bold tracking-tight">Studio Lines</div>
             <div className="sm:flex sm:justify-between">
             <ul className="text-sm mt-6">
