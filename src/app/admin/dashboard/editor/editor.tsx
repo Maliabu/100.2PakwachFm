@@ -57,7 +57,8 @@ const Editor = ({ content, placeholder, onChange,  }: EditorProps) => {
       }), Image.configure({
         inline: false,
         HTMLAttributes:{
-          class: 'w-full aspect-square h-80 py-6'
+          class: 'object-cover py-6',
+          style: 'height: 100%; width: 100%; inset: 0px; object-fit: contain; color: transparent;'
         }
       })],
     editorProps: {
