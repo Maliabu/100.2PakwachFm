@@ -24,6 +24,8 @@ function env(){
     }
 }
 
+const cpanelUrl = 'https://uploads.pakwachfm.com/editor'
+
 export async function addUsers(unsafeData: z.infer<typeof addUserSchema>) : 
 Promise<{error: boolean | undefined}> {
    const {success, data} = addUserSchema.safeParse(unsafeData)
@@ -97,6 +99,26 @@ export async function uploadCloudinaryFile(formData: FormData) {
       }
 }
 
+export async function uploadServerFile(formData: FormData) {
+    try {
+        const response = await fetch(`${env()}/api/server`, {
+          method: 'POST',
+          body: formData,
+        });
+        const contentType = response.headers.get('Content-Type');
+  
+        const result = await response.json();
+  
+        if (response.ok) {
+          return result.fileUrl// Set the image URL from the response
+        } else {
+          return null
+        }
+      } catch (error) {
+        return error
+      }
+}
+
 export async function uploadEventFile(formData: FormData) {
     const file = formData.get("file") as unknown as File;
     const arrayBuffer = await file.arrayBuffer();
@@ -138,6 +160,7 @@ export async function uploadArticleFile(formData: FormData) {
     const buffer = new Uint8Array(arrayBuffer);
 
     try {
+        // await fs.writeFile(`./public/articles/${file.name}`, buffer);
         await fs.writeFile(`./public/articles/${file.name}`, buffer);
     }
     catch{
@@ -176,12 +199,22 @@ export async function  uploadAds(formData: FormData) {
     }        
 
     try {
-        await fs.writeFile(`./public/${folder}/${file.name}`, buffer);
+        // await fs.writeFile(`./public/${folder}/${file.name}`, buffer);
+        // await fetch('https://yourdomain.com/upload.php', {
+        //     method: 'POST',
+        //     headers: {
+        //       'X-API-KEY': process.env.CPANEL_UPLOAD_SECRET!,
+        //     },
+        //     body: formData,
+        //   });
+        await uploadServerFile(formData)
+        console.log('UPLOADED')
         return {"image": data.image}
     }
     catch{
-        await fs.mkdir(`./public/${folder}`)
-        await fs.writeFile(`./public/${folder}/${file.name}`, buffer);
+        // await fs.mkdir(`./public/${folder}`)
+        // await fs.writeFile(`./public/${folder}/${file.name}`, buffer);
+        console.log('NOT UPLOADED')
         return {"image": data.image}
     }
 }
@@ -252,7 +285,7 @@ Promise<{error: boolean | undefined}> {
    }
 
 //    uploadEventFile(formData)
-    const profile = await uploadCloudinaryFile(formData)
+    const profile = await uploadServerFile(formData)
     if(profile !== null){
         const profileUrl = profile.toString()
         data.image = profileUrl
@@ -300,7 +333,7 @@ Promise<{error: boolean | undefined}> {
 //    uploadCourseFile(formData)
    //mostly spell check n no of arguments in payload
    // add currencies
-   const profile = await uploadCloudinaryFile(formData)
+   const profile = await uploadServerFile(formData)
    if(profile !== null){
         const profileUrl = profile.toString()
         data.image = profileUrl
@@ -334,7 +367,7 @@ Promise<{error: boolean | undefined}> {
 //    uploadCourseFile(formData)
    //mostly spell check n no of arguments in payload
    // add currencies
-   const profile = await uploadCloudinaryFile(formData)
+   const profile = await uploadServerFile(formData)
    if(profile !== null){
         const profileUrl = profile.toString()
         data.image = profileUrl
@@ -442,7 +475,7 @@ Promise<{error: boolean | undefined}> {
    }
 
 //    uploadArticleFile(formData)
-    const profile = await uploadCloudinaryFile(formData)
+    const profile = await uploadServerFile(formData)
 
     if(profile !== null){
         const profileUrl = profile.toString()
