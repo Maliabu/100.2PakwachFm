@@ -18,7 +18,7 @@ export const POST = async (req: NextRequest) => {
     // Set the file name and the path to save it
     const fileName = `${Date.now()}-${file.name}`;
     // const uploadPath = path.join(process.cwd(), folder, fileName); for localhost
-    const uploadPath = path.join('/home/pakwachfm/uploads/', folder, fileName);
+    const uploadPath = path.join('/home/pakwachfm/public_html/', folder, fileName);
 
     // Ensure the folder exists
     const folderPath = path.dirname(uploadPath);
