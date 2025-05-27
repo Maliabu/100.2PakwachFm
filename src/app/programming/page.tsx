@@ -19,14 +19,14 @@ export default async function Events() {
     where: eq(programmingTable.weekday, 'false')
   })
   return (
-    <div className="sm:px-16 sm:bg-muted">
-      <div className="sm:p-2">
+    <div className="sm:px-12 sm:bg-muted">
+      <div className="">
         <Menu/>
       </div>
-    <div className="flex justify-between items-center mx-2">
+    <div className="flex justify-between items-center">
       <Menu1/>
     </div>
-      <div className="px-2">
+      <div className="">
     <div>
     <div className="rounded-lg">
     <div className="grid sm:grid-cols-12 gap-2">
@@ -92,7 +92,7 @@ export default async function Events() {
     <Popular/>
     </div>
       </div>
-      <div className="sm:p-2">
+      <div className="mt-2">
         <Footer/>
       </div>
     </div>

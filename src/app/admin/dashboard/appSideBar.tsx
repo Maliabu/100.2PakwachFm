@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client"
 
-import { BarChart, ChartBar, ChartBarIcon, Delete, File, FileArchive, FileEdit, Home, LineChart, List, ListChecks, Mic, Paperclip, PenToolIcon, Pill, Play, Plus, Receipt, Settings2, ShoppingBasket, Store, StoreIcon, Sun, Tag, TruckIcon, User, UserCheck2, Users, Video, View, Wallet } from "lucide-react"
+import { BarChart, Calendar, CalendarArrowDown, ChartBar, ChartBarIcon, Delete, File, FileArchive, FileEdit, Home, LineChart, List, ListChecks, Mic, Paperclip, PenToolIcon, Pill, Play, Plus, Receipt, Settings2, ShoppingBasket, Store, StoreIcon, Sun, Tag, TruckIcon, User, UserCheck2, Users, Video, View, Wallet } from "lucide-react"
 
 import {
   Sidebar,
@@ -60,6 +60,24 @@ const data = {
           title: "Add",
           icon: Plus,
           url: "/admin/dashboard/programming",
+        },
+      ],
+    },
+    {
+      title: "Events",
+      url: "#",
+      icon: Calendar,
+      isActive: false,
+      items: [
+        {
+          title: "Add",
+          icon: Plus,
+          url: "/admin/dashboard/events",
+        },
+        {
+          title: "View",
+          icon: CalendarArrowDown,
+          url: "/admin/dashboard/events/view",
         },
       ],
     },
@@ -142,6 +160,7 @@ export function AppSidebar() {
       <SidebarFooter>
         <Logged/>
         <Logout/>
+        <p className="text-xs text-center">&copy;copyright.pakwachfm@{new Date().getFullYear()}</p>
       </SidebarFooter>
     </Sidebar>
   )

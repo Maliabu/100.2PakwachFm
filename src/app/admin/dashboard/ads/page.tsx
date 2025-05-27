@@ -31,7 +31,6 @@ export default function AddArticle() {
             image: "",
       },
     })
-    console.log(form.getValues())
 
     async function onSubmit(values: z.infer<typeof adSchema>) {
         let folders = 'columnAd'

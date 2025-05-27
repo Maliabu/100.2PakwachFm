@@ -6,7 +6,7 @@ import * as React from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { useForm } from "react-hook-form"
-import z, { any } from 'zod'
+import z, { any, date } from 'zod'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Textarea } from '@/components/ui/textarea'
@@ -21,14 +21,18 @@ import ImageGallery from "../editor/imageGallery"
 import { ArticlesCard } from "./articlesCard"
 import Articles from "./articles"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { DatePicker } from "../datePicker"
+import { DatePick } from "../datePick"
 
 
 export default function AddArticle() {
   const [value, setValue] = React.useState("")
   const [name, setName] = React.useState("")
+  const [id, setId] = React.useState("")
 
   React.useEffect(() => {
     setName(tokenise()[0])
+    setId(tokenise()[3])
   }, [])
 
     const form = useForm<z.infer<typeof addArticleSchema>>({
@@ -41,10 +45,10 @@ export default function AddArticle() {
           instagramLink: "",
           writer: name,
           image: "",
-          date: ''
+          date: new Date(),
+          userId: ''
       },
     })
-    console.log(form.getValues())
 
     async function onSubmit(values: z.infer<typeof addArticleSchema>) {
       values.content = value
@@ -82,11 +86,11 @@ export default function AddArticle() {
     <div className="">
       {/* <ReusableDrawer page="Article" form={formBuild()}/> */}
 
-      <div className="admin p-16">
+      <div className="admin p-12 bg-secondary rounded-lg">
       <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <div className="text-2xl font-bold tracking-tight my-4">Add Stroy/Article</div>
-        <div className="grid sm:grid-cols-3 w-full gap-2">
+        <div className="grid sm:grid-cols-3 w-full gap-2 bg-background p-6 rounded-lg">
           <div className="sm:col-span-1">
               <div className="flex flex-col space-y-2">
               <FormField
@@ -106,7 +110,7 @@ export default function AddArticle() {
                   />
               </div>
               <div className="text-xs my-2 text-muted-foreground">These social media links below will follow every article if the story happens to be on social media as well (optional)</div>
-              <div className="flex flex-col my-3 space-y-2">
+              <div className="flex flex-col mt-4 space-y-2">
               <FormField
                   control={form.control}
                   name="facebookLink"
@@ -121,7 +125,7 @@ export default function AddArticle() {
                   )}
                   />
               </div>
-              <div className="flex flex-col my-3 space-y-2">
+              <div className="flex flex-col mt-4 space-y-2">
               <FormField
                   control={form.control}
                   name="twitterLink"
@@ -136,7 +140,7 @@ export default function AddArticle() {
                   )}
                   />
               </div>
-              <div className="flex flex-col my-3 space-y-2">
+              <div className="flex flex-col mt-4 space-y-2">
               <FormField
                   control={form.control}
                   name="instagramLink"
@@ -151,7 +155,7 @@ export default function AddArticle() {
                   )}
                   />
               </div>
-              <div className="flex flex-col mt-3 space-y-2">
+              <div className="flex flex-col mt-4 space-y-2">
               <FormField
                   control={form.control}
                   name="image1"
@@ -169,7 +173,7 @@ export default function AddArticle() {
                   )}
                   />
               </div>
-              <div className="flex flex-col space-y-2 my-3">
+              <div className="flex flex-col space-y-2 mt-4">
               <FormField
                   control={form.control}
                   name="articleType"
@@ -194,15 +198,16 @@ export default function AddArticle() {
                   )}
                   />
               </div>
-              <div className="flex flex-col my-3 space-y-2">
+              <div className="flex flex-col space-y-1.5 mt-4">
+              <p className="text-sm">Date of the Article</p>
               <FormField
                   control={form.control}
                   name="date"
                   render={({ field }) => (
                       <FormItem>
-                      <FormLabel>Date of Article (displayed on the artcle)</FormLabel>
-                      <FormControl>
-                          <Input type="text" placeholder="WEDNESDAY 23 APRIL 2025 - format" {...field} />
+                      <FormControl
+                      >
+                          <DatePick field={field} />
                       </FormControl>
                       <FormMessage />
                       </FormItem>

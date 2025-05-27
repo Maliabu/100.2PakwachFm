@@ -1,0 +1,1 @@
+ALTER TABLE `articles_table` ADD `date of article` timestamp;

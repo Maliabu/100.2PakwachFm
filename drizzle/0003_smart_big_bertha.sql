@@ -1,1 +1,0 @@
-ALTER TABLE `articles_table` ADD `date` varchar(255) DEFAULT 'today';

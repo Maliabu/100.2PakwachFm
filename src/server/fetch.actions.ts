@@ -5,11 +5,12 @@ import { db } from "@/db/db";
 import { EventsTable, activityTable, articlesTable, commentsTable, courseTable, currencyTable, editorImagesTable, enrollmentsTable, messagesTable, nextCourseTable, programmingTable, replyTable, subscriptionsTable, usersTable, votesTable } from "@/db/schema";
 import "use-server"
 import { z } from "zod";
-import { addArticleSchema, addCourseSchema, addEnrollmentSchema, addEventSchema, addNextCourseSchema, addProgrammingSchema, addSubscriptionSchema, addUserSchema, commentsSchema, deleteArticleSchema, deleteEventSchema, deleteProgrammingSchema, deleteSchema, deleteUserSchema, loginUserSchema, messagesSchema, replySchema, updateCourseSchema, voteSchema } from '@/schema/schema'
+import { addArticleSchema, addCourseSchema, addEnrollmentSchema, addEventSchema, addNextCourseSchema, addProgrammingSchema, addSubscriptionSchema, addUserSchema, commentsSchema, deleteArticleSchema, deleteEventSchema, deleteProgrammingSchema, deleteSchema, deleteUserSchema, loginUserSchema, messagesSchema, replySchema, updateCourseSchema, uploadProfilePicture, voteSchema } from '@/schema/schema'
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { File } from "node:buffer";
 import { promises as fs } from "node:fs";
+import { sendPasswordResetLInk } from "@/nodemailer";
 // import { sendEmail } from "@/nodemailer";
 
 const today = new Date()
@@ -195,27 +196,29 @@ export async function  uploadAds(formData: FormData) {
     const arrayBuffer = await file.arrayBuffer();
     const buffer = new Uint8Array(arrayBuffer);
     const data = {
-        "image": file.name
+        "image": encodeURI(file.name)
     }        
 
     try {
-        // await fs.writeFile(`./public/${folder}/${file.name}`, buffer);
-        // await fetch('https://yourdomain.com/upload.php', {
-        //     method: 'POST',
-        //     headers: {
-        //       'X-API-KEY': process.env.CPANEL_UPLOAD_SECRET!,
-        //     },
-        //     body: formData,
-        //   });
-        await uploadServerFile(formData)
-        console.log('UPLOADED')
-        return {"image": data.image}
+        const res = await fetch('https://uploads.pakwachfm.com/uploads.php', {
+            method: 'POST',
+            body: formData,
+          });
+      
+          if (res.ok) {
+            const data = await res.json();
+            console.log('File uploaded to:', data.url);
+            return {"image": data.image, "url": data.url}
+
+          } else {
+            console.error('Upload failed');
+            return {"image": data.image, "url": ''}
+
+          }
     }
-    catch{
-        // await fs.mkdir(`./public/${folder}`)
-        // await fs.writeFile(`./public/${folder}/${file.name}`, buffer);
-        console.log('NOT UPLOADED')
-        return {"image": data.image}
+    catch(error){
+        console.log('NOT UPLOADED', error)
+        return {"image": data.image, "url": ''}
     }
 }
 
@@ -228,6 +231,20 @@ export async function readEditorFiles(){
         return images
     } catch{
         return []
+    }
+}
+
+export async function sendHtmlEmail(email: string, title:string, name:string, link: string){
+    sendPasswordResetLInk(email, title, name, link)
+    return true
+}
+
+export async function checkEmail(email: string){
+    const check = await db.query.usersTable.findFirst({where:eq(usersTable.email, email)})
+    if(check !== undefined){
+        return {error: true, name: check.name, email: check.email}
+    } else {
+        return {error: false, name: "", email: email}
     }
 }
 
@@ -248,6 +265,7 @@ export async function loginUser(unsafeData: z.infer<typeof loginUserSchema>){
     let name = ''
     let id = 0
     let userType = ''
+    let picture = ''
  
     const checkEmail = await db.query.usersTable.findFirst({
      where: eq(usersTable.email, data.email)
@@ -262,6 +280,7 @@ export async function loginUser(unsafeData: z.infer<typeof loginUserSchema>){
      name = checkEmail.name
      id = checkEmail.id
      userType = checkEmail.userType
+     picture = checkEmail.profilePicture || ''
  
      // before login, update isloggedin and lastlogin
      await db.update(usersTable).set({
@@ -273,7 +292,7 @@ export async function loginUser(unsafeData: z.infer<typeof loginUserSchema>){
     }
     await logActivity(name+" Logged in", id.toString())
     
-    return [token, encrPass, initVector, usertype, email, username, name, id.toString(), userType]
+    return [token, encrPass, initVector, usertype, email, username, name, id.toString(), userType, picture]
  }
 
 export async function addEvents(unsafeData: z.infer<typeof addEventSchema>, formData: FormData) : 
@@ -475,16 +494,43 @@ Promise<{error: boolean | undefined}> {
    }
 
 //    uploadArticleFile(formData)
-    const profile = await uploadServerFile(formData)
+    const profile = await uploadAds(formData)
 
     if(profile !== null){
-        const profileUrl = profile.toString()
-        data.image = profileUrl
+        data.image = profile.url
         await db.insert(articlesTable).values({...data})
+        await logActivity('Added article: '+data.title+'on '+data.date, data.userId)
         return {error: false}
     } else {
         return {error: true}       
     }
+
+}
+
+export async function uploadProfileImage(unsafeData: z.infer<typeof uploadProfilePicture>, formData: FormData) : 
+Promise<{error: boolean | undefined, url: string}> {
+   const {success, data} = uploadProfilePicture.safeParse(unsafeData)
+
+   if (!success){
+    return {error: true, url: ''}
+   }
+   try{
+
+//    uploadArticleFile(formData)
+    const profile = await uploadAds(formData)
+
+    if(profile !== null){
+        data.image = profile.url
+        const id = parseInt(data.userId)
+        await db.update(usersTable).set({profilePicture: data.image}).where(eq(usersTable.id, id))
+        await logActivity('Updated their profile picture to: '+data.image, data.userId)
+        return {error: false, url: data.image}
+    } else {
+        return {error: true, url: ''}       
+    }
+}catch(error){
+    return {error: true, url: ''}
+}
 
 }
 

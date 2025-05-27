@@ -19,9 +19,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     {mounted && <SidebarProvider>
       <AppSidebar />
       <main className=" sm:p-6 w-full">
-        <div className="grid grid-cols-2 bg-background p-2 rounded-lg">
+        <div className="grid grid-cols-12 bg-background p-2 rounded-lg">
         <SidebarTrigger />
-        <Header/></div>
+        <div className="sm:col-span-10">        
+          <Header/>
+        </div>
+        </div>
         {children}
       </main>
     </SidebarProvider>}

@@ -93,10 +93,36 @@ export const addArticleSchema = z.object({
     instagramLink: z.string(),
     writer: z.string({required_error: "Please enter your name.",}),
     image: z.string(),
-    image1: z.any(),
-    date: z.string(),
-    articleType: z.string()
+    image1: z.any({required_error: "Please upload an image.",}),
+    date: z.date({required_error: "Please enter a date.",}),
+    articleType: z.string(),
+    userId: z.string(),
 })
+
+export const resetPasswordSchema = z.object({
+    email: z.string({required_error: "Please enter your email.",}).min(5, {
+        message: "email too short"
+    }),
+})
+
+export const passwordResetSchema = z.object({
+    email: z.string(),
+    password: z.string(),
+    confirmPassword: z.string({required_error: "Please confirm your password.",}),
+    decInit: z.string(),
+    encrPass: z.string({required_error: "Please enter a password.",}).min(2, {
+        message: "Password must be atleast 8 characters"
+    }).max(50),
+    userId: z.string(),
+}).superRefine(({ confirmPassword, encrPass }, ctx) => {
+    if (confirmPassword !== encrPass) {
+      ctx.addIssue({
+        code: "custom",
+        message: "The passwords did not match",
+        path: ['confirmPassword']
+      });
+    }
+  });
 
 export const adSchema = z.object({
     image: z.string(),
@@ -104,6 +130,12 @@ export const adSchema = z.object({
     folder: z.string({required_error: "Please select a folder.",}).min(2, {
         message: "folder name should be atleast a character"
     }).max(200)
+})
+
+export const uploadProfilePicture = z.object({
+    image: z.string(),
+    image1: z.any(),
+    userId: z.string(),
 })
 
 export const addProgrammingSchema = z.object({

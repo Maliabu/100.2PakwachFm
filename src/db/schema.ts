@@ -61,7 +61,7 @@ export const articlesTable = mysqlTable('articles_table', {
   image: varchar('article_image', {length: 255}),
   writer: text('writer').notNull(),
   articleType: text('type').notNull().default('highlight'),
-  date: varchar('date', {length: 255}).default('today'),
+  date: timestamp('date'),
     createdAt,
     updatedAt,
 });
@@ -95,6 +95,21 @@ export const EventsTable = mysqlTable('events_table', {
   endDate: timestamp('end_date'),
   createdAt,
   updatedAt,
+});
+
+export const notificationsTable = mysqlTable('notifications', {
+  id: int('id').primaryKey().autoincrement(),
+  sender: int("user_id").notNull().references(() => usersTable.id, {onDelete: 'cascade'}),
+  status: text('status').notNull(),
+  notification: text('notification').notNull(),
+    createdAt,
+    updatedAt,
+});
+
+export const notificationUsersTable = mysqlTable('notification_users', {
+  id: int('id').primaryKey().autoincrement(),
+  notification: int('notification_id').notNull().references(() => notificationsTable.id, { onDelete: 'cascade' }),
+  user: int('user_id').notNull().references(() => usersTable.id, { onDelete: 'cascade' }),
 });
 
 export const enrollmentsTable = mysqlTable('enrollments_table', {
@@ -180,7 +195,7 @@ export const userRelations = relations(usersTable, ({many}) => ({
 
 export const activityTable = mysqlTable('activity', {
   id: int('id').primaryKey().autoincrement(),
-  user: int("user").notNull().references(() => usersTable.id, {onDelete: 'cascade'}),
+  user: int("user_id").notNull().references(() => usersTable.id, {onDelete: 'cascade'}),
   activity: text('value').notNull(),
     createdAt,
     updatedAt,
@@ -238,3 +253,9 @@ export type SelectMessage = typeof messagesTable.$inferSelect
 
 export type InsertActvity = typeof activityTable.$inferInsert;
 export type SelectActivity = typeof activityTable.$inferSelect;
+
+export type InsertNotification = typeof notificationsTable.$inferInsert;
+export type SelectNotification = typeof notificationsTable.$inferSelect;
+
+export type InsertNotificationsUser = typeof notificationUsersTable.$inferInsert;
+export type SelectNotificationsUser = typeof notificationUsersTable.$inferSelect;

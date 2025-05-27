@@ -78,7 +78,7 @@ export function HeadlineTabs(
               />
               
               <div className="grid sm:grid-cols-12 gap-2">
-                <div className="sm:col-span-4">
+                <div className="sm:col-span-6">
           {articles.length > 1 && <HeadLineOtherCard 
                     id={articles["1"].id}
                     title={articles["1"].title}
@@ -94,7 +94,7 @@ export function HeadlineTabs(
                     createdAt={articles["1"].createdAt} 
                     />}
                 </div>
-                <div className="sm:col-span-4">
+                <div className="sm:col-span-6">
           {articles.length > 2 && <HeadLineOtherCard 
                     id={articles["2"].id}
                     title={articles["2"].title}
@@ -110,7 +110,7 @@ export function HeadlineTabs(
                     createdAt={articles["2"].createdAt} 
                     />}
                 </div>
-                <div className="sm:col-span-4">
+                <div className="sm:hidden">
           {articles.length > 3 && <HeadLineOtherCard 
                     id={articles["3"].id}
                     title={articles["3"].title}
@@ -162,7 +162,7 @@ export function HeadlineTabs(
                     className="object-cover"/>
                   </div>
                   <Link href={ref(article.title)}>
-                <div className="text-lg font-bold tracking-tight mt-4 leading-5 text-dark pointer blog capitalize">
+                <div className="text-xl font-bold tracking-tight mt-4 leading-5 text-dark pointer blog capitalize">
               {article.title}</div></Link>
               <div className="line-clamp-4 text-sm leading-4 mt-2">
               {parse(article.content)}

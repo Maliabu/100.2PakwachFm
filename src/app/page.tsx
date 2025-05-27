@@ -4,14 +4,14 @@ import { Menu } from "./navigation/menu";
 
 export default function page() {
   return (
-    <div className="sm:px-16 sm:bg-muted">
-      <div className="sm:p-2">
+    <div className="sm:px-12 sm:bg-muted">
+      <div className="">
         <Menu/>
       </div>
-      <div className="px-2">
+      <div className="">
         <Home/>
       </div>
-      <div className="sm:p-2">
+      <div className="mt-2">
         <Footer/>
       </div>
     </div>

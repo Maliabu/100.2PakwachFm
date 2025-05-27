@@ -1,1 +1,0 @@
-ALTER TABLE `programming` RENAME COLUMN `weekday?` TO `weekday`;

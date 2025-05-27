@@ -6,27 +6,81 @@ import { fetcher, tokenise } from "@/services/services";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
 import { date } from "@/services/services";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { useForm } from "react-hook-form";
+import { uploadProfilePicture } from "@/schema/schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { z } from "zod";
+import { uploadProfileImage } from "@/server/fetch.actions";
+import Image from "next/image";
 
 export default function Page(){
     const [email, setEmail] = useState("")
     const [username, setUsername] = useState("")
     const [name, setName] = useState("")
+    const [buttonText, setButtonText] = useState('Upload')
     const [userType, setUserType] = useState("")
+    const [id, setId] = useState("")
+    const [pic, setPicture] = useState("")
+
+    const form = useForm<z.infer<typeof uploadProfilePicture>>({
+        resolver: zodResolver(uploadProfilePicture),
+          defaultValues: {
+            image: "",
+            userId: tokenise()[3]
+        },
+      })
     useEffect(() => {
-        console.log(tokenise()[4])
         setEmail(tokenise()[2])
         setUsername(tokenise()[1])
         setName(tokenise()[0])
         setUserType(tokenise()[4])
+        setId(tokenise()[3])
+        setPicture(tokenise()[5])
+
     }, [])
         const { data, error } = useSWR("/api/activity", fetcher);
         const act: any[] = []
         if(data){
             act.push(data)
         } else return []
+    
+          async function onSubmit(values: z.infer<typeof uploadProfilePicture>) {
+            setButtonText("Processing...")
+            setTimeout(() => {
+                setButtonText('Uploading...')
+            }, 3000)
+            setTimeout(() => {
+                setButtonText('Something went wrong')
+            }, 5000)
+              const app = document.getElementById('submit');
+              const text = 'processing';
+              if(app !== null){
+                app.innerHTML = text;
+              }
+              const file = values.image1
+      
+              const formData = new FormData()
+              formData.append("file", file)
+              formData.append('folder', 'users')
 
-        console.log(data)
-
+              const data = await uploadProfileImage(values, formData)
+        if(data?.error){
+            setButtonText("Failed")
+          form.setError("root", {
+            "message": "Picture not added"
+          })
+        } else {
+            localStorage.setItem('picture', data.url)
+          setButtonText("Successful")
+          window.location.reload()
+          // useRouter().refresh()
+        }
+          }
 
     return<div className="bg-secondary p-8 rounded-lg mt-2">
         <div className="grid sm:grid-cols-3 gap-2">
@@ -39,7 +93,58 @@ export default function Page(){
                 <div className="mt-3 text-sm">Username: <div className="text-muted-foreground text-sm font-medium">{username}</div></div>
             </div>
             <div className="flex justify-center items-center">
-                <div className="h-20 w-20 bg-primary text-muted text-5xl rounded-full flex justify-center items-center ">{name[0]?name[0].toUpperCase():name[0]}</div>
+            <Dialog>
+      <DialogTrigger asChild>
+      {pic=='' ? <div className="h-20 w-20 bg-primary cursor-pointer text-muted text-5xl rounded-full flex justify-center items-center ">{name[0].toUpperCase()}</div>:
+      <div style={{ position: 'relative', width: '200px', height: '200px' }}>
+      <Image
+          src={pic}
+          alt="Full size"
+          className="rounded-full"
+          fill
+          unoptimized
+          style={{ objectFit: 'cover' }} // or 'contain'
+      />
+      </div>}
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Edit profile</DialogTitle>
+          <DialogDescription>
+            Upload Profile Picture
+          </DialogDescription>
+        </DialogHeader>
+        <div className="grid gap-4 py-4">
+        <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+        <FormField
+                  control={form.control}
+                  name="image1"
+                  render={({ field: { value, onChange, ...fieldProps } }) => (
+                      <FormItem>
+                      <FormLabel>Upload a profile picture</FormLabel>
+                      <FormControl
+                      >
+                          <Input type="file" {...fieldProps} onChange={(event) =>
+                    onChange(event.target.files && event.target.files[0])
+                  }/>
+                      </FormControl>
+                      <FormMessage />
+                      </FormItem>
+                  )}
+                  />
+                <Button type="submit" className="mt-4">{buttonText}</Button>
+                {form.formState.errors.root && (
+          <div className="border-2 border-primary text-sm p-2 rounded-md">{form.formState.errors.root.message}</div>
+        )}
+        {form.formState.isSubmitSuccessful && (
+          <div className="border-2 border-primary mt-2 text-primary text-sm p-2 text-center rounded-md"> Picture uploaded </div>
+        )}
+                  </form>
+                  </Form>
+        </div>
+      </DialogContent>
+    </Dialog>
             </div>
         </div>
         {userType=="admin" &&

@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Pakwach FM",
-  description: "100.2 Pakwach FM official website",
+  description: "100.2 Pakwach FM official website for news, sports, entertainment and bringing the Pakwach community together.",
 };
 
 export default function RootLayout({

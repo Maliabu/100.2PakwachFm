@@ -23,8 +23,8 @@ export default function Events() {
     <div className="rounded-lg">
     <div className="grid grid-cols-12 gap-2">
       <div className="col-span-9 bg-background p-8 rounded-lg mt-2">
-        <div className="text-sm text-muted-foreground uppercase">news </div>
-        <div className="text-5xl tracking-tight leading-10 font-bold my-4 capitalize">The latest in news</div>
+        <div className="text-sm text-muted-foreground uppercase">advertise with us </div>
+        <div className="text-5xl tracking-tight leading-10 font-bold my-4 capitalize">Leave us a message</div>
         {/* <div style={{ position: 'relative', width: '100%', height: '500px' }}>
         <Image
             src={Sports}
@@ -44,50 +44,6 @@ export default function Events() {
     </div>
     <div className="bg-background p-8 rounded-lg mt-2">
         <div className="text-sm uppercase text-muted-foreground">Sports news</div>
-    </div>
-    <div className="bg-background p-8 rounded-lg mt-2">
-        <div className="flex justify-between"><Star size={18} className="text-primary"/>
-        <div className="text-sm uppercase text-muted-foreground"> OUR MOST POPULAR YET</div>
-        <Button><ThumbsUp/> Vote</Button>
-        </div>
-    <div className="grid grid-cols-2 gap-4 mx-40 my-10">
-        <div className="rounded-lg">
-        <div style={{ position: 'relative', width: '100%', height: '300px' }}>
-        <Image
-            src={Sports}
-            alt="Full size"
-            className="rounded-t-lg"
-            fill
-            style={{ objectFit: 'cover' }} // or 'contain'
-        />
-        </div>
-        <div className="p-4">
-            <Trophy className="text-primary"/><span>1</span>
-        <div className="text-2xl font-bold tracking-tight">Radio Adverts</div>
-        <div className="text-sm leading-4 mt-2">
-        promotion of goods or services through radio broadcasts, whether in the form of commercials or programming. In other words, an advertisement on the radio is a form of paid promotion in which a good or service is promoted employing airtime on a radio station
-        </div>
-        </div>
-        </div>
-        <div>
-                    <div style={{ position: 'relative', width: '100%', height: '300px' }}>
-        <Image
-            src={Announce}
-            alt="Full size"
-            fill
-            className="rounded-t-lg"
-            style={{ objectFit: 'cover' }} // or 'contain'
-        />
-        </div>
-        <div className="p-4">
-            <Medal className="text-primary"/><span>1</span>
-        <div className="text-2xl font-bold tracking-tight">Announcements</div>
-        <div className="text-sm leading-4 mt-2">
-        promotion of goods or services through radio broadcasts, whether in the form of commercials or programming. In other words, an advertisement on the radio is a form of paid promotion in which a good or service is promoted employing airtime on a radio station
-        </div>
-        </div>
-        </div>
-        </div>
     </div>
     </div>
       </div>

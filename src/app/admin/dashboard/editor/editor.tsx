@@ -86,7 +86,7 @@ const Editor = ({ content, placeholder, onChange,  }: EditorProps) => {
     <div className="prose max-w-none w-full border border-input bg-background text-foreground dark:prose-invert">
       <EditorToolbar editor={editor} onImageSelection={() => setShowImageGallery(true)} />
       <div className="editor">
-        <EditorContent editor={editor} placeholder={placeholder} />
+        <EditorContent editor={editor} placeholder={placeholder} className="editor" />
       </div>
       <ImageGallery 
       visible={showImageGallery} 

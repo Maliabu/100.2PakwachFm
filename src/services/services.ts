@@ -55,15 +55,16 @@ export function avatar(name: string){
 }
 
 export function tokenise(){
-    let name = '',email = '',username = '', id = '', userType = ''
+    let name = '',email = '',username = '', id = '', userType = '', picture = ''
     if(window){
         name = localStorage.getItem("name") || ''
         username = localStorage.getItem("username") || ''
         email = localStorage.getItem("email") || ''
         id = localStorage.getItem("id") || ''
         userType = localStorage.getItem("userType") || ''
+        picture = localStorage.getItem('picture') || ''
       }
-    return [name, username, email, id, userType]
+    return [name, username, email, id, userType, picture]
 }
 
 export function nextCourse(){

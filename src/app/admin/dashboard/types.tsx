@@ -168,3 +168,10 @@ export type currencyType = {
     createdAt: Date
     updatedAt: Date
   }
+  export type ActivityType = {
+    id: number
+    user_id: number
+    value: string
+    createdAt: Date
+    updatedAt: Date
+  }

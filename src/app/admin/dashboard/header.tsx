@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 
-import { Bell, Loader2, Moon, Sun } from "lucide-react";
+import { Bell, Dot, Loader2, Moon, Sun } from "lucide-react";
 import Profile from "../auth/profile";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
@@ -10,12 +10,18 @@ import { useTheme } from "next-themes";
 import { fetcher, tokenise } from "@/services/services";
 import useSWR from "swr";
 import { UserType } from "./types";
+import Image from "next/image";
+import Link from "next/link";
+import { Notify } from "./notifications/page";
 
 export default function Header(){
     const { setTheme } = useTheme()
     let user: UserType[] = []
+    let notes: Notify[] = []
     const logged: UserType[] = []
     const { data, error } = useSWR("/api/users", fetcher);
+    const { data: notifications, error: notError } = useSWR("/api/notifications", fetcher);
+ 
     if(data){
         user = data
         user.forEach(user => {
@@ -25,18 +31,51 @@ export default function Header(){
         })
     }
     if (!data) return <div className="flex bg-background rounded-md justify-center items-center mt-2"><Loader2 className="animate-spin"/>Loading Users ...</div>;
+    if(notifications){
+        notes = notifications
+    }
+    let hasNew = notes?.some((n: Notify) => n.status === "new");
+    function notify(){
+        if(hasNew){
+            return "bg-muted dark:text-green-400 text-green-600 animate-bounce rounded-full w-8 h-8 flex justify-center items-center"
+        } else {
+            return "bg-muted text-gray-400 rounded-full w-10 h-10 flex justify-center items-center"
+        }
+    }
+    const handleClick = async () => {
+        hasNew = false;
+        const userId = tokenise()[3]
+    
+        // Mark notifications as read
+        await fetch(`/api/notifications/${userId}`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            }
+          });
+          
+      };
     return <div className="">
-        <div className=" rounded-lg sm:grid sm:grid-cols-12 gap-2">
-            <div className="sm:col-span-6">
+        <div className=" rounded-lg sm:grid sm:grid-cols-2 gap-2">
+            <div className="">
             {tokenise()[4]=="admin" && 
             <div className=" bg-secondary py-1 px-4 rounded-md flex justify-between items-center">
                 <div className="text-sm">Logged in users: {logged.length}</div>
                 <div className="flex">{logged.map(user => (
-                    <div key={user.id} className="h-8 w-8 -ml-4 border border-2 border-muted bg-primary text-background grid font-bold rounded-full justify-center items-center">{user.name[0].toUpperCase()}</div>
+                    <div key={user.id} className="h-8 w-8 -ml-4 border border-2 border-muted bg-primary text-background grid font-bold rounded-full justify-center items-center">{user.profilePicture?<div style={{ position: 'relative', width: '30px', height: '30px' }}>
+                    <Image
+                        src={user.profilePicture}
+                        alt="Full size"
+                        className="rounded-full"
+                        fill
+                        unoptimized
+                        style={{ objectFit: 'cover' }} // or 'contain'
+                    />
+                    </div>:user.name[0].toUpperCase()}</div>
                 ))}</div>
             </div>}
             </div>
-            <div className="sm:col-span-6">
+            <div className="">
                 <div className="flex items-center justify-end">
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
@@ -61,7 +100,9 @@ export default function Header(){
                     </DropdownMenu>
                     <div className="mx-3">
                     <Profile/></div>
-                <Bell/></div>
+                    <Link href="/admin/dashboard/notifications" className={notify()} onClick={handleClick}>
+                    <Bell size={18}/><Dot className="absolute -mt-5 -mr-4" size={40}/></Link>
+                </div>
             </div>
         </div>
     </div>
