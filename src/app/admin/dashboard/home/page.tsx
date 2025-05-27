@@ -86,12 +86,11 @@ export default function Page() {
                 width: '30px',
                 height: '30px',
                 borderRadius: '50%',
-                backgroundColor: '#FF2500', // example fallback color
+                backgroundColor: '#696969', // example fallback color
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 color: 'white',
-                fontWeight: 'bold',
                 fontSize: '16px',
               }}
             >
@@ -147,7 +146,7 @@ export default function Page() {
                     </div>
                     </div>:<ToolTip>
                         <TooltipTrigger asChild>
-                        <div className="h-10 cursor-pointer w-10 grid justify-center items-center text-background rounded-full bg-primary">{data.name[0].toUpperCase()}</div>
+                        <div className="h-10 cursor-pointer w-10 grid justify-center items-center dark:text-foreground rounded-full bg-muted">{data.name[0].toUpperCase()}</div>
                         </TooltipTrigger>
                         <TooltipContent>
                                 <p>{data.name}</p>

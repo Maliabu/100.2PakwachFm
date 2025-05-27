@@ -16,7 +16,7 @@ export default function Logged(){
     return(
         <Link href="/admin/dashboard/account">
           <div className="flex flex-row justify-between bg-muted rounded-md p-4">
-          {pic=='' ? <div className="h-20 w-20 bg-primary cursor-pointer text-muted text-5xl rounded-full flex justify-center items-center ">{token.toUpperCase()}</div>:
+          {pic=='' ? <div className="h-10 w-10 bg-primary cursor-pointer text-muted text-2xl rounded-full flex justify-center items-center ">{token.toUpperCase()}</div>:
       <div style={{ position: 'relative', width: '40px', height: '40px' }}>
       <Image
           src={pic}
