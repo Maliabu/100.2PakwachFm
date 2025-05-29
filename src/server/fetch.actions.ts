@@ -304,15 +304,16 @@ Promise<{error: boolean | undefined}> {
    }
 
 //    uploadEventFile(formData)
-    const profile = await uploadServerFile(formData)
-    if(profile !== null){
-        const profileUrl = profile.toString()
-        data.image = profileUrl
-        await db.insert(EventsTable).values({...data})
-        return {error: false}
-    } else {
-        return {error: true}       
-    }
+const profile = await uploadAds(formData)
+
+if(profile !== null){
+    data.image = profile.url
+    await db.insert(EventsTable).values({...data})
+    await logActivity('Added article: '+data.title, data.userId)
+    return {error: false}
+} else {
+    return {error: true}       
+}
 }
 
 export async function addComment(unsafeData: z.infer<typeof commentsSchema>) : 

@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 
-import { Bell, Dot, Loader2, Moon, Sun } from "lucide-react";
+import { Bell, Dot, HelpCircle, Loader2, Moon, Sun } from "lucide-react";
 import Profile from "../auth/profile";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
@@ -37,9 +37,9 @@ export default function Header(){
     let hasNew = notes?.some((n: Notify) => n.status === "new");
     function notify(){
         if(hasNew){
-            return "bg-muted dark:text-green-400 text-green-600 animate-bounce rounded-full w-8 h-8 flex justify-center items-center"
+            return "bg-secondary dark:text-green-400 text-green-600 animate-bounce rounded-full w-8 h-8 flex justify-center items-center"
         } else {
-            return "bg-muted text-gray-400 rounded-full w-10 h-10 flex justify-center items-center"
+            return "bg-secondary rounded-full w-10 h-10 flex justify-center items-center"
         }
     }
     const handleClick = async () => {
@@ -62,7 +62,7 @@ export default function Header(){
             <div className=" bg-secondary py-1 px-4 rounded-md flex justify-between items-center">
                 <div className="text-sm">Logged in users: {logged.length}</div>
                 <div className="flex">{logged.map(user => (
-                    <div key={user.id} className="h-8 w-8 -ml-4 border border-2 border-muted bg-primary text-background grid font-bold rounded-full justify-center items-center">{user.profilePicture?<div style={{ position: 'relative', width: '30px', height: '30px' }}>
+                    <div key={user.id} className="h-8 w-8 -ml-4 border border-2 border-muted bg-primary text-background grid rounded-full justify-center items-center">{user.profilePicture?<div style={{ position: 'relative', width: '30px', height: '30px' }}>
                     <Image
                         src={user.profilePicture}
                         alt="Full size"
@@ -98,10 +98,12 @@ export default function Header(){
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                     </DropdownMenu>
-                    <div className="mx-3">
+                    <div className="mx-2">
                     <Profile/></div>
                     <Link href="/admin/dashboard/notifications" className={notify()} onClick={handleClick}>
                     <Bell size={18}/><Dot className="absolute -mt-5 -mr-4" size={40}/></Link>
+                    <Link href="/admin/dashboard/notifications" className='ml-2 h-10 w-10 bg-secondary rounded-full grid justify-center items-center'>
+                    <HelpCircle size={18}/></Link>
                 </div>
             </div>
         </div>

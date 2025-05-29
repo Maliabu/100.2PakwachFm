@@ -11,63 +11,35 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel"
 import Image from "next/image"
+import { db } from "@/db/db"
+import Link from "next/link"
 
-const highlight = [
-    {
-        heading: 'Todays news is about seargents in the army',
-        from: "The seargents polls",
-        date: 'APRIL 1 2020',
-        who: 'OGENRWOTH FELIX'
-    },
-    {
-        heading: 'Todays news is about seargents in the army',
-        from: "The seargents polls",
-        date: 'APRIL 1 2020',
-        who: 'OGENRWOTH FELIX'
-    },
-    {
-        heading: 'Todays news is about seargents in the army',
-        from: "The seargents polls",
-        date: 'APRIL 1 2020',
-        who: 'OGENRWOTH FELIX'
-    },
-    {
-        heading: 'Todays news is about seargents in the army',
-        from: "The seargents polls",
-        date: 'APRIL 1 2020',
-        who: 'OGENRWOTH FELIX'
-    },
-    {
-        heading: 'Todays news is about seargents in the army',
-        from: "The seargents polls",
-        date: 'APRIL 1 2020',
-        who: 'OGENRWOTH FELIX'
-    }
-]
 
-export function Concerts() {
+export async function Concerts() {
+  const events = await db.query.EventsTable.findMany()
   return (
     <Carousel className="w-full sm:bg-secondary rounded-lg p-4" 
       >
       <CarouselContent className="-ml-1">
-        {highlight.map((news, index) => (
-          <CarouselItem key={index} className="pl-1 md:basis-1/2 lg:basis-1/3">
+        {events.map((event, index) => (
+          <CarouselItem key={index} className="pl-1 md:basis-1/2 lg:basis-1/4">
             <div className="p-1">
               <Card className="shadow-none border-none p-0">
                 <CardContent className="justify-center p-0">
-                <div style={{ position: 'relative', width: '100%', height: '400px' }}>
+                <div style={{ position: 'relative', width: '100%', height: '300px' }}>
         <Image
-            src={Sports}
+            src={event.image}
             alt="Full size"
             className="rounded-t-lg"
             fill
+            unoptimized
             style={{ objectFit: 'cover' }} // or 'contain'
         />
         </div>
         <div className="p-6">
-                  <div className="text-2xl font-bold tracking-tight leading-5 ">{news.heading}</div>
-                  <div className="text-sm my-4">{news.from}</div>
-                  <div className="text-xs uppercase text-muted-foreground">{news.who} | {news.date}</div>
+                  <div className="text-2xl font-bold tracking-tight leading-5 ">{event.title}</div>
+                  <div className="text-sm my-4">{event.description}</div>
+                  {event.link!==null?<div className="text-xs hover:text-primary uppercase text-muted-foreground"><Link href={event.link}>Find out more</Link></div>:null}
                   </div>
                 </CardContent>
               </Card>

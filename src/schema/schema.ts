@@ -49,6 +49,7 @@ export const addEventSchema = z.object({
     startDate: z.date({required_error: "Please enter a date.",}),
     endDate: z.date({required_error: "Please enter a date.",}),
     image1: z.any(),
+    userId: z.string(),
 })
 
 //remember to coerce numbers else form doesnot submit

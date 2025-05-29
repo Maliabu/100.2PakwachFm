@@ -25,7 +25,7 @@ type ArticleCardProp = {
   facebookLink: string | null,
   twitterLink: string | null,
   instagramLink: string | null,
-  date: string | null,
+  date: Date,
   articleType: string,
 }
 
@@ -75,7 +75,7 @@ type ArticleCardProp = {
             objectFit="contain"
             className="object-cover"/></div>
       <div className="">
-      <div className="text-3xl tracking-tight font-bold leading-7 lowercase">{title}</div>
+      <div className="text-3xl tracking-tight font-bold leading-8 lowercase">{title}</div>
       <div className="my-4">
             <Button onClick={() => handleReadMore(title)}>Read full article</Button>
         </div>

@@ -17,6 +17,8 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar"
+import { useEffect, useState } from "react"
+import { tokenise } from "@/services/services"
 
 export function NavMain({
   items,
@@ -33,11 +35,24 @@ export function NavMain({
     }[]
   }[]
 }) {
+  const [idType, setId] = useState("")
+  useEffect(() => {
+      setId(tokenise()[4])
+  }, [])
+  // Filter items based on userType
+  const filteredItems = items.filter(item => {
+    // Example: Hide entire "Articles" section if user is not admin
+    if (item.title === "Users" || item.title === 'Notifications' && idType !== "admin") {
+      return false;
+    }
+    return true;
+  });
+  
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Dashboard</SidebarGroupLabel>
       <SidebarMenu>
-        {items.map((item) => (
+        {filteredItems.map((item) => (
           <Collapsible
             key={item.title}
             asChild

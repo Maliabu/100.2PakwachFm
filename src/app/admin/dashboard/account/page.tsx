@@ -95,7 +95,7 @@ export default function Page(){
             <div className="flex justify-center items-center">
             <Dialog>
       <DialogTrigger asChild>
-      {pic=='' ? <div className="h-20 w-20 bg-primary cursor-pointer text-muted text-5xl rounded-full flex justify-center items-center ">{name[0].toUpperCase()}</div>:
+      {pic=='' ? <div className="h-30 w-30 bg-primary cursor-pointer text-muted text-5xl rounded-full flex justify-center items-center ">{name[0]}</div>:
       <div style={{ position: 'relative', width: '200px', height: '200px' }}>
       <Image
           src={pic}

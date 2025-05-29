@@ -61,7 +61,7 @@ export const articlesTable = mysqlTable('articles_table', {
   image: varchar('article_image', {length: 255}),
   writer: text('writer').notNull(),
   articleType: text('type').notNull().default('highlight'),
-  date: timestamp('date'),
+  date: timestamp('date').defaultNow().notNull(),
     createdAt,
     updatedAt,
 });

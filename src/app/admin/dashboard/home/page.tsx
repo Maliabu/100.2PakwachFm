@@ -4,7 +4,7 @@
 'use client'
 
 import useSWR from "swr";
-import { date, fetcher } from "@/services/services";
+import { date, fetcher, tokenise } from "@/services/services";
 import { Calendar, Dot, Loader2, Paperclip, User2 } from "lucide-react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend } from 'recharts';
 import Image from "next/image";
@@ -12,6 +12,7 @@ import Logged from "../../auth/user";
 import { ActivityType, UserType } from "../types";
 import { TooltipContent, TooltipProvider, TooltipTrigger, Tooltip as ToolTip } from "@/components/ui/tooltip";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 type Activity = {
   activity: {
@@ -26,9 +27,14 @@ type Activity = {
 };
 
 export default function Page() {
+  const [idType, setId] = useState("")
+    useEffect(() => {
+        setId(tokenise()[4])
+    }, [])
   const { data, error } = useSWR<Activity[]>("/api/activity", fetcher);
   const { data:userData, error:userError } = useSWR<UserType[]>("/api/users", fetcher);
   const { data:articles, error:articlesError } = useSWR<UserType[]>("/api/articles", fetcher);
+  const { data:events, error:eventsError } = useSWR<UserType[]>("/api/events", fetcher);
 
   if (!data) {
     return (
@@ -86,12 +92,11 @@ export default function Page() {
                 width: '30px',
                 height: '30px',
                 borderRadius: '50%',
-                backgroundColor: '#FF2500', // example fallback color
+                backgroundColor: '#E5E7EB', // example fallback color
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                color: 'white',
-                fontWeight: 'bold',
+                color: 'black',
                 fontSize: '16px',
               }}
             >
@@ -147,7 +152,7 @@ export default function Page() {
                     </div>
                     </div>:<ToolTip>
                         <TooltipTrigger asChild>
-                        <div className="h-10 cursor-pointer w-10 grid justify-center items-center text-background rounded-full bg-primary">{data.name[0].toUpperCase()}</div>
+                        <div className="h-10 cursor-pointer w-10 grid justify-center items-center dark:text-foreground rounded-full bg-muted">{data.name[0].toUpperCase()}</div>
                         </TooltipTrigger>
                         <TooltipContent>
                                 <p>{data.name}</p>
@@ -167,23 +172,23 @@ export default function Page() {
             </div>
         </div>
         <div className="grid grid-cols-12 text-3xl font-bold p-2 gap-4">
-            <div className="col-span-4">
+            {idType=='admin' && <div className="col-span-4">
             <Link href='/admin/dashboard/users' className="p-3 rounded-lg hover:bg-primary hover:text-white transition-transform duration-300 cursor-pointer hover:scale-105 bg-secondary flex justify-between">
             <User2 size={20}/> {userData?.length}</Link>
-            </div>
+            </div>}
             <div className="col-span-4">
             <Link href='/admin/dashboard/articles' className="p-3 rounded-lg hover:bg-primary hover:text-white transition-transform duration-300 cursor-pointer hover:scale-105 bg-secondary flex justify-between">
                 <Paperclip size={20}/> {articles?.length}</Link>
             </div>
             <div className="col-span-4">
             <Link href='/admin/dashboard/events' className="p-3 rounded-lg hover:bg-primary hover:text-white transition-transform duration-300 cursor-pointer hover:scale-105 bg-secondary flex justify-between">
-                <Calendar size={20}/> 0</Link>
+                <Calendar size={20}/> {events?.length}</Link>
             </div>
         </div>
         <div className="grid grid-cols-12 text-sm gap-4">
-            <div className="col-span-4 px-3 flex justify-between">
+            {idType=='admin' && <div className="col-span-4 px-3 flex justify-between">
                 Users            
-            </div>
+            </div>}
             <div className="col-span-4 px-3 flex justify-between">
                 Articles
             </div>
@@ -193,16 +198,16 @@ export default function Page() {
         </div>
 
       </div>
-      <div className="rounded-lg p-6 bg-background my-1">
+      {idType=='admin' && <div className="rounded-lg p-6 bg-background my-1">
         <div className="text-xl tracking-tight font-bold mb-6">User Activity</div>
         <BarChart width={300} height={400} data={chartData}>
-          <XAxis dataKey="userId" tick={<CustomTick />} interval={0} height={50} />
-          {/* <YAxis /> */}
+          <XAxis dataKey="userId" tick={<CustomTick />} axisLine={false} interval={0} height={50} />
+          <YAxis axisLine={false} tickLine={false}/>
           <Tooltip />
           <Legend />
-          <Bar dataKey="activities" fill="#FF2500" label={{ position: "top" }} />
+          <Bar dataKey="activities" fill="#FF2500" label={{ position: "top" }} radius={[10, 10, 0, 0]} />
         </BarChart>
-      </div>
+      </div>}
     </div>
   );
 }
