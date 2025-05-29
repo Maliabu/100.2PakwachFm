@@ -171,18 +171,18 @@ export default function Page() {
                 <Dot className="text-red-400"/> Logged Out
             </div>
         </div>
-        <div className="grid grid-cols-12 text-3xl font-bold p-2 gap-4">
+        <div className="grid grid-cols-12 text-lg p-2 gap-4">
             {idType=='admin' && <div className="col-span-4">
-            <Link href='/admin/dashboard/users' className="p-3 rounded-lg hover:bg-primary hover:text-white transition-transform duration-300 cursor-pointer hover:scale-105 bg-secondary flex justify-between">
-            <User2 size={20}/> {userData?.length}</Link>
+            <Link href='/admin/dashboard/users' className="p-3 rounded-lg transition-transform duration-300 cursor-pointer hover:scale-105 bg-secondary flex justify-between">
+            <User2 size={20}/> <div className="h-8 w-8 flex items-center justify-center bg-muted/60 rounded-full">{userData?.length}</div></Link>
             </div>}
             <div className="col-span-4">
-            <Link href='/admin/dashboard/articles' className="p-3 rounded-lg hover:bg-primary hover:text-white transition-transform duration-300 cursor-pointer hover:scale-105 bg-secondary flex justify-between">
-                <Paperclip size={20}/> {articles?.length}</Link>
+            <Link href='/admin/dashboard/articles' className="p-3 rounded-lg transition-transform duration-300 cursor-pointer hover:scale-105 bg-secondary flex justify-between">
+                <Paperclip size={20}/> <div className="h-8 w-8 flex items-center justify-center bg-muted/60 rounded-full">{articles?.length}</div></Link>
             </div>
             <div className="col-span-4">
-            <Link href='/admin/dashboard/events' className="p-3 rounded-lg hover:bg-primary hover:text-white transition-transform duration-300 cursor-pointer hover:scale-105 bg-secondary flex justify-between">
-                <Calendar size={20}/> {events?.length}</Link>
+            <Link href='/admin/dashboard/events' className="p-3 rounded-lg transition-transform duration-300 cursor-pointer hover:scale-105 bg-secondary flex justify-between">
+                <Calendar size={20}/> <div className="h-8 w-8 flex items-center justify-center bg-muted/60 rounded-full">{events?.length}</div></Link>
             </div>
         </div>
         <div className="grid grid-cols-12 text-sm gap-4">
@@ -202,7 +202,7 @@ export default function Page() {
         <div className="text-xl tracking-tight font-bold mb-6">User Activity</div>
         <BarChart width={300} height={400} data={chartData}>
           <XAxis dataKey="userId" tick={<CustomTick />} axisLine={false} interval={0} height={50} />
-          <YAxis axisLine={false} tickLine={false}/>
+          {/* <YAxis axisLine={false} tickLine={false}/> */}
           <Tooltip />
           <Legend />
           <Bar dataKey="activities" fill="#FF2500" label={{ position: "top" }} radius={[10, 10, 0, 0]} />
