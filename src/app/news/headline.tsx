@@ -13,6 +13,7 @@ import parse from 'html-react-parser'
 import { HeadLineCard } from "./headlineCard"
 import { HeadLineOtherCard } from "./headlineOther"
 import { ArticlesTabsProps } from "../admin/dashboard/types"
+import { date } from "@/services/services"
 
 export function HeadlineTabs(
     {articles}: ArticlesTabsProps){
@@ -41,7 +42,7 @@ export function HeadlineTabs(
       facebookLink: string | null,
       twitterLink: string | null,
       instagramLink: string | null,
-      date: string | null,
+      date: Date,
       articleType: string,
       updatedAt: Date,
       createdAt: Date,
@@ -144,7 +145,7 @@ export function HeadlineTabs(
             facebookLink: string | null,
             twitterLink: string | null,
             instagramLink: string | null,
-            date: string | null,
+            date: Date,
             articleType: string,
             updatedAt: Date, 
             createdAt: Date}
@@ -164,7 +165,7 @@ export function HeadlineTabs(
                   <Link href={ref(article.title)}>
                 <div className="text-xl font-bold tracking-tight mt-4 leading-5 text-dark pointer blog capitalize">
               {article.title}</div></Link>
-              <div className="line-clamp-4 text-sm leading-4 mt-2">
+              <div className="line-clamp-2 text-sm leading-4 mt-2">
               {parse(article.content)}
               </div></div>
               </div>
@@ -185,7 +186,7 @@ export function HeadlineTabs(
             facebookLink: string | null,
             twitterLink: string | null,
             instagramLink: string | null,
-            date: string | null,
+            date: Date,
             articleType: string, title: string; content: string; writer: string, image: string | null, updatedAt: Date, createdAt: Date}
           ) => (
             <CardContent className="" key={article.id}>
@@ -201,13 +202,13 @@ export function HeadlineTabs(
                     className="object-cover"/>
                   </div>
                   <Link href={ref(article.title)}>
-                <div className="text-3xl font-bold tracking-tight mt-4 leading-7 text-dark pointer blog capitalize">
+                <div className="text-3xl font-bold tracking-tight mt-4 leading-8 text-dark pointer blog capitalize">
               {article.title}</div></Link>
-              <div className="line-clamp-4 text-md leading-5 mt-2">
+              <div className="line-clamp-2 text-md leading-6 mt-2">
               {parse(article.content)}
               </div>
               <div className="py-8">
-              <p className="text-sm text-muted-foreground float-right"> {article.date}</p>
+              <p className="text-sm text-muted-foreground float-right"> {date(article.date.toString())}</p>
               </div>
               </div>
               </div>

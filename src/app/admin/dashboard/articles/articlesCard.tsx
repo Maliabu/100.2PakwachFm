@@ -5,7 +5,7 @@
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import Image from "next/image"
-import DeletePage from "./deletePage"
+// import DeletePage from "./deletePage"
 import { ArticleType } from "../types"
 import { getMyDay, getMyMonth } from "@/services/success"
 
@@ -25,7 +25,7 @@ import { getMyDay, getMyMonth } from "@/services/success"
 
     return (
       <div className="p-4 rounded-md">
-      <Card className=" border-none shadow-none">
+      <Card className=" border-none shadow-none p-2">
       <div style={{ position: 'relative', width: '100%', height: '200px' }}>
         <Image
             src={path}
@@ -43,7 +43,7 @@ import { getMyDay, getMyMonth } from "@/services/success"
       getMyDay(date.getDay())}, {getMyMonth(date.getMonth()+1)} {date.getDate()}, {date.getFullYear()
       }</p></div>
       </Card>
-      <DeletePage id={id} submitId={title}/>      
+      {/* <DeletePage id={id} submitId={title}/>       */}
       </div>
     )
   }

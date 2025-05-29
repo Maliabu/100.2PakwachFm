@@ -48,7 +48,7 @@ export function ArticlesTabs(
       facebookLink: string | null,
       twitterLink: string | null,
       instagramLink: string | null,
-      date: string | null,
+      date: Date,
       articleType: string,
     }){
         setContent(content)
@@ -94,7 +94,7 @@ export function ArticlesTabs(
             facebookLink: string | null,
             twitterLink: string | null,
             instagramLink: string | null,
-            date: string | null,
+            date: Date,
             articleType: string, title: string; content: string; writer: string, image: string | null, updatedAt: Date, createdAt: Date}
           ) => (
             <CardContent className="" key={article.id}>
@@ -113,7 +113,7 @@ export function ArticlesTabs(
                   <Link href={ref(article.title)} className="text-xl font-bold tracking-tight leading-5 text-dark pointer">
                   <div className="my-4">
                   {article.title}</div></Link>
-              <div className="line-clamp-4 text-sm leading-4 mt-2">
+              <div className="line-clamp-2 text-sm leading-4 mt-2">
               {parse(article.content)}
               </div></div>}/>
               </div>
@@ -134,7 +134,7 @@ export function ArticlesTabs(
             facebookLink: string | null,
             twitterLink: string | null,
             instagramLink: string | null,
-            date: string | null,
+            date: Date,
             articleType: string, image: string | null, updatedAt: Date, createdAt: Date}
           ) => (
             <CardContent className="" key={article.id}>
@@ -153,12 +153,12 @@ export function ArticlesTabs(
                   <Link href={ref(article.title)} className="text-xl font-bold tracking-tight leading-5 text-dark pointer capitalize">
                   <div className="pt-4">
                   {article.title}</div></Link>
-              <div className="line-clamp-4 text-md leading-5 mt-2">
+              <div className="line-clamp-2 text-md leading-5 mt-2">
               {parse(article.content)}
               </div>
               <div className="py-4">
               <p className=" float-right text-sm text-muted-foreground"> {
-              getMyDay(article.updatedAt.getDay())}, {getMyMonth(article.updatedAt.getMonth())} {article.updatedAt.getDate()}, {article.updatedAt.getFullYear()
+              getMyDay(article.date.getDay())}, {getMyMonth(article.date.getMonth())} {article.date.getDate()}, {article.date.getFullYear()
               }</p>
               </div>
               </div>

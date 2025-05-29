@@ -15,7 +15,7 @@ export default function Events() {
       <div className="sm:p-2">
         <Menu/>
       </div>
-    <div className="flex justify-between items-center mt-2">
+    <div className="flex justify-between items-center mx-2">
       <Menu1/>
     </div>
       <div className="px-2">
@@ -24,7 +24,7 @@ export default function Events() {
     <div className="grid grid-cols-12 gap-2">
       <div className="col-span-9 bg-background p-8 rounded-lg mt-2">
         <div className="text-sm text-muted-foreground uppercase">advertise with us </div>
-        <div className="text-5xl tracking-tight leading-10 font-bold my-4 capitalize">Leave us a message</div>
+        <div className="text-4xl tracking-tight leading-10 font-bold my-4 capitalize">Leave us a message</div>
         {/* <div style={{ position: 'relative', width: '100%', height: '500px' }}>
         <Image
             src={Sports}
@@ -34,10 +34,10 @@ export default function Events() {
         />
         </div> */}
       </div>
-        <div className="col-span-3 bg-background rounded-lg p-4 mt-2">
+        <div className="col-span-3 flex justify-center items-center text-muted-foreground bg-background rounded-lg p-4 mt-2">
+          <MegaphoneIcon/>
             {/* <Mic size={150} className="border dark:text-primary rounded-full p-10"/> */}
             {/* <MegaphoneIcon size={70} className="p-4 ml-2 rounded-full border animate-spin"/> */}
-            <div className="text-sm text-muted-foreground uppercase">highlights </div>
             {/* <Highlights/> */}
         </div>
     </div>

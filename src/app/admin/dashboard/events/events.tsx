@@ -3,29 +3,29 @@
 
 
 import useSWR from "swr";
-import { ArticleType } from "../types";
 import { fetcher } from "@/services/services";
-import { ArticlesCard } from "./articlesCard";
+import { EventType } from "../types";
+import { EventCard } from "./view/eventsCard";
 import { Skeleton } from "@/components/ui/skeleton";
 
-export default function Articles(){
-    let article: ArticleType[] = []
-  const { data: articles, error: articleError } = useSWR("/api/articles", fetcher);
-  if(articles){
-      article = articles
+export default function Events(){
+    let event: EventType[] = []
+  const { data: events, error: eventError } = useSWR("/api/events", fetcher);
+  if(events){
+      event = events
   }
-  if(!articles){
-    return <div className="text-xs">loading articles ...</div>
+  if(!events){
+    return <div className="text-xs">loading events ...</div>
   }
     return(
         <div className=" rounded-lg p-2 bg-secondary">
-          <div className="p-2 bg-background flex justify-between text-xl font-bold tracking-tight rounded-lg text-sm">Articles <div className="grid items-center justify-center w-8 h-8 bg-primary text-white rounded-full">{article.length}</div></div>
-          {
-                    article.length > 0 ? (
+          <div className="p-2 bg-background flex justify-between text-xl font-bold tracking-tight rounded-lg text-sm">Events <div className="grid items-center justify-center w-8 h-8 bg-primary text-white rounded-full">{event.length}</div></div>
+            {
+                    event.length > 0 ? (
                       <div className="sm:grid sm:grid-cols-12">
-                        {article.map(article => (
-                          <div key={article.id} className="col-span-3">
-                          <ArticlesCard {...article}/>
+                        {event.map(event => (
+                          <div key={event.id} className="col-span-3">
+                          <EventCard {...event}/>
                           </div>
                         ))}
                       </div>

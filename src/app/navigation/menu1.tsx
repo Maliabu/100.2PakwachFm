@@ -13,7 +13,7 @@ export default function Menu1(){
 
   useEffect(() => {
     async function fetchImages() {
-      const res = await fetch('/api/menuAd');
+      const res = await fetch('https://uploads.pakwachfm.com/menuAds.php');
       const data: string[] = await res.json();
 
       // Shuffle and take up to 3

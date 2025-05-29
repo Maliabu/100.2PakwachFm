@@ -47,7 +47,7 @@ export type ArticleType = {
     image: string | null
     writer: string
     articleType: string
-    date: string | null
+    date: Date
     createdAt: Date
     updatedAt: Date
 }
@@ -61,7 +61,7 @@ export type ArticlesTabsProps = {
       createdAt: Date;
       updatedAt: Date;
       articleType: string;
-      date: string | null;
+      date: Date;
       image: string | null;
       title: string;
       content: string;

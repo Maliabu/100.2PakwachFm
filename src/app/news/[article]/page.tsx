@@ -52,7 +52,7 @@ export default async function Page({
             facebookLink: string | null;
             twitterLink: string | null;
             instagramLink: string | null;
-            date: string | null;
+            date: Date;
             articleType: string; content: string; writer: string, image: string | null, updatedAt: Date, createdAt: Date}
           ) => (
             <ReadMoreCard key={article.id} article={article} />

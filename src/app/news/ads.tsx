@@ -9,7 +9,7 @@ export function Ads() {
   
     React.useEffect(() => {
       async function fetchImages() {
-        const res = await fetch('/api/columnAd');
+        const res = await fetch('https://uploads.pakwachfm.com/columnAds.php');
         const data: string[] = await res.json();
   
         // Shuffle and take up to 3
