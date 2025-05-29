@@ -42,7 +42,7 @@ export function NavMain({
   // Filter items based on userType
   const filteredItems = items.filter(item => {
     // Example: Hide entire "Articles" section if user is not admin
-    if (item.title === "Users" || item.title === 'Notifications' && idType !== "admin") {
+    if ((item.title === "Users" || item.title === 'Notifications') && idType !== "admin") {
       return false;
     }
     return true;

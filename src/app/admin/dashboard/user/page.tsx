@@ -88,11 +88,11 @@ export default function AddUser() {
     }
 
   return (
-    <div className="p-4 pb-0">
+    <div className="p-4 pb-0 bg-secondary rounded-lg">
       <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="bg-background sm:p-8 p-6">
+      <form onSubmit={form.handleSubmit(onSubmit)} className=" sm:p-8 p-6">
       <div className="text-2xl font-bold tracking-tight">Add New Dashboard User</div>
-        <div className="grid items-center gap-2 mt-4">
+        <div className="grid items-center gap-2 mt-4 bg-background p-8 rounded-lg">
           <div className="grid sm:grid-cols-2 gap-2">
               <div className="flex flex-col space-y-1.5">
               <FormField
