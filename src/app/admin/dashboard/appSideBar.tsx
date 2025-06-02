@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client"
 
-import { BarChart, Calendar, CalendarArrowDown, ChartBar, ChartBarIcon, Delete, File, FileArchive, FileEdit, Home, LineChart, List, ListChecks, Mic, Paperclip, PenToolIcon, Pill, Play, Plus, Receipt, Settings2, ShoppingBasket, Store, StoreIcon, Sun, Tag, TruckIcon, User, UserCheck2, Users, Video, View, Wallet } from "lucide-react"
+import { BarChart, Calendar, CalendarArrowDown, ChartBar, ChartBarIcon, Delete, File, FileArchive, FileEdit, Home, Info, LineChart, List, ListChecks, Mic, Paperclip, PenToolIcon, Pill, Play, Plus, Receipt, Settings2, ShoppingBasket, Store, StoreIcon, Sun, Tag, TruckIcon, User, UserCheck2, Users, Video, View, Wallet } from "lucide-react"
 
 import {
   Sidebar,
@@ -143,14 +143,32 @@ const data = {
         },
       ],
     },
+    {
+      title: "Notifications",
+      url: "#",
+      icon: Info,
+      isActive: false,
+      items: [
+        {
+          title: "Add",
+          icon: Plus,
+          url: "/admin/dashboard/notifications",
+        },
+        {
+          title: "View",
+          icon: UserCheck2,
+          url: "/admin/dashboard/notifications/view",
+        },
+      ],
+    },
   ],
 }
 
 export function AppSidebar() {
   return (
-    <Sidebar>
+    <Sidebar className="bg-background border-none">
       <SidebarHeader>
-        <div className="h-20 w-30 p-3 rounded-lg">
+        <div className="h-20 w-50 p-3 rounded-lg">
           <Image src={Logo} alt="logo"/>
         </div>
       </SidebarHeader>

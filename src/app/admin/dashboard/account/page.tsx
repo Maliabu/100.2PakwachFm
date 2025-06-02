@@ -82,9 +82,9 @@ export default function Page(){
         }
           }
 
-    return<div className="bg-secondary p-8 rounded-lg mt-2">
-        <div className="grid sm:grid-cols-3 gap-2">
-            <div className="p-6 col-span-1 text-3xl font-bold tracking-tight">
+    return<div className=" mt-2">
+        <div className="grid sm:grid-cols-3 gap-2 bg-secondary rounded-lg p-6">
+            <div className="col-span-1 text-3xl font-bold tracking-tight">
                 Account <div className="text-sm font-medium text-muted-foreground">This is your login account to access this dashboard. User accounts can only be created and updated by an admin account.</div>
             </div>
             <div className="p-4 bg-background rounded-md">
@@ -95,12 +95,12 @@ export default function Page(){
             <div className="flex justify-center items-center">
             <Dialog>
       <DialogTrigger asChild>
-      {pic=='' ? <div className="h-30 w-30 bg-primary cursor-pointer text-muted text-5xl rounded-full flex justify-center items-center ">{name[0]}</div>:
+      {pic=='' ? <div className="h-30 w-30 cursor-pointer bg-primary cursor-pointer text-muted text-5xl rounded-full flex justify-center items-center ">{name[0]}</div>:
       <div style={{ position: 'relative', width: '200px', height: '200px' }}>
       <Image
           src={pic}
           alt="Full size"
-          className="rounded-full"
+          className="rounded-full cursor-pointer"
           fill
           unoptimized
           style={{ objectFit: 'cover' }} // or 'contain'

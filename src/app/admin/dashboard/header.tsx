@@ -37,7 +37,7 @@ export default function Header(){
     let hasNew = notes?.some((n: Notify) => n.status === "new");
     function notify(){
         if(hasNew){
-            return "bg-secondary dark:text-green-400 text-green-600 animate-bounce rounded-full w-8 h-8 flex justify-center items-center"
+            return "bg-secondary dark:text-red-400 text-red-600 animate-bounce rounded-full w-8 h-8 flex justify-center items-center"
         } else {
             return "bg-secondary rounded-full w-10 h-10 flex justify-center items-center"
         }
@@ -59,8 +59,8 @@ export default function Header(){
         <div className=" rounded-lg sm:grid sm:grid-cols-2 gap-2">
             <div className="">
             {tokenise()[4]=="admin" && 
-            <div className=" bg-secondary py-1 px-4 rounded-md flex justify-between items-center">
-                <div className="text-sm">Logged in users: {logged.length}</div>
+            <div className=" bg-primary text-background py-1 px-4 rounded-md flex justify-between items-center">
+                <div className="text-sm font-bold">Logged in users: {logged.length}</div>
                 <div className="flex">{logged.map(user => (
                     <div key={user.id} className="h-8 w-8 -ml-4 border border-2 border-muted bg-primary text-background grid rounded-full justify-center items-center">{user.profilePicture?<div style={{ position: 'relative', width: '30px', height: '30px' }}>
                     <Image
