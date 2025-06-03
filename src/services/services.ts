@@ -252,8 +252,16 @@ export function getMyDay(num: number | null){
 }
 
 export function date(dateString: string){
-    const date = new Date(dateString)
-    return date.toDateString()
+  const date = new Date(dateString)
+  return date.toLocaleString("en-US", {
+    weekday: "short",
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  })
 }
 
 export async function getArticleBySlug(slug: string) {

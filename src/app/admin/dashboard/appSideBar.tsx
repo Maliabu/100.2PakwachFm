@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client"
 
-import { BarChart, Calendar, CalendarArrowDown, ChartBar, ChartBarIcon, Delete, File, FileArchive, FileEdit, Home, Info, LineChart, List, ListChecks, Mic, Paperclip, PenToolIcon, Pill, Play, Plus, Receipt, Settings2, ShoppingBasket, Store, StoreIcon, Sun, Tag, TruckIcon, User, UserCheck2, Users, Video, View, Wallet } from "lucide-react"
+import { BarChart, Calendar, CalendarArrowDown, ChartBar, ChartBarIcon, Delete, File, FileArchive, FileEdit, Home, Info, LineChart, List, ListChecks, Mic, Paperclip, PenToolIcon, Pill, Play, Plus, Receipt, Settings2, ShoppingBasket, Store, StoreIcon, Sun, Tag, Ticket, TruckIcon, User, UserCheck2, Users, Video, View, Wallet } from "lucide-react"
 
 import {
   Sidebar,
@@ -158,6 +158,24 @@ const data = {
           title: "View",
           icon: UserCheck2,
           url: "/admin/dashboard/notifications/view",
+        },
+      ],
+    },
+    {
+      title: "Tickets",
+      url: "#",
+      icon: Ticket,
+      isActive: false,
+      items: [
+        {
+          title: "Add",
+          icon: Plus,
+          url: "/admin/dashboard/ticket",
+        },
+        {
+          title: "View",
+          icon: UserCheck2,
+          url: "/admin/dashboard/ticket/view",
         },
       ],
     },

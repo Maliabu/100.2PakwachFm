@@ -13,6 +13,7 @@ import { UserType } from "./types";
 import Image from "next/image";
 import Link from "next/link";
 import { Notify } from "./notifications/view/page";
+import { Ticketing } from "./home/page";
 
 export default function Header(){
     const { setTheme } = useTheme()
@@ -21,6 +22,9 @@ export default function Header(){
     const logged: UserType[] = []
     const { data, error } = useSWR("/api/users", fetcher);
     const { data: notifications, error: notError } = useSWR("/api/notifications", fetcher);
+    const { data:tickets, error:ticketError } = useSWR<Ticketing[]>("/api/tickets", fetcher);
+    const open: Ticketing[] = []
+    const closed: Ticketing[] = []
  
     if(data){
         user = data
@@ -30,6 +34,15 @@ export default function Header(){
             }
         })
     }
+    if(tickets){
+        tickets.forEach(ticket => {
+          if(ticket.tickets.status==='open'){
+            open.push(ticket)
+          } else{
+            closed.push(ticket)
+          }
+        })
+      }
     if (!data) return <div className="flex bg-background rounded-md justify-center items-center mt-2"><Loader2 className="animate-spin"/>Loading Users ...</div>;
     if(notifications){
         notes = notifications
@@ -37,7 +50,14 @@ export default function Header(){
     let hasNew = notes?.some((n: Notify) => n.status === "new");
     function notify(){
         if(hasNew){
-            return "bg-secondary dark:text-red-400 text-red-600 animate-bounce rounded-full w-8 h-8 flex justify-center items-center"
+            return "bg-orange-400/20 dark:text-red-400 text-red-600 animate-bounce rounded-full w-8 h-8 flex justify-center items-center"
+        } else {
+            return "bg-secondary rounded-full w-10 h-10 flex justify-center items-center"
+        }
+    }
+    function ticky(){
+        if(open.length > 0){
+            return "bg-orange-400/20 dark:text-red-400 text-red-600 animate-bounce rounded-full w-10 ml-2 h-10 flex justify-center items-center"
         } else {
             return "bg-secondary rounded-full w-10 h-10 flex justify-center items-center"
         }
@@ -59,7 +79,7 @@ export default function Header(){
         <div className=" rounded sm:grid sm:grid-cols-2 gap-2">
             <div className="">
             {tokenise()[4]=="admin" && 
-            <div className=" bg-primary text-background py-1 px-2 rounded-md flex justify-between items-center">
+            <div className=" bg-primary text-background p-2 rounded-md flex justify-between items-center">
                 <div className="text-sm font-bold">Logged in users: {logged.length}</div>
                 <div className="flex">{logged.map(user => (
                     <div key={user.id} className="h-8 w-8 -ml-4 border border-2 border-background bg-primary text-background grid rounded-full justify-center items-center">{user.profilePicture?<div style={{ position: 'relative', width: '30px', height: '30px' }}>
@@ -100,9 +120,9 @@ export default function Header(){
                     </DropdownMenu>
                     <div className="mx-2">
                     <Profile/></div>
-                    <Link href="/admin/dashboard/notifications" className={notify()} onClick={handleClick}>
+                    <Link href="/admin/dashboard/notifications/view" className={notify()} onClick={handleClick}>
                     <Bell size={18}/><Dot className="absolute -mt-5 -mr-4" size={40}/></Link>
-                    <Link href="/admin/dashboard/notifications" className='ml-2 h-10 w-10 bg-secondary rounded-full grid justify-center items-center'>
+                    <Link href="/admin/dashboard/ticket" className={ticky()}>
                     <Ticket size={18}/></Link>
                 </div>
             </div>

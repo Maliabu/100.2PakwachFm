@@ -15,6 +15,13 @@
       "when": 1748356075287,
       "tag": "0001_messy_expediter",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1748981151551,
+      "tag": "0002_dapper_titanium_man",
+      "breakpoints": true
     }
   ]
 }
