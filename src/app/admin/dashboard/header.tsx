@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 
-import { Bell, Dot, HelpCircle, Loader2, Moon, Sun } from "lucide-react";
+import { Bell, Dot, HelpCircle, Loader2, Moon, Sun, Ticket } from "lucide-react";
 import Profile from "../auth/profile";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
@@ -12,7 +12,7 @@ import useSWR from "swr";
 import { UserType } from "./types";
 import Image from "next/image";
 import Link from "next/link";
-import { Notify } from "./notifications/page";
+import { Notify } from "./notifications/view/page";
 
 export default function Header(){
     const { setTheme } = useTheme()
@@ -56,13 +56,13 @@ export default function Header(){
           
       };
     return <div className="">
-        <div className=" rounded-lg sm:grid sm:grid-cols-2 gap-2">
+        <div className=" rounded sm:grid sm:grid-cols-2 gap-2">
             <div className="">
             {tokenise()[4]=="admin" && 
-            <div className=" bg-primary text-background py-1 px-4 rounded-md flex justify-between items-center">
+            <div className=" bg-primary text-background py-1 px-2 rounded-md flex justify-between items-center">
                 <div className="text-sm font-bold">Logged in users: {logged.length}</div>
                 <div className="flex">{logged.map(user => (
-                    <div key={user.id} className="h-8 w-8 -ml-4 border border-2 border-muted bg-primary text-background grid rounded-full justify-center items-center">{user.profilePicture?<div style={{ position: 'relative', width: '30px', height: '30px' }}>
+                    <div key={user.id} className="h-8 w-8 -ml-4 border border-2 border-background bg-primary text-background grid rounded-full justify-center items-center">{user.profilePicture?<div style={{ position: 'relative', width: '30px', height: '30px' }}>
                     <Image
                         src={user.profilePicture}
                         alt="Full size"
@@ -79,7 +79,7 @@ export default function Header(){
                 <div className="flex items-center justify-end">
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                        <Button variant="outline">
+                        <Button variant="outline" className="border-none">
                             <div className="flex justify-center border-none items-center">
                         <Sun className="h-[1.2rem] w-full rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
                         <Moon className="mr-3 h-[1.2rem] w-full rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
@@ -103,7 +103,7 @@ export default function Header(){
                     <Link href="/admin/dashboard/notifications" className={notify()} onClick={handleClick}>
                     <Bell size={18}/><Dot className="absolute -mt-5 -mr-4" size={40}/></Link>
                     <Link href="/admin/dashboard/notifications" className='ml-2 h-10 w-10 bg-secondary rounded-full grid justify-center items-center'>
-                    <HelpCircle size={18}/></Link>
+                    <Ticket size={18}/></Link>
                 </div>
             </div>
         </div>

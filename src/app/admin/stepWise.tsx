@@ -203,7 +203,7 @@ export default function StepWise() {
         }
     }
     return (
-        <div className="sm:p-16 p-2 bg-muted flex flex-col items-center">
+        <div className="sm:p-16 p-2 flex flex-col items-center bg-gradient-to-bl from-[#ffe4e6]  to-[#ddfbf1]">
             <div className="p-4 sm:rounded-l-3xl sr:rounded-t-2xl flex flex-col justify-center items-center text-muted sm:columns-1"> 
                <Image src={Logo} width={150} height={150} alt="logo"/>                  
             </div>
@@ -255,11 +255,11 @@ function Step1(props:
         return null
     }
     return (
-        <div className=" pb-4 w-[350px] bg-background dark:bg-muted rounded-lg">
-          <div className="text-2xl p-4 tracking-tight font-bold sm:mb-8 grid justify-center items-center">Login</div>
+        <div className=" p-6 w-[350px] bg-background shadow-lg dark:bg-muted rounded">
+          <div className="text-3xl tracking-tight font-bold sm:mb-8 grid justify-center items-center">Sign in</div>
             <Form {...props.form}>
             <form onSubmit={props.form.handleSubmit(props.onSubmit)}>
-            <div className="grid w-full items-center px-8">
+            <div className="grid w-full items-center">
                 <div>
                     <div className="">
                     <FormField
@@ -314,12 +314,12 @@ function Step1(props:
                         />
                     </div>
                 </div>
-                <Button className=" text-white w-full mt-4" id="submit" type="submit">Login</Button>
+                <Button className=" text-white w-full mt-4" id="submit" type="submit">Sign in</Button>
                 </div>
 
-            <div className="text-sm text-muted py-4 px-8">Forgot password?</div>
+            <div className="text-xs grid justify-center cursor-pointer text-primary pt-4">{props.button}</div>
             {props.form.formState.errors.root && (
-                <div className="border border-primary text-sm mx-4 text-primary p-2 text-center rounded-md">{props.form.formState.errors.root.message}</div>
+                <div className=" font-bold text-sm mx-4 text-primary p-2 text-center rounded-md">{props.form.formState.errors.root.message}</div>
             )}
             </form>
             </Form>
@@ -334,12 +334,12 @@ function Step2(props:{
     if (props.currentStep !== 2) {
         return null
     }
-    return (<div>
-              <div className="text-4xl tracking-tight font-bold my-4 grid justify-center items-center">Reset Password</div>
-              <div className="text-sm mb-4 leading-5">Enter your email to receive a password reset link so you can change your password.</div>
+    return (<div className="p-8 w-[350px] bg-background shadow-lg dark:bg-muted rounded">
+              <div className="text-3xl tracking-tight font-bold grid justify-center items-center">Reset Password</div>
+              <div className="text-xs grid justify-center items-center my-4">Enter your email to receive a password reset link so you can change your password.</div>
               <Form {...props.form}>
                 <form onSubmit={props.form.handleSubmit(props.onSubmit)}>
-                <div className="grid w-full items-center">
+                <div className="grid items-center">
                     <div>
                         <div className="">
                         <FormField
@@ -362,7 +362,7 @@ function Step2(props:{
                 {props.form.formState.errors.root && (
                     <div className=" bg-green-200 text-primary p-2 text-center rounded-md">{props.form.formState.errors.root.message}</div>
                 )}
-                <div className="text-primary text-sm flex justify-center mt-2"><Link href='/'>{props.prev}</Link></div>
+                <div className="text-primary text-xs cursor-pointer flex justify-center mt-2">{props.prev}</div>
                 </form>
                 </Form>
     </div>);

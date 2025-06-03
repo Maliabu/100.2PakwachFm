@@ -16,10 +16,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   },[router])
   return (
     <div>
-    {mounted && <SidebarProvider>
+    {mounted && <SidebarProvider className="bg-secondary">
       <AppSidebar />
-      <main className=" sm:p-6 w-full">
-        <div className="grid grid-cols-12 border bg-background p-2 rounded-lg">
+      <main className=" sm:p-6 w-full ">
+        <div className="grid grid-cols-12 bg-background p-2 rounded-lg">
         <div className="col-span-2"><SidebarTrigger /></div>
         <div className="col-span-10">        
           <Header/>

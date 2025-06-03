@@ -166,9 +166,9 @@ const data = {
 
 export function AppSidebar() {
   return (
-    <Sidebar className="bg-background border-none">
+    <Sidebar className="border-none">
       <SidebarHeader>
-        <div className="h-20 w-50 p-3 rounded-lg">
+        <div className="h-20 w-40 p-3 rounded-lg">
           <Image src={Logo} alt="logo"/>
         </div>
       </SidebarHeader>

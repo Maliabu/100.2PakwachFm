@@ -24,8 +24,8 @@ import { getMyDay, getMyMonth } from "@/services/success"
     const date = new Date(createdAt); 
 
     return (
-      <div className="p-4 rounded-md">
-      <Card className=" border-none shadow-none p-2">
+      <div className="py-4 rounded-md">
+      <Card className=" border-none shadow-none p-8">
       <div style={{ position: 'relative', width: '100%', height: '200px' }}>
         <Image
             src={path}

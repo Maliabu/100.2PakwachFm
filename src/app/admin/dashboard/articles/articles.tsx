@@ -18,11 +18,11 @@ export default function Articles(){
     return <div className="text-xs">loading articles ...</div>
   }
     return(
-        <div className=" rounded-lg p-2 bg-secondary">
+        <div className="mt-2">
           <div className="p-2 bg-background flex justify-between text-xl font-bold tracking-tight rounded-lg text-sm">Articles <div className="grid items-center justify-center w-8 h-8 bg-primary text-white rounded-full">{article.length}</div></div>
           {
                     article.length > 0 ? (
-                      <div className="sm:grid sm:grid-cols-12">
+                      <div className="sm:grid sm:grid-cols-12 gap-2">
                         {article.map(article => (
                           <div key={article.id} className="col-span-3">
                           <ArticlesCard {...article}/>

@@ -34,14 +34,13 @@ export default function Notifications(){
             return 'text-xs p-2 rounded-full text-gray-700 bg-gray-100 dark:bg-muted uppercase float-right'
         }
     }
-    console.log(notify)
     return (
         <div className="sm:p-6 p-2 bg-background rounded-lg mt-2">
             <div className="flex justify-between items-center">
             <div className="text-2xl font-bold">Notifications</div>
             <div className="h-10 w-10 bg-primary text-md text-muted font-bold rounded-full flex justify-center items-center ">{notify.length}</div>
             </div>
-            <div className="bg-muted rounded-lg sm:p-6 p-4 sm:w-3/4 mt-6 admin">
+            <div className="bg-secondary rounded-lg sm:p-6 p-4 sm:w-3/4 mt-6 admin">
             
             { notify.length>0?
                         notify.map((notes, index) => (

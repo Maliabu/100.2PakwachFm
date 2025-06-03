@@ -52,6 +52,12 @@ export const addEventSchema = z.object({
     userId: z.string(),
 })
 
+export const addNotificationSchema = z.object({
+    notification: z.string({required_error: "Please provide your notification.",}),
+    status: z.string(),
+    sender: z.coerce.number({required_error: "Please enter a user id.",}),
+})
+
 //remember to coerce numbers else form doesnot submit
 export const addCourseSchema = z.object({
     title: z.string({required_error: "Please enter a title.",}).min(2, {

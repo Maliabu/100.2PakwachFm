@@ -6,7 +6,7 @@
 
 import useSWR from "swr";
 import { date, fetcher, tokenise } from "@/services/services";
-import { BarChart2, Calendar, Clock10, Cloud, CloudFog, Dot, Globe, Info, Loader2, Paperclip, Ticket, User2 } from "lucide-react";
+import { BarChart2, Calendar, Calendar1, Clock10, ClockAlert, Cloud, CloudFog, Dot, Globe, Info, Loader2, Paperclip, Ticket, User2 } from "lucide-react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend } from 'recharts';
 import Image from "next/image";
 import Logged from "../../auth/user";
@@ -14,6 +14,7 @@ import { ActivityType, UserType } from "../types";
 import { TooltipContent, TooltipProvider, TooltipTrigger, Tooltip as ToolTip } from "@/components/ui/tooltip";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import Shape from '@/app/images/shape.png'
 
 type Activity = {
   activity: {
@@ -135,38 +136,51 @@ export default function Page() {
 
   return (
     <div className=" mt-2">
-      <div className="rounded-lg bg-background my-1">
-        <div className="grid grid-cols-12 gap-4 p-2 bg-secondary rounded-lg">
-            <div className=" p-4 sm:col-span-8">
-              <div className="text-lg font-bold tracking-tight">Overview</div>
-            <div className="bg-background p-3 rounded-lg text-md font- tracking-tight mt-6 flex justify-between">
+      <div className="rounded-lg my-1">
+        <div className="sm:grid sm:grid-cols-12 gap-4">
+            <div className=" p-8 sm:col-span-8 bg-background rounded-lg">
+              <div className="text-lg font-bold flex justify-between tracking-tight text-primary">Overview <Image src={Shape} alt="shape" height={40} width={80}/></div>
+            <div className="bg-secondary p-3 rounded-lg text-md font-bold tracking-tight mt-6 flex justify-between">
             <div className="flex"><Info className="mr-4 text-primary"/>Notifications</div>
               <div>0</div>
               </div>
-              <div className="bg-background p-3 rounded-lg text-md font- tracking-tight mt-2 flex justify-between">
+              <div className="grid grid-cols-3 font-medium text-sm py-4">
+              <div>New</div>
+              <div>Read</div>
+              </div>
+              <div className="bg-secondary p-3 rounded-lg text-md font-bold tracking-tight mt-2 flex justify-between">
               <div className="flex"><Globe className="mr-4 text-primary"/>Web Usage</div>
               <div>0</div>
               </div>
-              <div className="bg-background p-3 rounded-lg text-md font- tracking-tight mt-2 flex justify-between">
+              <div className="grid grid-cols-3 font-medium text-sm py-4">
+              <div>Page Visits</div>
+              <div>Button Clicks</div>
+              <div>Submissions</div>
+              </div>
+              <div className="bg-secondary p-3 rounded-lg text-md font-bold tracking-tight mt-2 flex justify-between">
               <div className="flex"><Ticket className="mr-4 text-primary"/>Tickets</div>
               <div>0</div>
               </div>
-              <div className="bg-background p-3 rounded-lg text-md font- tracking-tight mt-2 flex justify-between">
+              <div className="grid grid-cols-3 font-medium text-sm py-4">
+              <div>Openend</div>
+              <div>Closed</div>
+              </div>
+              <div className="bg-secondary p-3 rounded-lg text-md font-bold tracking-tight mt-2 flex justify-between">
               <div className="flex"><BarChart2 className="mr-4 text-primary"/> Activities</div>
               <div>0</div>
               </div>
             </div>
-            <div className="text-sm p-6 flex flex-col sm:col-span-4 justify-center items-center bg-primary text-background rounded-lg tracking-tight font-bold ">
-              <div className="p-2 border rounded-md flex justify-between items-center"><Clock10 className="mr-5"/>{greeting}</div>
-              <Cloud size={30} className="mt-4"/>
+            <div className="text-sm p-6 flex flex-col sm:col-span-4 justify-center dash text-background rounded-lg tracking-tight font-bold ">
+              <div className="py-2 px-5 bg-background/20 rounded-md flex justify-between items-center"><Calendar1 className="mr-5"/>{greeting}</div>
+              <ClockAlert size={60} className="my-8"/>
               <div className="text-5xl font-bold tracking-tight p-12">{formatTime(today)}</div>
                 {date(today.toString())}
             </div>
         </div>
       </div>
-      <div className="rounded-lg p-6 border my-1">
-        <div className="text-xl tracking-tight font-bold">Dashboard Statistics</div>
-        <div className="bg-secondary rounded-lg p-4 mt-6 flex">
+      <div className="my-6">
+        <div className="text-xl tracking-tight text-primary font-bold">Dashboard Statistics</div>
+        <div className="bg-background rounded-lg p-8 mt-6 flex">
             {
                 userData?.map((data, index)=>(
                     <div className="flex mr-1" key={index}>
@@ -190,7 +204,7 @@ export default function Page() {
                                 </TooltipContent>
                             </ToolTip>
                             </TooltipProvider>
-                    <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block bg-gray-800 text-white text-xs px-2 py-1 rounded">
+                    <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block bg-backgrund text-white text-xs px-2 py-1 rounded">
                         Hover text here
                     </div>
                     </div>:<ToolTip>
@@ -216,19 +230,19 @@ export default function Page() {
         </div>
         <div className="grid grid-cols-12 text-lg p-2 gap-4">
             {idType=='admin' && <div className="col-span-4">
-            <Link href='/admin/dashboard/users' className="p-3 rounded-lg transition-transform duration-300 cursor-pointer hover:scale-105 bg-secondary flex justify-between">
+            <Link href='/admin/dashboard/users' className="p-6 rounded-lg transition-transform duration-300 cursor-pointer hover:scale-105 bg-background flex justify-between">
             <User2 size={20} className="text-primary"/> <div className="h-8 w-8 flex font-medium items-center justify-center bg-secondary rounded-full">{userData?.length}</div></Link>
             </div>}
             <div className="col-span-4">
-            <Link href='/admin/dashboard/articles' className="p-3 rounded-lg transition-transform duration-300 cursor-pointer hover:scale-105 bg-secondary flex justify-between">
+            <Link href='/admin/dashboard/articles' className="p-6 rounded-lg transition-transform duration-300 cursor-pointer hover:scale-105 bg-background flex justify-between">
                 <Paperclip size={20} className="text-primary"/> <div className="h-8 w-8 flex items-center justify-center bg-secondary rounded-full">{articles?.length}</div></Link>
             </div>
             <div className="col-span-4">
-            <Link href='/admin/dashboard/events' className="p-3 rounded-lg transition-transform duration-300 cursor-pointer hover:scale-105 bg-secondary flex justify-between">
+            <Link href='/admin/dashboard/events' className="p-6 rounded-lg transition-transform duration-300 cursor-pointer hover:scale-105 bg-background flex justify-between">
                 <Calendar size={20} className="text-primary"/> <div className="h-8 w-8 flex items-center justify-center bg-secondary rounded-full">{events?.length}</div></Link>
             </div>
         </div>
-        <div className="grid grid-cols-12 text-md gap-4">
+        <div className="grid grid-cols-12 text-sm font-bold gap-4">
             {idType=='admin' && <div className="col-span-4 px-3 flex justify-between">
                 Users            
             </div>}
@@ -241,16 +255,16 @@ export default function Page() {
         </div>
 
       </div>
-      {idType=='admin' && <div className="rounded-lg p-6 border my-1">
+      {idType=='admin' && <div className="rounded-lg p-6 bg-background my-1">
         <div className="sm:grid sm:grid-cols-12">
           <div className="sm:col-span-6">
-          <div className="text-xl tracking-tight font-bold mb-6">User Activity</div>
-        <BarChart width={350} height={400} data={chartData}>
+          <div className="text-xl tracking-tight font-bold text-primary mb-6">User Activity</div>
+        <BarChart width={300} height={400} data={chartData}>
           <XAxis dataKey="userId" tick={<CustomTick />} axisLine={false} interval={0} height={50} />
           {/* <YAxis axisLine={false} tickLine={false}/> */}
           <Tooltip />
           <Legend />
-          <Bar dataKey="activities" fill="#fa3c00" label={{ position: "top" }} radius={[10, 10, 10, 10]} />
+          <Bar dataKey="activities" fill="#152653" label={{ position: "top" }} radius={[10, 10, 10, 10]} />
         </BarChart></div>
         <div className="sm:col-span-6 admin rounded-lg">
           {
@@ -267,3 +281,5 @@ export default function Page() {
     </div>
   );
 }
+// #fa3c00 - orange
+// #152653 - blue
