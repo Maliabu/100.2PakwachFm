@@ -15,6 +15,7 @@ import { addNotificationSchema, openTicket } from '@/schema/schema'
 import { tokenise } from "@/services/services"
 import Image from "next/image"
 import Shape from '@/app/images/shape.png'
+import Link from "next/link"
 
 export default function Ticket() {
 
@@ -49,7 +50,8 @@ export default function Ticket() {
     }
 
   return (
-    <div className="mt-2 flex bg-background rounded">
+    <div>
+    <div className="my-2 flex bg-background rounded">
       <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className=" sm:p-8">
       <div className="text-2xl font-bold tracking-tight">What do you need help with?</div>
@@ -85,5 +87,7 @@ export default function Ticket() {
       <div className="w-[350]px p-6">
       <Image src={Shape} alt="shape" width={300} height={20}/></div>
         </div>
+      <Link href='/admin/dashboard/ticket/view'><Button>View Tickets</Button></Link>
+    </div>
   )
 }

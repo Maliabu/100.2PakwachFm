@@ -192,7 +192,7 @@ export default function Page() {
               <div className="text-lg font-bold flex justify-between tracking-tight text-primary">Overview <Image src={Shape} alt="shape" height={40} width={80}/></div>
             <div className="bg-secondary p-3 rounded-lg text-md font-bold tracking-tight mt-6 flex justify-between">
             <div className="flex"><Info className="mr-4 text-primary"/>Notifications</div>
-              <div>0</div>
+              <div>{newNot.length + read.length}</div>
               </div>
               <div className="grid grid-cols-3 font-medium text-sm py-4">
               <div className="flex"><div className=" mr-2 border-r pr-2">{newNot.length}</div>New</div>
@@ -202,14 +202,15 @@ export default function Page() {
               <div className="flex"><Globe className="mr-4 text-primary"/>Web Usage</div>
               <div>0</div>
               </div>
-              <div className="grid grid-cols-3 font-medium text-sm py-4">
+              <div className="grid grid-cols-4 font-medium text-sm py-4">
               <div className="flex"><div className=" mr-2 border-r pr-2">0</div>Page Visits</div>
               <div className="flex"><div className=" mr-2 border-r pr-2">0</div>Button Clicks</div>
               <div className="flex"><div className=" mr-2 border-r pr-2">0</div>Submissions</div>
+              <div className="flex"><div className=" mr-2 border-r pr-2">0</div>Messages</div>
               </div>
               <div className="bg-secondary p-3 rounded-lg text-md font-bold tracking-tight mt-2 flex justify-between">
               <div className="flex"><Ticket className="mr-4 text-primary"/>Tickets</div>
-              <div>0</div>
+              <div>{open.length + closed.length}</div>
               </div>
               <div className="grid grid-cols-3 font-medium text-sm py-4">
               <div className="flex"><div className=" mr-2 border-r pr-2">{open.length}</div>Opened</div>
@@ -217,20 +218,22 @@ export default function Page() {
               </div>
               <div className="bg-secondary p-3 rounded-lg text-md font-bold tracking-tight mt-2 flex justify-between">
               <div className="flex"><BarChart2 className="mr-4 text-primary"/> Activities</div>
-              <div>0</div>
+              <div>{data.length}</div>
               </div>
             </div>
             <div className="text-sm p-6 flex flex-col sm:col-span-4 justify-center dash text-white rounded-lg tracking-tight font-bold ">
               <div className="py-2 px-5 bg-background/20 rounded-md flex justify-between items-center"><Calendar1 className="mr-5"/>{greeting}</div>
+              {open.length>0 && <div className="py-2 px-5 bg-background/20 rounded-md flex justify-between items-center animate-pulse my-1"><Ticket className="mr-5"/>You have {open.length} Ticket(s) pending</div>}
+              {newNot.length>0 && <div className="py-2 px-5 bg-background/20 rounded-md flex justify-between items-center animate-pulse"><Info className="mr-5"/>You have {open.length} Notification(s) pending</div>}
               <ClockAlert size={60} className="my-8"/>
               <div className="text-5xl font-bold tracking-tight p-12">{formatTime(today)}</div>
                 <div className="text-foreground p-3 bg-background/50 rounded w-[100px]">{date(today.toString())}</div>
             </div>
         </div>
       </div>
-      <div className="m-6">
-        <div className="text-xl tracking-tight text-primary font-bold">Dashboard Statistics</div>
-        <div className="bg-background rounded-lg p-8 mt-6 flex">
+      <div className="my-2">
+        <div className="flex p-8 items-center justify-between bg-background rounded-lg">
+        <div className=" flex">
             {
                 userData?.map((data, index)=>(
                     <div className="flex mr-1" key={index}>
@@ -270,11 +273,13 @@ export default function Page() {
                 ))
             }
         </div>
-        <div className="grid grid-cols-12 text-xs p-2">
-            <div className="sm:col-span-1 col-span-6 flex items-center font-medium">
+        <div className="text-xl tracking-tight text-primary font-bold">User Statistics</div>
+        </div>
+        <div className="grid grid-cols-12 text-sm p-2">
+            <div className="sm:col-span-2 col-span-6 flex items-center font-medium">
                 <Dot className="text-green-400" size={30}/> Logged In
             </div>
-            <div className="sm:col-span-1 col-span-6 flex items-center font-medium">
+            <div className="sm:col-span-2 col-span-6 flex items-center font-medium">
                 <Dot className="text-red-400" size={30}/> Logged Out
             </div>
         </div>
@@ -292,7 +297,7 @@ export default function Page() {
                 <Calendar size={20} className="text-primary"/> <div className="h-8 w-8 flex items-center justify-center bg-secondary rounded-full">{events?.length}</div></Link>
             </div>
         </div>
-        <div className="grid grid-cols-12 text-sm font-bold gap-4">
+        <div className="grid grid-cols-12 text-sm font-bold gap-2 mb-4">
             {idType=='admin' && <div className="col-span-4 px-3 flex justify-between">
                 Users            
             </div>}

@@ -50,14 +50,14 @@ export default function Header(){
     let hasNew = notes?.some((n: Notify) => n.status === "new");
     function notify(){
         if(hasNew){
-            return "bg-orange-400/20 dark:text-red-400 text-red-600 animate-bounce rounded-full w-8 h-8 flex justify-center items-center"
+            return "bg-green-400/20 dark:text-green-400 text-green-600 animate-bounce rounded-full w-8 h-8 flex justify-center items-center"
         } else {
             return "bg-secondary rounded-full w-10 h-10 flex justify-center items-center"
         }
     }
     function ticky(){
         if(open.length > 0){
-            return "bg-orange-400/20 dark:text-red-400 text-red-600 animate-bounce rounded-full w-10 ml-2 h-10 flex justify-center items-center"
+            return "bg-green-400/20 dark:text-green-400 text-green-600 animate-bounce rounded-full w-10 ml-2 h-10 flex justify-center items-center"
         } else {
             return "bg-secondary rounded-full w-10 h-10 flex justify-center items-center"
         }

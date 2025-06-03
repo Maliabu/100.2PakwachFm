@@ -160,7 +160,7 @@ export default function Page(){
     </Dialog>
             </div>
         </div>
-        <div className="py-6 my-2 rounded-lg sm:col-span-12 font-medium">
+        <div className="p-6 my-2 rounded-lg sm:col-span-12 font-medium">
                 <div className=" text-2xl font-bold items-center tracking-tight">LoggedIn Users:</div>
                 <div className="p-2 mt-2">{logged.map(user => (
                     <div key={user.id} className=" bg-background p-2 rounded-lg mt-1 grid grid-cols-12 gap-4 justify-between items-center">
