@@ -2,10 +2,10 @@
 "use server"
 
 import { db } from "@/db/db";
-import { EventsTable, activityTable, articlesTable, commentsTable, courseTable, currencyTable, editorImagesTable, enrollmentsTable, messagesTable, nextCourseTable, notificationsTable, programmingTable, replyTable, subscriptionsTable, usersTable, votesTable } from "@/db/schema";
+import { EventsTable, activityTable, articlesTable, commentsTable, courseTable, currencyTable, editorImagesTable, enrollmentsTable, messagesTable, nextCourseTable, notificationsTable, programmingTable, replyTable, subscriptionsTable, ticketingTable, usersTable, votesTable } from "@/db/schema";
 import "use-server"
 import { z } from "zod";
-import { addArticleSchema, addCourseSchema, addEnrollmentSchema, addEventSchema, addNextCourseSchema, addNotificationSchema, addProgrammingSchema, addSubscriptionSchema, addUserSchema, commentsSchema, deleteArticleSchema, deleteEventSchema, deleteProgrammingSchema, deleteSchema, deleteUserSchema, loginUserSchema, messagesSchema, replySchema, updateCourseSchema, uploadProfilePicture, voteSchema } from '@/schema/schema'
+import { addArticleSchema, addCourseSchema, addEnrollmentSchema, addEventSchema, addNextCourseSchema, addNotificationSchema, addProgrammingSchema, addSubscriptionSchema, addUserSchema, commentsSchema, deleteArticleSchema, deleteEventSchema, deleteProgrammingSchema, deleteSchema, deleteUserSchema, loginUserSchema, messagesSchema, openTicket, replySchema, updateCourseSchema, uploadProfilePicture, voteSchema } from '@/schema/schema'
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { File } from "node:buffer";
@@ -327,6 +327,22 @@ Promise<{error: boolean | undefined}> {
    await db.insert(notificationsTable).values({...data})
 
    await logActivity("Added new Notification: "+data.notification, data.sender.toString())
+
+   return {error: false}
+//    redirect("/admin/dashboard")
+}
+
+export async function openNewTicket(unsafeData: z.infer<typeof openTicket>) : 
+Promise<{error: boolean | undefined}> {
+   const {success, data} = openTicket.safeParse(unsafeData)
+
+   if (!success){
+    return {error: true}
+   }
+
+   await db.insert(ticketingTable).values({...data})
+
+   await logActivity("opened a ticket: "+data.issue, data.opened.toString())
 
    return {error: false}
 //    redirect("/admin/dashboard")

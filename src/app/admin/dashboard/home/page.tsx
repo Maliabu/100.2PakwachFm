@@ -10,7 +10,7 @@ import { BarChart2, Calendar, Calendar1, Clock10, ClockAlert, Cloud, CloudFog, D
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend } from 'recharts';
 import Image from "next/image";
 import Logged from "../../auth/user";
-import { ActivityType, UserType } from "../types";
+import { ActivityType, ArticleType, EventType, UserType } from "../types";
 import { TooltipContent, TooltipProvider, TooltipTrigger, Tooltip as ToolTip } from "@/components/ui/tooltip";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -28,16 +28,47 @@ type Activity = {
     isLoggedIn: boolean
   }
 };
+export type Ticketing = {
+  tickets: {
+    opened: number,
+    value: string,
+    issue: string,
+    status: string,
+  },
+  users_table: {
+    name: string,
+    profilePicture: string
+    isLoggedIn: boolean
+  }
+};
+export type Notify = {
+  id: number;
+  notification: string;
+  createdAt: Date;
+  updatedAt: Date;
+  status: string;
+  users: {
+      name: string
+  }
+}
 
 export default function Page() {
   const [idType, setId] = useState("")
+  const [id, setid] = useState("")
     useEffect(() => {
         setId(tokenise()[4])
+        setid(tokenise()[3])
     }, [])
   const { data, error } = useSWR<Activity[]>("/api/activity", fetcher);
   const { data:userData, error:userError } = useSWR<UserType[]>("/api/users", fetcher);
-  const { data:articles, error:articlesError } = useSWR<UserType[]>("/api/articles", fetcher);
-  const { data:events, error:eventsError } = useSWR<UserType[]>("/api/events", fetcher);
+  const { data:articles, error:articlesError } = useSWR<ArticleType[]>("/api/articles", fetcher);
+  const { data:events, error:eventsError } = useSWR<EventType[]>("/api/events", fetcher);
+  const { data:tickets, error:ticketError } = useSWR<Ticketing[]>("/api/tickets", fetcher);
+  const { data:notifications, error:notificationError } = useSWR<Notify[]>("/api/notifications", fetcher);
+  const open: Ticketing[] = []
+  const closed: Ticketing[] = []
+  const newNot: Notify[] = []
+  const read: Notify[] = []
 
   if (!data) {
     return (
@@ -46,6 +77,25 @@ export default function Page() {
         Loading Users ...
       </div>
     );
+  }
+
+  if(tickets){
+    tickets.forEach(ticket => {
+      if(ticket.tickets.status==='open'){
+        open.push(ticket)
+      } else{
+        closed.push(ticket)
+      }
+    })
+  }
+  if(notifications){
+    notifications.forEach(notification => {
+      if(notification.status==='new'){
+        newNot.push(notification)
+      } else{
+        read.push(notification)
+      }
+    })
   }
 
   // Aggregate activity count by user
@@ -137,7 +187,7 @@ export default function Page() {
   return (
     <div className=" mt-2">
       <div className="rounded-lg my-1">
-        <div className="sm:grid sm:grid-cols-12 gap-4">
+        <div className="sm:grid sm:grid-cols-12 gap-2">
             <div className=" p-8 sm:col-span-8 bg-background rounded-lg">
               <div className="text-lg font-bold flex justify-between tracking-tight text-primary">Overview <Image src={Shape} alt="shape" height={40} width={80}/></div>
             <div className="bg-secondary p-3 rounded-lg text-md font-bold tracking-tight mt-6 flex justify-between">
@@ -145,40 +195,40 @@ export default function Page() {
               <div>0</div>
               </div>
               <div className="grid grid-cols-3 font-medium text-sm py-4">
-              <div>New</div>
-              <div>Read</div>
+              <div className="flex"><div className=" mr-2 border-r pr-2">{newNot.length}</div>New</div>
+              <div className="flex"><div className=" mr-2 border-r pr-2">{read.length}</div>Read</div>
               </div>
               <div className="bg-secondary p-3 rounded-lg text-md font-bold tracking-tight mt-2 flex justify-between">
               <div className="flex"><Globe className="mr-4 text-primary"/>Web Usage</div>
               <div>0</div>
               </div>
               <div className="grid grid-cols-3 font-medium text-sm py-4">
-              <div>Page Visits</div>
-              <div>Button Clicks</div>
-              <div>Submissions</div>
+              <div className="flex"><div className=" mr-2 border-r pr-2">0</div>Page Visits</div>
+              <div className="flex"><div className=" mr-2 border-r pr-2">0</div>Button Clicks</div>
+              <div className="flex"><div className=" mr-2 border-r pr-2">0</div>Submissions</div>
               </div>
               <div className="bg-secondary p-3 rounded-lg text-md font-bold tracking-tight mt-2 flex justify-between">
               <div className="flex"><Ticket className="mr-4 text-primary"/>Tickets</div>
               <div>0</div>
               </div>
               <div className="grid grid-cols-3 font-medium text-sm py-4">
-              <div>Openend</div>
-              <div>Closed</div>
+              <div className="flex"><div className=" mr-2 border-r pr-2">{open.length}</div>Opened</div>
+              <div className="flex"><div className=" mr-2 border-r pr-2">{closed.length}</div>Closed</div>
               </div>
               <div className="bg-secondary p-3 rounded-lg text-md font-bold tracking-tight mt-2 flex justify-between">
               <div className="flex"><BarChart2 className="mr-4 text-primary"/> Activities</div>
               <div>0</div>
               </div>
             </div>
-            <div className="text-sm p-6 flex flex-col sm:col-span-4 justify-center dash text-background rounded-lg tracking-tight font-bold ">
+            <div className="text-sm p-6 flex flex-col sm:col-span-4 justify-center dash text-white rounded-lg tracking-tight font-bold ">
               <div className="py-2 px-5 bg-background/20 rounded-md flex justify-between items-center"><Calendar1 className="mr-5"/>{greeting}</div>
               <ClockAlert size={60} className="my-8"/>
               <div className="text-5xl font-bold tracking-tight p-12">{formatTime(today)}</div>
-                {date(today.toString())}
+                <div className="text-foreground p-3 bg-background/50 rounded w-[100px]">{date(today.toString())}</div>
             </div>
         </div>
       </div>
-      <div className="my-6">
+      <div className="m-6">
         <div className="text-xl tracking-tight text-primary font-bold">Dashboard Statistics</div>
         <div className="bg-background rounded-lg p-8 mt-6 flex">
             {

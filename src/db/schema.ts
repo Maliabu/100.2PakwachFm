@@ -106,6 +106,15 @@ export const notificationsTable = mysqlTable('notifications', {
     updatedAt,
 });
 
+export const ticketingTable = mysqlTable('tickets', {
+  id: int('id').primaryKey().autoincrement(),
+  opened: int("user_id").notNull().references(() => usersTable.id, {onDelete: 'cascade'}),
+  status: text('status').notNull(),
+  issue: text('issue').notNull(),
+    createdAt,
+    updatedAt,
+});
+
 export const notificationUsersTable = mysqlTable('notification_users', {
   id: int('id').primaryKey().autoincrement(),
   notification: int('notification_id').notNull().references(() => notificationsTable.id, { onDelete: 'cascade' }),
