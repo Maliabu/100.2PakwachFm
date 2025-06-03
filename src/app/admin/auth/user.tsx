@@ -15,7 +15,7 @@ export default function Logged(){
     }, [])
     return(
         <Link href="/admin/dashboard/account">
-          <div className="flex flex-row justify-between bg-muted rounded-md p-4">
+          <div className="flex flex-row justify-between bg-secondary rounded-md p-4">
           {pic=='' ? <div className="h-10 w-10 bg-primary cursor-pointer text-muted text-2xl rounded-full flex justify-center items-center ">{token.toUpperCase()}</div>:
       <div style={{ position: 'relative', width: '40px', height: '40px' }}>
       <Image
@@ -27,8 +27,8 @@ export default function Logged(){
           style={{ objectFit: 'cover' }} // or 'contain'
       />
       </div>}
-            <div className=" leading-4 w-2/3 text-sm">
-            Hi, <span className="font-bold">{name}</span>. Welcome to the dashboard!</div>
+            <div className=" leading-4 w-2/3 text-sm font-medium">
+            Hi, <span className="font-bold text-primary">{name}</span>. Welcome to the dashboard!</div>
         </div>
         </Link>
     )

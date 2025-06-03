@@ -18,11 +18,11 @@ export default function UserPage(){
     }
     if (!data) return <div className="flex p-6 bg-background rounded-md justify-center items-center mt-2"><Loader2 className="animate-spin"/>Loading Users ...</div>;
     
-    return<div className="bg-background rounded-lg mt-2">
+    return<div className="bg-background rounded-lg mt-2 p-6">
         <div>
             <div className="text-3xl tracking-tight font-bold">Users</div>
             <div>
-                <DataTableDemo data={user} columns={columns} id="supplier" name="name"/>
+                <DataTableDemo data={user} columns={columns} id="user" name="name"/>
             </div>
         </div>
     </div>

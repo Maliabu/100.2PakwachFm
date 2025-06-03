@@ -162,7 +162,7 @@ export default function AddProgramming() {
     }
 
   return (
-    <div className="">
+    <div className="mt-2">
       <ReusableDrawer page="Programming" form={formBuild()}/>
       <div>
         <Programmes/>

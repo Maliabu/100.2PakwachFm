@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client"
 
 import { ChevronRight, type LucideIcon } from "lucide-react"
@@ -50,7 +51,7 @@ export function NavMain({
   
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>Dashboard</SidebarGroupLabel>
+      {/* <SidebarGroupLabel>Dashboard</SidebarGroupLabel> */}
       <SidebarMenu>
         {filteredItems.map((item) => (
           <Collapsible
@@ -61,9 +62,9 @@ export function NavMain({
           >
             <SidebarMenuItem>
               <CollapsibleTrigger asChild>
-                <SidebarMenuButton tooltip={item.title}>
+                <SidebarMenuButton tooltip={item.title} className="">
                   {item.icon && <item.icon />}
-                  <div>{item.title}</div>
+                  <div className="font-medium text-sm">{item.title}</div>
                   <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
                 </SidebarMenuButton>
               </CollapsibleTrigger>
