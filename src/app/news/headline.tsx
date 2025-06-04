@@ -130,7 +130,7 @@ export function HeadlineTabs(
               </div>
     </div>
         <div className="sm:col-span-4 hidden sm:block">
-      <Card className=" border-none shadow-none p-2">
+      <Card className=" border-none shadow-none">
       <CardHeader>
         <div className="text-2xl font-bold tracking-tight leading-6 mt-4">Highlights</div>
       </CardHeader>

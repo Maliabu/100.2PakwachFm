@@ -12,7 +12,7 @@ import Messages from "../admin/dashboard/messages/page";
 
 export default function Events() {
   return (
-    <div className="sm:px-16 sm:bg-muted">
+    <div className="sm:px-16 md:px-12 sm:bg-muted">
       <div className="sm:px-2">
         <Menu/>
       </div>
