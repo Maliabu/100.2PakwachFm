@@ -132,7 +132,7 @@ export function HeadlineTabs(
         <div className="sm:col-span-4 hidden sm:block">
       <Card className=" border-none shadow-none">
       <CardHeader>
-        <div className="text-2xl font-bold tracking-tight leading-6 mt-4">Highlights</div>
+        <div className="text-2xl font-bold tracking-tight leading-6">Highlights</div>
       </CardHeader>
       <div className="scroll-y-blog bg-background py-2">
         {
