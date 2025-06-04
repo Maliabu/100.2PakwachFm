@@ -54,9 +54,9 @@ export default function Menu1(){
           </NavigationMenuList>
         </NavigationMenu>
         </div>
-        <div className="sm:col-span-6">
+        <div className="sm:col-span-6 flex">
       {images.map((src, index) => (
-        <div key={index} className="flex relative w-full h-24">
+        <div key={index} className=" relative w-full h-24">
           <Image
             src={src}
             alt={`Ad ${index}`}

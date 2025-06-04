@@ -134,6 +134,14 @@
   transform: translateZ(0);
   color: aliceblue;
 }
+.ads{
+  /* Try to improve rendering */
+  image-rendering: auto; /* can also try 'crisp-edges' or 'pixelated' */
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  color: aliceblue;
+}
 .dash{
   background-image: url('images/shape1.png');
   background-size: cover;

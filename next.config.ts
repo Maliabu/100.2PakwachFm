@@ -13,10 +13,7 @@ typescript: {
   ignoreBuildErrors: true,
 },
 // images: {
-//   loader: "cloudinary",
-//   // path: "https://res.cloudinary.com/dwklt6k9c/image/upload",
-//   path: '',
-//   domains: ["res.cloudinary.com"], // Ensure the domain is allowed
+//   domains: ["uploads.pakwachfm.com"], // Ensure the domain is allowed
 // },
 };
 

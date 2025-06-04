@@ -101,7 +101,8 @@ export default function AddArticle() {
                   name="image1"
                   render={({ field: { value, onChange, ...fieldProps } }) => (
                       <FormItem>
-                      <FormLabel>Image - displayed before the story *</FormLabel>
+                      <FormLabel>Advert Image *</FormLabel>
+                      <div className="text-xs font-medium">Preferrably 900x400 size images for menu ads and 500x600 for column ads</div>
                       <FormControl
                       >
                           <Input type="file" {...fieldProps} onChange={(event) =>

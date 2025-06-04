@@ -82,8 +82,8 @@ export function Menu() {
             src={images[0]}
             alt={`Ad ${images[0]}`}
             fill
-            className="object-cover"
             unoptimized
+            className="object-cover"
           /></div>
           : ''}
   <SearchBar/></div>
