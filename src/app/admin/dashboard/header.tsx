@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 
-import { Bell, Dot, HelpCircle, Loader2, Moon, Sun, Ticket } from "lucide-react";
+import { Bell, Dot, HelpCircle, InboxIcon, Loader2, Mail, MailOpen, Moon, Sun, Ticket } from "lucide-react";
 import Profile from "../auth/profile";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
@@ -14,6 +14,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Notify } from "./notifications/view/page";
 import { Ticketing } from "./home/page";
+import { Message } from "./messages/view/page";
 
 export default function Header(){
     const { setTheme } = useTheme()
@@ -23,8 +24,10 @@ export default function Header(){
     const { data, error } = useSWR("/api/users", fetcher);
     const { data: notifications, error: notError } = useSWR("/api/notifications", fetcher);
     const { data:tickets, error:ticketError } = useSWR<Ticketing[]>("/api/tickets", fetcher);
+    const { data:messages, error:messageError } = useSWR<Message[]>("/api/messages", fetcher);
     const open: Ticketing[] = []
     const closed: Ticketing[] = []
+    let message: Message[] = []
  
     if(data){
         user = data
@@ -43,6 +46,9 @@ export default function Header(){
           }
         })
       }
+      if(messages){
+        message = messages
+      }
     if (!data) return <div className="flex bg-background rounded-md justify-center items-center mt-2"><Loader2 className="animate-spin"/>Loading Users ...</div>;
     if(notifications){
         notes = notifications
@@ -59,7 +65,14 @@ export default function Header(){
         if(open.length > 0){
             return "bg-green-400/20 dark:text-green-400 text-green-600 animate-bounce rounded-full w-10 ml-2 h-10 flex justify-center items-center"
         } else {
-            return "bg-secondary rounded-full w-10 h-10 flex justify-center items-center"
+            return "bg-secondary rounded-full w-10 h-10 ml-2 flex justify-center items-center"
+        }
+    }
+    function messaging(){
+        if(message.length > 0){
+            return "bg-green-400/20 dark:text-green-400 text-green-600 rounded-full w-10 ml-2 h-10 flex justify-center items-center"
+        } else {
+            return "bg-secondary rounded-full w-10 h-10 ml-2 flex justify-center items-center"
         }
     }
     const handleClick = async () => {
@@ -79,10 +92,10 @@ export default function Header(){
         <div className=" rounded sm:grid sm:grid-cols-2 gap-2">
             <div className="">
             {tokenise()[4]=="admin" && 
-            <div className=" bg-primary text-background p-2 rounded-md flex justify-between items-center">
-                <div className="text-sm font-bold">Logged in users: {logged.length}</div>
+            <div className=" bg-secondary p-2 rounded-md flex justify-between items-center">
+                <div className="text-sm font-medium">Logged in users: {logged.length}</div>
                 <div className="flex">{logged.map(user => (
-                    <div key={user.id} className="h-8 w-8 -ml-4 border border-2 border-background bg-primary text-background grid rounded-full justify-center items-center">{user.profilePicture?<div style={{ position: 'relative', width: '30px', height: '30px' }}>
+                    <div key={user.id} className="h-8 w-8 -ml-4 bg-muted text-foreground grid rounded-full justify-center items-center">{user.profilePicture?<div style={{ position: 'relative', width: '30px', height: '30px' }}>
                     <Image
                         src={user.profilePicture}
                         alt="Full size"
@@ -124,6 +137,8 @@ export default function Header(){
                     <Bell size={18}/><Dot className="absolute -mt-5 -mr-4" size={40}/></Link>
                     <Link href="/admin/dashboard/ticket" className={ticky()}>
                     <Ticket size={18}/></Link>
+                    <Link href="/admin/dashboard/messages" className={messaging()} onClick={handleClick}>
+                    <MailOpen size={18}/></Link>
                 </div>
             </div>
         </div>

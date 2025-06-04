@@ -6,7 +6,7 @@
 
 import useSWR from "swr";
 import { date, fetcher, tokenise } from "@/services/services";
-import { BarChart2, Calendar, Calendar1, Clock10, ClockAlert, Cloud, CloudFog, Dot, Globe, Info, Loader2, Paperclip, Ticket, User2 } from "lucide-react";
+import { BarChart2, Calendar, Calendar1, Clock10, ClockAlert, Cloud, CloudFog, Dot, Globe, Info, Loader2, MailOpen, Paperclip, Ticket, User2 } from "lucide-react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend } from 'recharts';
 import Image from "next/image";
 import Logged from "../../auth/user";
@@ -15,6 +15,8 @@ import { TooltipContent, TooltipProvider, TooltipTrigger, Tooltip as ToolTip } f
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import Shape from '@/app/images/shape.png'
+import Shape1 from '@/app/images/shape2.png'
+import { Message } from "../messages/view/page";
 
 type Activity = {
   activity: {
@@ -26,6 +28,12 @@ type Activity = {
     name: string,
     profilePicture: string
     isLoggedIn: boolean
+  },
+  tickets: {
+    opened: number,
+    value: string,
+    issue: string,
+    status: string,
   }
 };
 export type Ticketing = {
@@ -65,10 +73,12 @@ export default function Page() {
   const { data:events, error:eventsError } = useSWR<EventType[]>("/api/events", fetcher);
   const { data:tickets, error:ticketError } = useSWR<Ticketing[]>("/api/tickets", fetcher);
   const { data:notifications, error:notificationError } = useSWR<Notify[]>("/api/notifications", fetcher);
+  const { data:messages, error:messageError } = useSWR<Message[]>("/api/messages", fetcher);
   const open: Ticketing[] = []
   const closed: Ticketing[] = []
   const newNot: Notify[] = []
   const read: Notify[] = []
+  let message: Message[] = []
 
   if (!data) {
     return (
@@ -97,9 +107,12 @@ export default function Page() {
       }
     })
   }
+  if(messages){
+    message = messages
+  }
 
   // Aggregate activity count by user
-  const userMap = new Map<number, { name: string; profilePicture: string; count: number }>();
+  const userMap = new Map<number, { name: string; profilePicture: string; count: number; tickets: number }>();
 
   data.forEach(({ activity, users_table }) => {
     const userId = activity.user;
@@ -108,17 +121,45 @@ export default function Page() {
         name: users_table.name,
         profilePicture: users_table.profilePicture,
         count: 1,
+        tickets: 0,
       });
     } else {
       userMap.get(userId)!.count += 1;
     }
   });
+  tickets?.forEach(({ tickets, users_table }) => {
+    const userId = parseInt(tickets.opened.toString()); // Replace with actual user ID field
+  
+    // You probably need the user ID of the ticket owner, not `.opened`
+    // Fix this depending on your schema
+    // For example:
+    // const userId = tickets.user;
+  
+    const existing = [...userMap.values()].find(u => u.name === users_table.name); // fallback if userId missing
+    if (existing) {
+      userMap.forEach((value, key) => {
+        if (value.name === users_table.name) {
+          userMap.get(key)!.tickets += 1;
+        }
+      });
+    } else {
+      // If user not already in map, add them
+      userMap.set(userId, {
+        name: users_table.name,
+        profilePicture: users_table.profilePicture,
+        count: 0,
+        tickets: 1,
+      });
+    }
+  });
+  
 
-  const chartData = Array.from(userMap.entries()).map(([userId, { name, profilePicture, count }]) => ({
+  const chartData = Array.from(userMap.entries()).map(([userId, { name, profilePicture, count, tickets }]) => ({
     userId,
     name,
     profilePicture,
     activities: count,
+    tickets: tickets
   }));
   
   const CustomTick = ({ x, y, payload }: any) => {
@@ -145,11 +186,11 @@ export default function Page() {
                 width: '40px',
                 height: '40px',
                 borderRadius: '50%',
-                backgroundColor: '#E5E7EB', // example fallback color
+                backgroundColor: '#152653', // example fallback color
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                color: 'black',
+                color: 'white',
                 fontSize: '16px',
               }}
             >
@@ -189,9 +230,9 @@ export default function Page() {
       <div className="rounded-lg my-1">
         <div className="sm:grid sm:grid-cols-12 gap-2">
             <div className=" p-8 sm:col-span-8 bg-background rounded-lg">
-              <div className="text-lg font-bold flex justify-between tracking-tight text-primary">Overview <Image src={Shape} alt="shape" height={40} width={80}/></div>
+              <div className="text-xl font-bold flex justify-between tracking-tight text-">Overview <Image src={Shape} alt="shape" height={40} width={80}/></div>
             <div className="bg-secondary p-3 rounded-lg text-md font-bold tracking-tight mt-6 flex justify-between">
-            <div className="flex"><Info className="mr-4 text-primary"/>Notifications</div>
+            <div className="flex"><Info className="mr-4 text-"/>Notifications</div>
               <div>{newNot.length + read.length}</div>
               </div>
               <div className="grid grid-cols-3 font-medium text-sm py-4">
@@ -199,17 +240,17 @@ export default function Page() {
               <div className="flex"><div className=" mr-2 border-r pr-2">{read.length}</div>Read</div>
               </div>
               <div className="bg-secondary p-3 rounded-lg text-md font-bold tracking-tight mt-2 flex justify-between">
-              <div className="flex"><Globe className="mr-4 text-primary"/>Web Usage</div>
+              <div className="flex"><Globe className="mr-4 text-"/>Web Usage</div>
               <div>0</div>
               </div>
               <div className="grid grid-cols-4 font-medium text-sm py-4">
               <div className="flex"><div className=" mr-2 border-r pr-2">0</div>Page Visits</div>
               <div className="flex"><div className=" mr-2 border-r pr-2">0</div>Button Clicks</div>
               <div className="flex"><div className=" mr-2 border-r pr-2">0</div>Submissions</div>
-              <div className="flex"><div className=" mr-2 border-r pr-2">0</div>Messages</div>
+              <div className="flex"><div className=" mr-2 border-r pr-2">{message.length}</div>Messages</div>
               </div>
               <div className="bg-secondary p-3 rounded-lg text-md font-bold tracking-tight mt-2 flex justify-between">
-              <div className="flex"><Ticket className="mr-4 text-primary"/>Tickets</div>
+              <div className="flex"><Ticket className="mr-4 text-"/>Tickets</div>
               <div>{open.length + closed.length}</div>
               </div>
               <div className="grid grid-cols-3 font-medium text-sm py-4">
@@ -217,22 +258,23 @@ export default function Page() {
               <div className="flex"><div className=" mr-2 border-r pr-2">{closed.length}</div>Closed</div>
               </div>
               <div className="bg-secondary p-3 rounded-lg text-md font-bold tracking-tight mt-2 flex justify-between">
-              <div className="flex"><BarChart2 className="mr-4 text-primary"/> Activities</div>
+              <div className="flex"><BarChart2 className="mr-4 text-"/> Activities</div>
               <div>{data.length}</div>
               </div>
             </div>
             <div className="text-sm p-6 flex flex-col sm:col-span-4 justify-center dash text-white rounded-lg tracking-tight font-bold ">
               <div className="py-2 px-5 bg-background/20 rounded-md flex justify-between items-center"><Calendar1 className="mr-5"/>{greeting}</div>
-              {open.length>0 && <div className="py-2 px-5 bg-background/20 rounded-md flex justify-between items-center animate-pulse my-1"><Ticket className="mr-5"/>You have {open.length} Ticket(s) pending</div>}
-              {newNot.length>0 && <div className="py-2 px-5 bg-background/20 rounded-md flex justify-between items-center animate-pulse"><Info className="mr-5"/>You have {open.length} Notification(s) pending</div>}
-              <ClockAlert size={60} className="my-8"/>
-              <div className="text-5xl font-bold tracking-tight p-12">{formatTime(today)}</div>
+              {open.length>0 && <div className="py-2 px-5 bg-background/20 rounded-md flex justify-between items-center animate-pulse mt-1"><Ticket className="mr-5"/>You have {open.length} Ticket(s) pending</div>}
+              {newNot.length>0 && <div className="py-2 px-5 bg-background/20 rounded-md flex justify-between items-center animate-pulse mt-1"><Info className="mr-5"/>You have {open.length} Notification(s) pending</div>}
+              {message.length>0 && <div className="py-2 px-5 bg-background/20 rounded-md flex justify-between items-center mt-1 animate-pulse"><MailOpen className="mr-5"/>You have {message.length} Message(s) pending</div>}
+              <ClockAlert size={60} className="mt-8"/>
+              <div className="text-5xl font-bold tracking-tight my-12">{formatTime(today)}</div>
                 <div className="text-foreground p-3 bg-background/50 rounded w-[100px]">{date(today.toString())}</div>
             </div>
         </div>
       </div>
       <div className="my-2">
-        <div className="flex p-8 items-center justify-between bg-background rounded-lg">
+        <div className="flex p-4 items-center justify-between bg-background rounded-lg">
         <div className=" flex">
             {
                 userData?.map((data, index)=>(
@@ -262,18 +304,19 @@ export default function Page() {
                     </div>
                     </div>:<ToolTip>
                         <TooltipTrigger asChild>
-                        <div className="h-10 cursor-pointer w-10 grid justify-center items-center dark:text-foreground rounded-full bg-primary text-background">{data.name[0].toUpperCase()}</div>
+                        <div className="h-10 cursor-pointer w-10 grid justify-center items-center dark:text-foreground rounded-full bg-secondary">{data.name[0].toUpperCase()}</div>
                         </TooltipTrigger>
                         <TooltipContent>
                                 <p>{data.name}</p>
                                 </TooltipContent>
                         </ToolTip>}
-                <Dot className={data.isLoggedIn==true?'absolute -mt-6 -mr-8 text-green-400':'absolute -mt-6 -mr-6 text-primary'} size={50}/>
+                <Dot className={data.isLoggedIn==true?'absolute -mt-6 -mr-8 text-green-400':'absolute -mt-6 -mr-6 text-orange-600'} size={50}/>
                 </div>
                 ))
             }
         </div>
-        <div className="text-xl tracking-tight text-primary font-bold">User Statistics</div>
+        <Image src={Shape1} alt="shape" height={20} width={80}/>
+        <div className="text-xl tracking-tight text- font-bold">User Statistics</div>
         </div>
         <div className="grid grid-cols-12 text-sm p-2">
             <div className="sm:col-span-2 col-span-6 flex items-center font-medium">
@@ -286,15 +329,15 @@ export default function Page() {
         <div className="grid grid-cols-12 text-lg p-2 gap-4">
             {idType=='admin' && <div className="col-span-4">
             <Link href='/admin/dashboard/users' className="p-6 rounded-lg transition-transform duration-300 cursor-pointer hover:scale-105 bg-background flex justify-between">
-            <User2 size={20} className="text-primary"/> <div className="h-8 w-8 flex font-medium items-center justify-center bg-secondary rounded-full">{userData?.length}</div></Link>
+            <User2 size={20} className="text-"/> <div className="h-8 w-8 flex font-medium items-center justify-center bg-secondary rounded-full">{userData?.length}</div></Link>
             </div>}
             <div className="col-span-4">
             <Link href='/admin/dashboard/articles' className="p-6 rounded-lg transition-transform duration-300 cursor-pointer hover:scale-105 bg-background flex justify-between">
-                <Paperclip size={20} className="text-primary"/> <div className="h-8 w-8 flex items-center justify-center bg-secondary rounded-full">{articles?.length}</div></Link>
+                <Paperclip size={20} className="text-"/> <div className="h-8 w-8 flex items-center justify-center bg-secondary rounded-full">{articles?.length}</div></Link>
             </div>
             <div className="col-span-4">
             <Link href='/admin/dashboard/events' className="p-6 rounded-lg transition-transform duration-300 cursor-pointer hover:scale-105 bg-background flex justify-between">
-                <Calendar size={20} className="text-primary"/> <div className="h-8 w-8 flex items-center justify-center bg-secondary rounded-full">{events?.length}</div></Link>
+                <Calendar size={20} className="text-"/> <div className="h-8 w-8 flex items-center justify-center bg-secondary rounded-full">{events?.length}</div></Link>
             </div>
         </div>
         <div className="grid grid-cols-12 text-sm font-bold gap-2 mb-4">
@@ -313,13 +356,14 @@ export default function Page() {
       {idType=='admin' && <div className="rounded-lg p-6 bg-background my-1">
         <div className="sm:grid sm:grid-cols-12">
           <div className="sm:col-span-6">
-          <div className="text-xl tracking-tight font-bold text-primary mb-6">User Activity</div>
-        <BarChart width={300} height={400} data={chartData}>
-          <XAxis dataKey="userId" tick={<CustomTick />} axisLine={false} interval={0} height={50} />
+          <div className="text-xl tracking-tight font-bold text- mb-6">User Activity</div>
+        <BarChart width={400} height={400} data={chartData} barCategoryGap={8} barGap={0}>
+          <XAxis dataKey="userId" tick={<CustomTick />} axisLine={true} interval={0} height={50} />
           {/* <YAxis axisLine={false} tickLine={false}/> */}
           <Tooltip />
           <Legend />
-          <Bar dataKey="activities" fill="#152653" label={{ position: "top" }} radius={[10, 10, 10, 10]} />
+          <Bar dataKey="activities" fill="#152653" label={{ position: "top" }} />
+          <Bar dataKey="tickets" fill="#fa3c00" label={{ position: "top" }} />
         </BarChart></div>
         <div className="sm:col-span-6 admin rounded-lg">
           {

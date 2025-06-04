@@ -166,8 +166,8 @@ export default function Page(){
                     <div key={user.id} className=" bg-background p-2 rounded-lg mt-1 grid grid-cols-12 gap-4 justify-between items-center">
                     <div className="h-12 w-12 text-lg -ml-6 border col-span-1 border-8 border-muted bg-primary text-background grid font-bold rounded-full justify-center items-center">{user?.name[0].toUpperCase()}</div>
                     <div className="text-sm p-2 sm:col-span-2 rounded-full sm:block hidden">{user?.name}</div>
-                    <div className="text-xs sm:mr-6 mr-4 sm:col-span-4 col-span-6"><span className="text-muted-foreground font-bold">last login:</span><br/>{date(user.lastLogin.toString())}</div>
-                    <div className="text-sm p-2 bg-secondary rounded">{user.userType}</div>
+                    <div className="text-sm sm:mr-6 mr-4 sm:col-span-4 col-span-6"><span className="text-muted-foreground font-bold">last login:</span><br/>{date(user.lastLogin.toString())}</div>
+                    <div className="text-sm p-2 bg-secondary rounded-md capitalize">{user.userType}</div>
                     </div>
                 ))}</div>
             </div>

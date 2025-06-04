@@ -55,7 +55,7 @@ export function Highlights() {
             <div className="p-1">
               <Card className="shadow-none border-none">
                 <CardContent className="justify-center">
-                  <div className="text-2xl font-bold tracking-tight leading-5">{news.heading}</div>
+                  <div className="text-2xl font-bold tracking-tight leading-5 line-clamp-3">{news.heading}</div>
                   <div className="text-sm my-4">{news.from}</div>
                   <div className="text-xs uppercase text-muted-foreground">{news.who} | {news.date}</div>
                 </CardContent>

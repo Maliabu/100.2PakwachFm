@@ -11,21 +11,21 @@ import Popular from "../home/popular";
 export default function Events() {
   return (
     <div className="sm:px-16 sm:bg-muted">
-      <div className="sm:p-2">
+      <div className="sm:px-2">
         <Menu/>
       </div>
-    <div className="flex justify-between items-center mt-2">
+    <div className="flex justify-between items-center">
       <Menu1/>
     </div>
       <div className="px-2">
     <div>
     <div className="rounded-lg">
     <div className="grid grid-cols-12 gap-2">
-      <div className="col-span-9 bg-background p-8 rounded-lg mt-2">
+      <div className="col-span-9 bg-background p-8 rounded-lg">
         <div className="text-sm text-muted-foreground uppercase">services </div>
         <div className="text-5xl tracking-tight leading-10 font-bold my-4 capitalize">We offer</div>
       </div>
-        <div className="col-span-3 bg-background rounded-lg p-4 mt-2">
+        <div className="col-span-3 bg-background rounded-lg p-4">
             {/* <Mic size={150} className="border dark:text-primary rounded-full p-10"/> */}
             {/* <MegaphoneIcon size={70} className="p-4 ml-2 rounded-full border animate-spin"/> */}
             <div className="text-sm text-muted-foreground uppercase">Advertise </div>

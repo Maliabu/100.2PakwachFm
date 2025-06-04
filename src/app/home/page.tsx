@@ -29,7 +29,7 @@ export default function Page() {
     <div>
       <Menu1 />
       <div className="grid grid-cols-12 gap-2">
-        <div className="col-span-12 bg-background sm:p-8 p-2 rounded-lg sm:mt-2">
+        <div className="col-span-12 bg-background sm:p-8 p-2 rounded-lg">
           <div className="text-sm text-muted-foreground pt-8 sm:pt-0">HEADLINES </div>
           <HeadlineTabs articles={articles} />
         </div>

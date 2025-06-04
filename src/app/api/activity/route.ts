@@ -1,5 +1,5 @@
 import { db } from "@/db/db";
-import { activityTable, usersTable } from "@/db/schema";
+import { activityTable, ticketingTable, usersTable } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
 
@@ -7,7 +7,7 @@ import { NextResponse } from "next/server";
 export async function GET() {
   try {
     // Query the database
-    const activities = await db.select().from(activityTable).leftJoin(usersTable, eq(activityTable.user, usersTable.id));
+    const activities = await db.select().from(activityTable).leftJoin(usersTable, eq(activityTable.user, usersTable.id)).leftJoin(ticketingTable, eq(activityTable.user, ticketingTable.opened));
     
     // Return the users as a JSON response
     return NextResponse.json(activities);

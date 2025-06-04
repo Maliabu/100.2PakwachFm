@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client"
 
-import { BarChart, Calendar, CalendarArrowDown, ChartBar, ChartBarIcon, Delete, File, FileArchive, FileEdit, Home, Info, LineChart, List, ListChecks, Mic, Paperclip, PenToolIcon, Pill, Play, Plus, Receipt, Settings2, ShoppingBasket, Store, StoreIcon, Sun, Tag, Ticket, TruckIcon, User, UserCheck2, Users, Video, View, Wallet } from "lucide-react"
+import { BarChart, Calendar, CalendarArrowDown, ChartBar, ChartBarIcon, CheckCheck, Delete, File, FileArchive, FileEdit, Home, Info, LineChart, List, ListChecks, Mail, MailCheck, Mic, Paperclip, PenToolIcon, Pill, Play, Plus, Receipt, Settings2, ShoppingBasket, Store, StoreIcon, Sun, Tag, Ticket, TicketCheck, TruckIcon, User, UserCheck2, Users, Video, Videotape, View, Wallet } from "lucide-react"
 
 import {
   Sidebar,
@@ -94,7 +94,7 @@ const data = {
         },       
         {
           title: "View",
-          icon: Paperclip,
+          icon: Videotape,
           url: "/admin/dashboard/ads/view",
         },
       ],
@@ -156,7 +156,7 @@ const data = {
         },
         {
           title: "View",
-          icon: UserCheck2,
+          icon: CheckCheck,
           url: "/admin/dashboard/notifications/view",
         },
       ],
@@ -174,8 +174,26 @@ const data = {
         },
         {
           title: "View",
-          icon: UserCheck2,
+          icon: TicketCheck,
           url: "/admin/dashboard/ticket/view",
+        },
+      ],
+    },
+    {
+      title: "Messages",
+      url: "#",
+      icon: Mail,
+      isActive: false,
+      items: [
+        {
+          title: "Add",
+          icon: Plus,
+          url: "/admin/dashboard/messages",
+        },
+        {
+          title: "View",
+          icon: MailCheck,
+          url: "/admin/dashboard/messages/view",
         },
       ],
     },

@@ -4,7 +4,7 @@ import { Menu } from "./navigation/menu";
 
 export default function page() {
   return (
-    <div className="sm:px-12 sm:bg-muted">
+    <div className="sm:px-12 sm:bg-secondary">
       <div className="">
         <Menu/>
       </div>

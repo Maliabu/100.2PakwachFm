@@ -269,3 +269,8 @@ export async function getArticleBySlug(slug: string) {
   if (!res.ok) return null
   return res.json()
 }
+
+export function dater(date: Date){
+  const ddate = new Date(date)
+  return ddate
+}
