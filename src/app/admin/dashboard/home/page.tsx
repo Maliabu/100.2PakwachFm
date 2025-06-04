@@ -229,7 +229,7 @@ export default function Page() {
     <div className=" mt-2">
       <div className="rounded-lg my-1">
         <div className="sm:grid sm:grid-cols-12 gap-2">
-            <div className=" p-8 sm:col-span-8 bg-background rounded-lg">
+            <div className=" sm:p-8 p-6 sm:col-span-8 bg-background rounded-lg">
               <div className="text-xl font-bold flex justify-between tracking-tight text-">Overview <Image src={Shape} alt="shape" height={40} width={80}/></div>
             <div className="bg-secondary p-3 rounded-lg text-md font-bold tracking-tight mt-6 flex justify-between">
             <div className="flex"><Info className="mr-4 text-"/>Notifications</div>
@@ -243,11 +243,11 @@ export default function Page() {
               <div className="flex"><Globe className="mr-4 text-"/>Web Usage</div>
               <div>0</div>
               </div>
-              <div className="grid grid-cols-4 font-medium text-sm py-4">
+              <div className="grid sm:grid-cols-4 grid-cols-2 font-medium text-sm py-4">
               <div className="flex"><div className=" mr-2 border-r pr-2">0</div>Page Visits</div>
               <div className="flex"><div className=" mr-2 border-r pr-2">0</div>Button Clicks</div>
-              <div className="flex"><div className=" mr-2 border-r pr-2">0</div>Submissions</div>
-              <div className="flex"><div className=" mr-2 border-r pr-2">{message.length}</div>Messages</div>
+              <div className="flex sm:mt-0 mt-4 "><div className=" mr-2 border-r pr-2">0</div>Submissions</div>
+              <div className="flex sm:mt-0 mt-4 "><div className=" mr-2 border-r pr-2">{message.length}</div>Messages</div>
               </div>
               <div className="bg-secondary p-3 rounded-lg text-md font-bold tracking-tight mt-2 flex justify-between">
               <div className="flex"><Ticket className="mr-4 text-"/>Tickets</div>
@@ -315,7 +315,7 @@ export default function Page() {
                 ))
             }
         </div>
-        <Image src={Shape1} alt="shape" height={20} width={80}/>
+        <Image src={Shape1} alt="shape" height={20} width={80} className="hidden sm:block"/>
         <div className="text-xl tracking-tight text- font-bold">User Statistics</div>
         </div>
         <div className="grid grid-cols-12 text-sm p-2">
@@ -326,21 +326,21 @@ export default function Page() {
                 <Dot className="text-red-400" size={30}/> Logged Out
             </div>
         </div>
-        <div className="grid grid-cols-12 text-lg p-2 gap-4">
-            {idType=='admin' && <div className="col-span-4">
+        <div className="grid sm:grid-cols-12 grid-cols-1 text-lg p-2 gap-4">
+            {idType=='admin' && <div className="sm:col-span-4">
             <Link href='/admin/dashboard/users' className="p-6 rounded-lg transition-transform duration-300 cursor-pointer hover:scale-105 bg-background flex justify-between">
             <User2 size={20} className="text-"/> <div className="h-8 w-8 flex font-medium items-center justify-center bg-secondary rounded-full">{userData?.length}</div></Link>
             </div>}
-            <div className="col-span-4">
+            <div className="sm:col-span-4">
             <Link href='/admin/dashboard/articles' className="p-6 rounded-lg transition-transform duration-300 cursor-pointer hover:scale-105 bg-background flex justify-between">
                 <Paperclip size={20} className="text-"/> <div className="h-8 w-8 flex items-center justify-center bg-secondary rounded-full">{articles?.length}</div></Link>
             </div>
-            <div className="col-span-4">
+            <div className="sm:col-span-4">
             <Link href='/admin/dashboard/events' className="p-6 rounded-lg transition-transform duration-300 cursor-pointer hover:scale-105 bg-background flex justify-between">
                 <Calendar size={20} className="text-"/> <div className="h-8 w-8 flex items-center justify-center bg-secondary rounded-full">{events?.length}</div></Link>
             </div>
         </div>
-        <div className="grid grid-cols-12 text-sm font-bold gap-2 mb-4">
+        <div className="grid grid-cols-12 text-sm font-bold gap-2 mb-4 hidden sm:block">
             {idType=='admin' && <div className="col-span-4 px-3 flex justify-between">
                 Users            
             </div>}

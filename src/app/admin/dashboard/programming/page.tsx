@@ -60,10 +60,10 @@ export default function AddProgramming() {
 
     function formBuild(){
       return(
-      <div className="admin pb-36">
+      <div className="sm:admin sm:pb-36 p-4">
       <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <div className="grid grid-cols-3 w-full gap-4">
+        <div className="grid sm:grid-cols-3 sm:w-full sm:gap-4">
           <div className="col-span-1">
               <div className="flex flex-col space-y-1.5">
               <FormField

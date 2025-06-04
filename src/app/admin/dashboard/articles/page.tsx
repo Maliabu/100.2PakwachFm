@@ -83,16 +83,16 @@ export default function AddArticle() {
     }
 
   return (
-    <div className="">
+    <div className="p-2">
       {/* <ReusableDrawer page="Article" form={formBuild()}/> */}
 
-      <div className="admin p-12 bg-secondary rounded-lg">
+      <div className="sm:admin sm:p-12 bg-secondary rounded-lg">
       <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <div className="text-2xl font-bold tracking-tight my-4">Add Stroy/Article</div>
-        <div className="grid sm:grid-cols-3 w-full gap-2 bg-background p-6 rounded-lg">
+        <div className="text-2xl font-bold tracking-tight my-4">Add Story/Article</div>
+        <div className="sm:grid sm:grid-cols-3 sm:w-full gap-2 bg-background p-6 rounded-lg">
           <div className="sm:col-span-1">
-              <div className="flex flex-col space-y-2">
+              <div className="sm:flex sm:flex-col space-y-2">
               <FormField
                   control={form.control}
                   name="title"

@@ -49,9 +49,9 @@ export default function Notify() {
     }
 
   return (
-    <div className="mt-2 flex bg-background justify-between rounded">
+    <div className="mt-2 sm:flex bg-background justify-between rounded">
       <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className=" sm:p-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="p-6 sm:p-8">
       <div className="text-2xl font-bold tracking-tight">Add a Notification</div>
       <div className="text-sm mb-6 text-muted-foreground">This goes out to all users for now.</div>
           <div className="grid sm:grid-cols-3 gap-2">
@@ -82,7 +82,7 @@ export default function Notify() {
         )}
       </form>
       </Form>
-      <div className="w-[350]px p-6">
+      <div className="w-[350]px p-6 sm:block hidden">
       <Image src={Shape} alt="shape" width={200} height={20}/></div>
         </div>
   )

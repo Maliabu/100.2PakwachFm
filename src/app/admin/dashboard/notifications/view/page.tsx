@@ -44,7 +44,7 @@ export default function Notifications(){
             { notify.length>0?
                         notify.map((notes, index) => (
                             <div key={index} className="grid grid-cols-12 mb-1 gap-4">
-                     <div className="col-span-1 h-10 w-10 bg-primary text-muted font-bold text-2xl rounded-full flex justify-center items-center ">S</div>
+                     <div className="col-span-1 h-10 w-10 bg-primary text-muted text-2xl rounded-full flex justify-center items-center ">S</div>
                      <div className="col-span-11 sm:p-6 p-4 mx-4 bg-background flex justify-between rounded-lg">
                         <div>
                      <div className="text-xs font-bold text-muted-foreground">from: system</div>

@@ -20,14 +20,14 @@ import { Programming } from "../types"
   }: Programming){
 
     return (
-      <div className="flex flex-row justify-between">
-      <Card className="sm:w-5/6 grid sm:grid-cols-5 gap-4 p-4 mt-1 border-none shadow-none border-b bg-background rounded">
+      <div className="sm:flex sm:flex-row sm:justify-between">
+      <Card className="sm:w-5/6 grid sm:grid-cols-5 grid-cols-4 sm:gap-4 p-4 mt-1 border-none shadow-none border-b bg-background rounded">
         <div className="items-start">
         <p className=" text-sm font-bold tracking-tight">{programme}</p></div>
         <div>
           <p className=" text-sm">{startTime}</p>
         </div>
-        <div>
+        <div className=" sm:block hidden">
         <p className=" text-sm">to</p></div>
         <div>
         <p className=" text-sm">{endTime}</p></div>
