@@ -1,0 +1,1 @@
+ALTER TABLE `messages_table` ADD `status` text NOT NULL;

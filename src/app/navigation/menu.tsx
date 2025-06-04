@@ -39,7 +39,7 @@ export function Menu() {
     fetchImages();
   }, []);
   return (
-    <div><footer className="row-start-3 sm:p-3 p-4 bg-black text-white sm:rounded-t-lg flex gap-[24px] text-sm flex-wrap items-center justify-center">
+    <div><footer className="row-start-3 sm:p-3 p-4 bg-black text-white flex gap-[24px] text-sm flex-wrap items-center justify-center">
       <div className="text-sm">Follow us on:</div>
     <a
       className="flex items-center sm:gap-2 font-bold tracking-tight hover:underline hover:underline-offset-4"
@@ -68,23 +68,24 @@ export function Menu() {
     <span className="sm:block hidden">facebook</span>
     </a>
   </footer>
-  <div className="on-air p-16 background grid grid-cols-12 gap-2">
+  <div className="on-air p-16 bg-gradient-to-bl background grid grid-cols-12 gap-2">
     <div className="sm:col-span-3">
       <div className="w-60 h-20">
     <Image src={Logo} alt="logo"/></div>
     </div>
   </div>
-  <div className="bg-secondary p-3 flex justify-between">
+  <div className="bg-secondary p-2 flex justify-between">
     <Link href='/programming'><Button className="bg-primary">Schedule <ChevronRight size={18}/></Button></Link>
-        <div className="relative w-full h-24 mx-8">
-          {images.length > 0? <Image
+          {images.length > 0?         
+          <div className="relative w-full h-24 mx-8">
+            <Image
             src={images[0]}
             alt={`Ad ${images[0]}`}
             fill
             className="object-cover"
             unoptimized
-          />: 'ad'}
-    </div>
+          /></div>
+          : ''}
   <SearchBar/></div>
     <div className="sm:bg-background bg-secondary sm:p-3 sm:rounded-b-lg">
         <div className="justify-between flex">

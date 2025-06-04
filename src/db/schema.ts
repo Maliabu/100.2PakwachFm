@@ -146,6 +146,7 @@ export const subscriptionsTable = mysqlTable('subscriptions_table', {
 export const messagesTable = mysqlTable('messages_table', {
   id: int('id').primaryKey().autoincrement(),
   email: text('email').notNull().unique(),
+  status: text('status').notNull(),
   message: text('message'),
     createdAt,
     updatedAt,

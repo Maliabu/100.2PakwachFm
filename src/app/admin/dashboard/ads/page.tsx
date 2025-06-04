@@ -68,7 +68,7 @@ export default function AddArticle() {
     <div className="">
       {/* <ReusableDrawer page="Article" form={formBuild()}/> */}
 
-      <div className="admin p-16">
+      <div className="p-8 bg-background rounded-md mt-2">
       <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <div className="text-2xl font-bold tracking-tight my-4">Upload Ads to Website</div>

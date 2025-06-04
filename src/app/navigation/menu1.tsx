@@ -26,7 +26,7 @@ export default function Menu1(){
     fetchImages();
   }, []);
     return(
-        <div className="sm:grid sm:grid-cols-12 dark mt-2 bg-black rounded-md">
+        <div className="sm:grid sm:grid-cols-12 rounded-md">
           <div className="sm:col-span-6 sm:p-2">
         <NavigationMenu className="rounded-lg hidden sm:block">
           <NavigationMenuList>

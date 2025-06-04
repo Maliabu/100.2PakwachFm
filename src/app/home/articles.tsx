@@ -43,8 +43,7 @@ export default async function Articles() {
                     unoptimized
                     className="object-cover"/>
                   </div>
-                  <div className="text-2xl mt-4 font-bold tracking-tight leading-6 hover:text-primary lowercase capitalize"><Link href={'/news/'+encodeURIComponent(news.title)}>{news.title}</Link></div>
-                  <div className="text-sm my-4">{news.writer}</div>
+                  <div className="text-2xl my-4 font-bold tracking-tight leading-6 hover:text-primary lowercase line-clamp-3 capitalize"><Link href={'/news/'+encodeURIComponent(news.title)}>{news.title}</Link></div>
                   <div className="text-xs uppercase text-muted-foreground">{news.writer} | {
       getMyDay(news.updatedAt.getDay())}, {getMyMonth(news.updatedAt.getMonth())} {news.updatedAt.getDate()}, {news.updatedAt.getFullYear()
       }</div>

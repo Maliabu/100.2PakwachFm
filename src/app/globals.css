@@ -51,7 +51,7 @@
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(38.2% 0.091 267.935);
+  --primary: oklch(0.746 0.422 75.116);
   --primary-foreground: oklch(0.985 0 0);
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
@@ -85,7 +85,7 @@
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.205 0 0);
   --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.746 0.422 76.116);
+  --primary: oklch(0.746 0.422 60.116);
   --primary-foreground: oklch(0.985 0 0);
   --secondary: oklch(0.269 0 0);
   --secondary-foreground: oklch(0.985 0 0);
@@ -122,10 +122,16 @@
 }
 
 .background{
-  background-image: url('images/radio2.jpeg');
-  background-size: cover;
-  background-repeat: no-repeat;
+  background-image: url('images/Song\ lyrics\ getting\ simpler\,\ more\ repetitive\,\ angry\ and\ self-obsessed\ –\ study.jpeg');
+  background-repeat: no-repeat !important;
   padding-top: 5%;
+  background-position: center;
+  background-size: cover;
+  /* Try to improve rendering */
+  image-rendering: auto; /* can also try 'crisp-edges' or 'pixelated' */
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translateZ(0);
   color: aliceblue;
 }
 .dash{

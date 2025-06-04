@@ -130,7 +130,7 @@ export function HeadlineTabs(
               </div>
     </div>
         <div className="sm:col-span-4 hidden sm:block">
-      <Card className=" border-none p-2">
+      <Card className=" border-none shadow-none p-2">
       <CardHeader>
         <div className="text-2xl font-bold tracking-tight leading-6 mt-4">Highlights</div>
       </CardHeader>
@@ -163,7 +163,7 @@ export function HeadlineTabs(
                     className="object-cover"/>
                   </div>
                   <Link href={ref(article.title)}>
-                <div className="text-xl font-bold tracking-tight mt-4 leading-5 text-dark pointer blog capitalize">
+                <div className="text-2xl font-bold tracking-tight mt-4 leading-6 hover:text-primary text-dark pointer blog capitalize lowercase line-clamp-3">
               {article.title}</div></Link>
               <div className="line-clamp-2 text-sm leading-4 mt-2">
               {parse(article.content)}
