@@ -66,7 +66,7 @@ type ArticleCardProp = {
     return (
       <div>
       <Card className="border-none shadow-none background-none" id={title}>
-      <div className="relative w-full h-36">
+      <div className="relative w-full h-44">
       <Image
             src={path}
             alt="article image"

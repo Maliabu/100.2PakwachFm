@@ -46,8 +46,8 @@ import { Button } from "@/components/ui/button"
     const insta = instagramLink!==null?instagramLink:''
     return (
       <div>
-      <Card className="border-none shadow-none background-none sm:p-6" id={title}>
-      <div className="relative w-full sm:h-96 h-80">
+      <Card className="border-none shadow-none background-none sm:p-6 py-0" id={title}>
+      <div className="relative w-full sm:h-96 h-64">
         <Image
             src={path}
             alt="article image"

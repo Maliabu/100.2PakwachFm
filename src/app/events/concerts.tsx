@@ -27,16 +27,16 @@ export async function Concerts() {
               <Card className="shadow-none border-none p-0">
                 <CardContent className="justify-center p-0">
                 <div style={{ position: 'relative', width: '100%', height: '300px' }}>
-        <Image
-            src={event.image}
-            alt="Full size"
-            className="rounded-t-lg"
-            fill
-            unoptimized
-            style={{ objectFit: 'cover' }} // or 'contain'
-        />
-        </div>
-        <div className="p-6">
+                <Image
+                    src={event.image}
+                    alt="Full size"
+                    className="rounded-t-lg"
+                    fill
+                    unoptimized
+                    style={{ objectFit: 'cover' }} // or 'contain'
+                />
+                </div>
+                <div className="p-6">
                   <div className="text-2xl font-bold tracking-tight leading-5 ">{event.title}</div>
                   <div className="text-sm my-4">{event.description}</div>
                   {event.link!==null?<div className="text-xs hover:text-primary uppercase text-muted-foreground"><Link href={event.link}>Find out more</Link></div>:null}

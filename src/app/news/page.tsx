@@ -15,19 +15,19 @@ import { Ads } from "./ads";
 export default async function News() {
   const votes =  await db.select().from(articlesTable)
   return (
-    <div className="sm:px-16 sm:bg-muted">
+    <div className="sm:px-16 md:px-12 sm:bg-muted">
       <div className="sm:px-2">
         <Menu/>
       </div>
-    <div className="">
+    <div className="sm:px-2">
       <Menu1/>
     </div>
-      <div className="px-2">
+      <div className="sm:px-2">
     <div>
     <div className="rounded-lg">
     <div className="grid sm:grid-cols-12 gap-2">
       <div className="sm:col-span-10 bg-background sm:p-8 p-4 rounded-lg">
-        <div className="text-sm text-muted-foreground uppercase mb-2">news </div>
+        <div className="text-sm text-muted-foreground uppercase my-2">news </div>
         <ArticlesTabs articles={votes}/>
       </div>
       <div className="col-span-2 rounded-lg">

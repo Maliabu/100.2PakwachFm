@@ -82,8 +82,8 @@ export function Menu() {
             src={images[0]}
             alt={`Ad ${images[0]}`}
             fill
-            className="object-cover"
             unoptimized
+            className="object-cover"
           /></div>
           : ''}
   <SearchBar/></div>
@@ -131,7 +131,7 @@ export function Menu() {
     </NavigationMenu>
     <div className="sm:block hidden"><Link href='/videos'><Button><Video/> Videos</Button></Link></div>
     </div>
-    <div className="sm:hidden overflow-x-auto w-full py-2 scrollbar-hidden scrollbar-hide bg-background">
+    <div className="sm:hidden overflow-x-auto w-full p-2 scrollbar-hidden scrollbar-hide bg-background">
   <ul className="flex gap-2 min-w-max">
     <li className="shrink-0">
       <NavItem href="/" label="Home"/>

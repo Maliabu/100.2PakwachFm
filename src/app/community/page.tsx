@@ -10,7 +10,7 @@ import Menu1 from "../navigation/menu1";
 
 export default function Community() {
   return (
-    <div className="sm:px-16 sm:bg-muted">
+    <div className="sm:px-16 md:px-12 sm:bg-muted">
       <div className="sm:px-2">
         <Menu/>
       </div>

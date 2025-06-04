@@ -49,7 +49,7 @@ import { useRouter } from "next/navigation"
     return (
       <div>
       <Card className="border-none shadow-none background-none" id={title}>
-      <div className="relative w-full sm:h-96 h-80">
+      <div className="relative w-full sm:h-96 h-64">
         <Image
             src={path}
             alt="article image"

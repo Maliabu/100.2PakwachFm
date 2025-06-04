@@ -7,12 +7,12 @@ import { Button } from "@/components/ui/button";
 export default function Popular(){
     return(
         <div>
-        <div className="bg-background sm:p-8 p-2 rounded-lg mt-2">
+        <div className="bg-background sm:p-6 p-2 rounded-lg mt-2">
             <div className="flex justify-between"><Star size={18} className="text-primary"/>
             <div className="text-sm uppercase text-muted-foreground"> OUR MOST POPULAR YET</div>
             <Button className="bg-secondary text-muted-foreground"><ThumbsUp/> Voted</Button>
             </div>
-        <div className="grid sm:grid-cols-2 gap-4 sm:mx-40 my-10">
+        <div className="grid sm:grid-cols-2 gap-4 sm:mx-40 sm:my-10 m-8">
             <div className="rounded-lg">
             <div style={{ position: 'relative', width: '100%', height: '300px' }}>
             <Image
