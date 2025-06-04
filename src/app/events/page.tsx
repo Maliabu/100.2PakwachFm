@@ -18,10 +18,10 @@ export default function Events() {
         <Menu/>
       </div>
 
-    <div className="flex justify-between items-center mx-2">
+    <div className=" sm:mx-2">
       <Menu1/>
     </div>
-      <div className="px-2">
+      <div className="sm:px-2">
     <div>
     <div className="rounded-lg">
     <div className="grid sm:grid-cols-12 gap-2">
@@ -29,7 +29,7 @@ export default function Events() {
         <div className="text-sm text-muted-foreground">LATEST </div>
         <div className="text-4xl tracking-tight leading-10 font-bold my-4 capitalize">Events and Concerts</div>
       </div>
-      <div className="sm:col-span-3 rounded-lg bg-background items-center flex justify-center"><Calendar/></div>
+      <div className="sm:col-span-3 rounded-lg events items-center flex justify-center"><Calendar/></div>
     </div>
     </div>
     <div className="bg-background sm:p-8 p-4 rounded-lg mt-2">

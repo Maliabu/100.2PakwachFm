@@ -51,7 +51,7 @@ export default function Messages() {
 
   return (
     <div>
-    <div className="my-2 flex bg-background justify-between rounded">
+    <div className="my-2 sm:flex bg-background justify-between rounded">
       <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className=" sm:p-8">
       <div className="text-2xl font-bold tracking-tight">Leave a message</div>

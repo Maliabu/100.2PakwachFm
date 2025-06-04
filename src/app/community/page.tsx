@@ -7,6 +7,7 @@ import Footer from "../navigation/footer";
 import { SearchBar } from "../navigation/search";
 import Popular from "../home/popular";
 import Menu1 from "../navigation/menu1";
+import { Users2 } from "lucide-react";
 
 export default function Community() {
   return (
@@ -25,8 +26,8 @@ export default function Community() {
         <div className="text-sm text-muted-foreground uppercase">our community </div>
         <div className="text-5xl tracking-tight leading-10 font-bold my-4 capitalize">join us</div>
       </div>
-        <div className="col-span-3 bg-background rounded-lg p-4">
-            <div className="text-sm text-muted-foreground uppercase">activities </div>
+        <div className="sm:col-span-3 community rounded-lg p-4">
+            <div className="text-sm text-muted-foreground uppercase"><Users2/> </div>
         </div>
     </div>
     </div>

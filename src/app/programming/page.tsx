@@ -20,13 +20,13 @@ export default async function Events() {
   })
   return (
     <div className="sm:px-16 md:px-12 sm:bg-muted">
-      <div className="px-2">
+      <div className="sm:px-2">
         <Menu/>
       </div>
-    <div className="flex justify-between items-center px-2">
+    <div className=" sm:px-2">
       <Menu1/>
     </div>
-      <div className="px-2">
+      <div className="sm:px-2">
     <div>
     <div className="rounded-lg">
     <div className="grid sm:grid-cols-12 gap-2">
@@ -81,7 +81,7 @@ export default async function Events() {
         />
         </div> */}
       </div>
-        <div className="sm:col-span-3 bg-background rounded-lg p-4 mt-2">
+        <div className="sm:col-span-3 present rounded-lg p-4 mt-2">
             {/* <Mic size={150} className="border dark:text-primary rounded-full p-10"/> */}
             {/* <MegaphoneIcon size={70} className="p-4 ml-2 rounded-full border animate-spin"/> */}
             <div className="text-sm text-muted-foreground uppercase">presenters </div>
