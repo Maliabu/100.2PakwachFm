@@ -89,7 +89,7 @@ export default function Header(){
           
       };
     return <div className="">
-        <div className=" rounded sm:grid sm:grid-cols-2 gap-2">
+        <div className=" rounded sm:grid sm:grid-cols-2 sm:gap-2">
             <div className="">
             {tokenise()[4]=="admin" && 
             <div className=" bg-secondary p-2 rounded-md flex justify-between items-center">
@@ -108,8 +108,8 @@ export default function Header(){
                 ))}</div>
             </div>}
             </div>
-            <div className="">
-                <div className="flex items-center justify-end">
+            <div className="sm:mt-0 mt-2">
+                <div className="flex items-center sm:justify-end">
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <Button variant="outline" className="border-none">

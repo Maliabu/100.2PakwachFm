@@ -57,11 +57,11 @@ export default function AddEvents() {
         }
     }
   return (
-    <div className="p-4 sm:p-8 pb-0 rounded bg-secondary">
+    <div className="p-2 sm:p-8 pb-0 rounded bg-secondary">
     <Form {...form}>
     <form onSubmit={form.handleSubmit(onSubmit)}>
         <div className="text-2xl font-bold tracking-tight">Add an Event</div>
-      <div className="grid grid-cols-2 w-full items-center gap-4 bg-background rounded-lg p-4 sm:p-8 mt-4">
+      <div className="grid sm:grid-cols-2 w-full items-center gap-4 bg-background rounded-lg p-4 sm:p-8 mt-4">
         <div>
             <div className="flex flex-col space-y-1.5">
             <FormField

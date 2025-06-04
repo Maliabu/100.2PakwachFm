@@ -51,9 +51,9 @@ export default function Ticket() {
 
   return (
     <div>
-    <div className="my-2 flex bg-background rounded">
+    <div className="my-2 sm:flex bg-background rounded">
       <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className=" sm:p-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="p-6 sm:p-8">
       <div className="text-2xl font-bold tracking-tight">What do you need help with?</div>
       <div className="text-sm mb-6 text-muted-foreground">This goes out to support for web app support.</div>
           <div className="grid sm:grid-cols-3 gap-2">

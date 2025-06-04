@@ -20,7 +20,7 @@ type ReusableDrawerProps = {
           <Button className="text-white">Add {page}</Button>
         </DrawerTrigger>
         <DrawerContent>
-          <div className=" px-16">
+          <div className=" sm:px-16">
             <DrawerHeader>
               <DrawerTitle>Add New {page}</DrawerTitle>
               <DrawerDescription>Provide the details as required for {page}</DrawerDescription>
