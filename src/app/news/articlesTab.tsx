@@ -126,9 +126,9 @@ export function ArticlesTabs(
     <div className="sm:hidden mt-12">
       <Card className="border-none shadow-none bg-secondary">
       <CardHeader>
-        <div className="text-3xl font-bold tracking-tight leading-6">Recommended Articles</div>
+        <div className="text-sm font-lighter text-muted-foreground mt-4 uppercase">Recommended Articles</div>
       </CardHeader>
-      <div className="scroll-y-blog bg-background py-4">
+      <div className="scroll-y-blog">
         {
           allArticles.map((article: { id: number; title: string; content: string; writer: string, 
             facebookLink: string | null,
@@ -150,7 +150,7 @@ export function ArticlesTabs(
                     unoptimized
                     className="object-cover"/>
                   </div>
-                  <Link href={ref(article.title)} className="text-xl font-bold tracking-tight leading-5 text-dark pointer capitalize">
+                  <Link href={ref(article.title)} className="text-2xl font-bold tracking-tight leading-5 text-dark pointer capitalize lowercase line-clamp-3">
                   <div className="pt-4">
                   {article.title}</div></Link>
               <div className="line-clamp-2 text-md leading-5 mt-2">

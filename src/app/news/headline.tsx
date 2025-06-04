@@ -175,12 +175,10 @@ export function HeadlineTabs(
     </Card>
     </div>
     </div>
-    <div className="sm:hidden sm:mt-12">
-      <Card className="border-none shadow-none">
-      <CardHeader>
-        <div className="text-3xl font-bold tracking-tight leading-6">What you missed</div>
-      </CardHeader>
-      <div className="scroll-y-blog bg-background py-4">
+    <div className="sm:hidden sm:mt-12 bg-secondary p-6">
+      <div className="border-none shadow-none p-0 bg-none">
+        <div className="text-sm font-light uppercase text-muted-foreground leading-6 mb-6">More happening</div>
+      <div className="scroll-y-blog">
         {
           allArticles.map((article: { id: number; 
             facebookLink: string | null,
@@ -189,7 +187,7 @@ export function HeadlineTabs(
             date: Date,
             articleType: string, title: string; content: string; writer: string, image: string | null, updatedAt: Date, createdAt: Date}
           ) => (
-            <CardContent className="" key={article.id}>
+            <div className="" key={article.id}>
             <div className="mt-1 pb-4" 
             onClick={() => getContent(article)}>
               <div>
@@ -202,7 +200,7 @@ export function HeadlineTabs(
                     className="object-cover"/>
                   </div>
                   <Link href={ref(article.title)}>
-                <div className="text-3xl font-bold tracking-tight mt-4 leading-8 text-dark pointer blog capitalize">
+                <div className="text-2xl line-clamp-3 font-bold tracking-tight mt-4 leading-6 text-dark pointer blog lowercase capitalize">
               {article.title}</div></Link>
               <div className="line-clamp-2 text-md leading-6 mt-2">
               {parse(article.content)}
@@ -212,10 +210,10 @@ export function HeadlineTabs(
               </div>
               </div>
               </div>
-              </CardContent>
+              </div>
           ))
         }</div>
-    </Card>
+    </div>
     </div>
         </div>
         </div>

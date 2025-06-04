@@ -19,15 +19,15 @@ export default async function News() {
       <div className="sm:px-2">
         <Menu/>
       </div>
-    <div className="px-2">
+    <div className="sm:px-2">
       <Menu1/>
     </div>
-      <div className="px-2">
+      <div className="sm:px-2">
     <div>
     <div className="rounded-lg">
     <div className="grid sm:grid-cols-12 gap-2">
       <div className="sm:col-span-10 bg-background sm:p-8 p-4 rounded-lg">
-        <div className="text-sm text-muted-foreground uppercase mb-2">news </div>
+        <div className="text-sm text-muted-foreground uppercase my-2">news </div>
         <ArticlesTabs articles={votes}/>
       </div>
       <div className="col-span-2 rounded-lg">
