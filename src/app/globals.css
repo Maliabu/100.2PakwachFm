@@ -134,6 +134,58 @@
   transform: translateZ(0);
   color: aliceblue;
 }
+.events{
+  background-image: url('images/event.jpeg');
+  background-repeat: no-repeat !important;
+  padding-top: 5%;
+  background-position: center;
+  background-size: cover;
+  /* Try to improve rendering */
+  image-rendering: auto; /* can also try 'crisp-edges' or 'pixelated' */
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  color: aliceblue;
+}
+.community{
+  background-image: url('images/community.jpeg');
+  background-repeat: no-repeat !important;
+  padding-top: 5%;
+  background-position: center;
+  background-size: cover;
+  /* Try to improve rendering */
+  image-rendering: auto; /* can also try 'crisp-edges' or 'pixelated' */
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  color: aliceblue;
+}
+.advertize{
+  background-image: url('images/ad.jpeg');
+  background-repeat: no-repeat !important;
+  padding-top: 5%;
+  background-position: center;
+  background-size: cover;
+  /* Try to improve rendering */
+  image-rendering: auto; /* can also try 'crisp-edges' or 'pixelated' */
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  color: aliceblue;
+}
+.present{
+  background-image: url('images/events.jpeg');
+  background-repeat: no-repeat !important;
+  padding-top: 5%;
+  background-position: center;
+  background-size: cover;
+  /* Try to improve rendering */
+  image-rendering: auto; /* can also try 'crisp-edges' or 'pixelated' */
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  color: aliceblue;
+}
 .ads{
   /* Try to improve rendering */
   image-rendering: auto; /* can also try 'crisp-edges' or 'pixelated' */

@@ -16,16 +16,16 @@ export default function Events() {
       <div className="sm:px-2">
         <Menu/>
       </div>
-    <div className="flex justify-between items-center mx-2">
+    <div className="sm:mx-2">
       <Menu1/>
     </div>
-      <div className="px-2">
+      <div className="sm:px-2">
     <div>
     <div className="rounded-lg">
-    <div className="grid grid-cols-12 gap-2">
-      <div className="col-span-9 bg-background p-8 rounded-lg">
+    <div className="sm:grid sm:grid-cols-12 gap-2">
+      <div className="sm:col-span-9 bg-background p-8 rounded-lg">
         <div className="text-sm text-muted-foreground uppercase">advertise with us </div>
-        <div className="text-3xl tracking-tight leading-10 font-bold my-4 capitalize">Checkout our rate card! Advertise your Business</div>
+        <div className="text-3xl tracking-tight leading-8 font-bold my-4 capitalize">Checkout our rate card! Advertise your Business</div>
         {/* <div style={{ position: 'relative', width: '100%', height: '500px' }}>
         <Image
             src={Sports}
@@ -36,7 +36,7 @@ export default function Events() {
         </div> */}
         <Messages/>
       </div>
-        <div className="col-span-3 flex justify-center items-center text-muted-foreground bg-background rounded-lg p-4">
+        <div className="sm:col-span-3 flex justify-center items-center text-muted-foreground advertize rounded-lg p-4">
           <MegaphoneIcon/>
             {/* <Mic size={150} className="border dark:text-primary rounded-full p-10"/> */}
             {/* <MegaphoneIcon size={70} className="p-4 ml-2 rounded-full border animate-spin"/> */}
