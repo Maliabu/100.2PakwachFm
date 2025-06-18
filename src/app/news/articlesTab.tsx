@@ -113,7 +113,7 @@ export function ArticlesTabs(
                   <Link href={ref(article.title)} className="text-xl line-clamp-3 font-bold tracking-tight leading-5 text-dark pointer lowercase capitalize hover:text-primary">
                   <div className="my-4">
                   {article.title}</div></Link>
-              <div className="line-clamp-2 text-sm leading-4 mt-2">
+              <div className="line-clamp-2 hidden text-sm leading-4 mt-2">
               {parse(article.content)}
               </div></div>}/>
               </div>

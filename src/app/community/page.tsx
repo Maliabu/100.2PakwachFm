@@ -8,6 +8,9 @@ import { SearchBar } from "../navigation/search";
 import Popular from "../home/popular";
 import Menu1 from "../navigation/menu1";
 import { Users2 } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import PartnerCarousel from "./partners";
 
 export default function Community() {
   return (
@@ -15,19 +18,22 @@ export default function Community() {
       <div className="sm:px-2">
         <Menu/>
       </div>
-    <div className="flex justify-between items-center">
+    <div className="flex justify-between items-center mx-2">
       <Menu1/>
     </div>
       <div className="px-2">
     <div>
     <div className="rounded-lg">
-    <div className="grid grid-cols-12 gap-2">
-      <div className="col-span-9 bg-background p-8 rounded-lg">
+    <div className="grid sm:grid-cols-12 gap-2">
+      <div className="sm:col-span-9 bg-background p-8 rounded-lg">
         <div className="text-sm text-muted-foreground uppercase">our community </div>
         <div className="text-5xl tracking-tight leading-10 font-bold my-4 capitalize">join us</div>
+        <div className="text-sm">Our roots run deep in Pakwach, Uganda — a place full of vibrant culture, strong community spirit, and inspiring local initiatives. We’re proud to work alongside NGOs, youth groups, and community organizations in Pakwach that are creating real change on the ground. This page highlights some of the partners we support as they work to uplift lives, promote education, protect the environment, and build a brighter future for everyone in the region.</div>
+        <div className="text-sm text-muted-foreground uppercase my-8">cause ally </div>
+        <PartnerCarousel/>
       </div>
         <div className="sm:col-span-3 community rounded-lg p-4">
-            <div className="text-sm text-muted-foreground uppercase"><Users2/> </div>
+            <div className="text-sm hidden text-muted-foreground uppercase"><Users2/> </div>
         </div>
     </div>
     </div>

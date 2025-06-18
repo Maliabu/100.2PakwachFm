@@ -165,7 +165,7 @@ export function HeadlineTabs(
                   <Link href={ref(article.title)}>
                 <div className="text-2xl font-bold tracking-tight mt-4 leading-6 hover:text-primary text-dark pointer blog capitalize lowercase line-clamp-3">
               {article.title}</div></Link>
-              <div className="line-clamp-2 text-sm leading-4 mt-2">
+              <div className="line-clamp-2 hidden text-sm leading-4 mt-2">
               {parse(article.content)}
               </div></div>
               </div>

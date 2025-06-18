@@ -37,7 +37,7 @@ export default function Events() {
         <Messages/>
       </div>
         <div className="sm:col-span-3 flex justify-center items-center text-muted-foreground advertize rounded-lg p-4">
-          <MegaphoneIcon/>
+          <MegaphoneIcon className="hidden"/>
             {/* <Mic size={150} className="border dark:text-primary rounded-full p-10"/> */}
             {/* <MegaphoneIcon size={70} className="p-4 ml-2 rounded-full border animate-spin"/> */}
             {/* <Highlights/> */}

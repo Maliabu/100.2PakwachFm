@@ -203,7 +203,7 @@ export default function StepWise() {
         }
     }
     return (
-        <div className="sm:p-16 p-2 flex flex-col items-center bg-gradient-to-bl from-[#ffe4e6]  to-[#ddfbf1]">
+        <div className="sm:p-16 p-2 flex flex-col items-center bg-secondary">
             <div className="p-4 sm:rounded-l-3xl sr:rounded-t-2xl flex flex-col justify-center items-center text-muted sm:columns-1"> 
                <Image src={Logo} width={150} height={150} alt="logo"/>                  
             </div>
@@ -255,7 +255,7 @@ function Step1(props:
         return null
     }
     return (
-        <div className=" p-6 w-[350px] bg-background shadow-lg dark:bg-muted rounded">
+        <div className=" p-6 w-[350px] bg-background dark:bg-muted rounded">
           <div className="text-3xl tracking-tight font-bold sm:mb-8 grid justify-center items-center">Sign in</div>
             <Form {...props.form}>
             <form onSubmit={props.form.handleSubmit(props.onSubmit)}>
