@@ -29,7 +29,7 @@ export default function Events() {
         <div className="text-sm text-muted-foreground">LATEST </div>
         <div className="text-4xl tracking-tight leading-10 font-bold my-4 capitalize">Events and Concerts</div>
       </div>
-      <div className="sm:col-span-3 rounded-lg events items-center flex justify-center"><Calendar/></div>
+      <div className="sm:col-span-3 rounded-lg events items-center flex justify-center"><Calendar className="hidden"/></div>
     </div>
     </div>
     <div className="bg-background sm:p-8 p-4 rounded-lg mt-2">

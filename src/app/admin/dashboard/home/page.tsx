@@ -262,14 +262,14 @@ export default function Page() {
               <div>{data.length}</div>
               </div>
             </div>
-            <div className="text-sm p-6 flex flex-col sm:col-span-4 justify-center dash text-white rounded-lg tracking-tight font-bold ">
-              <div className="py-2 px-5 bg-background/20 rounded-md flex justify-between items-center"><Calendar1 className="mr-5"/>{greeting}</div>
-              {open.length>0 && <div className="py-2 px-5 bg-background/20 rounded-md flex justify-between items-center animate-pulse mt-1"><Ticket className="mr-5"/>You have {open.length} Ticket(s) pending</div>}
-              {newNot.length>0 && <div className="py-2 px-5 bg-background/20 rounded-md flex justify-between items-center animate-pulse mt-1"><Info className="mr-5"/>You have {open.length} Notification(s) pending</div>}
-              {message.length>0 && <div className="py-2 px-5 bg-background/20 rounded-md flex justify-between items-center mt-1 animate-pulse"><MailOpen className="mr-5"/>You have {message.length} Message(s) pending</div>}
+            <div className="text-sm p-6 flex flex-col sm:col-span-4 justify-center bg-background text-foreground rounded-lg tracking-tight font-bold ">
+              <div className="py-2 px-5 bg-secondary rounded-md flex justify-between items-center"><Calendar1 className="mr-5"/>{greeting}</div>
+              {open.length>0 && <div className="py-2 px-5 bg-secondary rounded-md flex justify-between items-center animate-pulse mt-1"><Ticket className="mr-5"/>You have {open.length} Ticket(s) pending</div>}
+              {newNot.length>0 && <div className="py-2 px-5 bg-secondary rounded-md flex justify-between items-center animate-pulse mt-1"><Info className="mr-5"/>You have {open.length} Notification(s) pending</div>}
+              {message.length>0 && <div className="py-2 px-5 bg-secondary rounded-md flex justify-between items-center mt-1 animate-pulse"><MailOpen className="mr-5"/>You have {message.length} Message(s) pending</div>}
               <ClockAlert size={60} className="mt-8"/>
               <div className="text-5xl font-bold tracking-tight my-12">{formatTime(today)}</div>
-                <div className="text-foreground p-3 bg-background/50 rounded w-[100px]">{date(today.toString())}</div>
+                <div className=" p-3 bg-secondary rounded w-[100px]">{date(today.toString())}</div>
             </div>
         </div>
       </div>
@@ -329,26 +329,15 @@ export default function Page() {
         <div className="grid sm:grid-cols-12 grid-cols-1 text-lg p-2 gap-4">
             {idType=='admin' && <div className="sm:col-span-4">
             <Link href='/admin/dashboard/users' className="p-6 rounded-lg transition-transform duration-300 cursor-pointer hover:scale-105 bg-background flex justify-between">
-            <User2 size={20} className="text-"/> <div className="h-8 w-8 flex font-medium items-center justify-center bg-secondary rounded-full">{userData?.length}</div></Link>
+            <div className="text-sm"><User2 size={20} className="text-"/> Users</div> <div className="h-8 w-8 flex font-medium items-center justify-center bg-secondary rounded-full">{userData?.length}</div></Link>
             </div>}
             <div className="sm:col-span-4">
             <Link href='/admin/dashboard/articles' className="p-6 rounded-lg transition-transform duration-300 cursor-pointer hover:scale-105 bg-background flex justify-between">
-                <Paperclip size={20} className="text-"/> <div className="h-8 w-8 flex items-center justify-center bg-secondary rounded-full">{articles?.length}</div></Link>
+                <div className="text-sm"><Paperclip size={20} className="text-"/> Articles</div><div className="h-8 w-8 flex items-center justify-center bg-secondary rounded-full">{articles?.length}</div></Link>
             </div>
             <div className="sm:col-span-4">
             <Link href='/admin/dashboard/events' className="p-6 rounded-lg transition-transform duration-300 cursor-pointer hover:scale-105 bg-background flex justify-between">
-                <Calendar size={20} className="text-"/> <div className="h-8 w-8 flex items-center justify-center bg-secondary rounded-full">{events?.length}</div></Link>
-            </div>
-        </div>
-        <div className="grid grid-cols-12 text-sm font-bold gap-2 mb-4 hidden sm:block">
-            {idType=='admin' && <div className="col-span-4 px-3 flex justify-between">
-                Users            
-            </div>}
-            <div className="col-span-4 px-3 flex justify-between">
-                Articles
-            </div>
-            <div className="col-span-4 px-3 flex justify-between">
-                Events
+                <div className="text-sm"><Calendar size={20} className="text-"/> Events</div><div className="h-8 w-8 flex items-center justify-center bg-secondary rounded-full">{events?.length}</div></Link>
             </div>
         </div>
 

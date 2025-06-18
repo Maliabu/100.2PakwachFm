@@ -26,8 +26,8 @@ export default function Menu1(){
     fetchImages();
   }, []);
     return(
-        <div className="sm:grid sm:grid-cols-12 rounded-md">
-          <div className="sm:col-span-6 sm:p-2">
+        <div className="sm:grid sm:grid-cols-12 bg- rounded-md">
+          <div className="sm:col-span-12 sm:p-2">
         <NavigationMenu className="rounded-lg hidden sm:block">
           <NavigationMenuList>
           <NavigationMenuItem>
@@ -54,7 +54,7 @@ export default function Menu1(){
           </NavigationMenuList>
         </NavigationMenu>
         </div>
-        <div className="sm:col-span-6 flex">
+        <div className="sm:col-span-6 hidden flex">
       {images.map((src, index) => (
         <div key={index} className=" relative w-full h-24">
           <Image
