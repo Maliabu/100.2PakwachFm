@@ -1,5 +1,5 @@
 import { relations } from 'drizzle-orm';
-import { boolean, int, mysqlTable, text, timestamp, varchar } from 'drizzle-orm/mysql-core';
+import { boolean, int, json, mysqlTable, text, timestamp, varchar } from 'drizzle-orm/mysql-core';
 
 const createdAt = timestamp('created_at').notNull().defaultNow()
 const updatedAt = timestamp('updated_at')
@@ -222,6 +222,20 @@ export const editorImagesTable = mysqlTable('editor_images', {
   updatedAt,
 })
 
+export const webUser = mysqlTable("web_users", {
+  id: varchar("id", { length: 36 }).primaryKey(), // UUID
+  consent: varchar("consent", { length: 5 }).default("true"),
+createdAt,updatedAt
+});
+
+export const webEvents = mysqlTable("web_events", {
+  id: varchar("id", { length: 36 }).primaryKey(), // UUID
+  user_id: varchar("user_id", { length: 36 }),
+  event_type: varchar("event_type", { length: 100 }),
+  metadata: json("metadata"),
+createdAt
+});
+
 export type InsertEditorImage = typeof editorImagesTable.$inferInsert;
 export type SelectEditorImage = typeof editorImagesTable.$inferSelect;
 
@@ -269,3 +283,9 @@ export type SelectNotification = typeof notificationsTable.$inferSelect;
 
 export type InsertNotificationsUser = typeof notificationUsersTable.$inferInsert;
 export type SelectNotificationsUser = typeof notificationUsersTable.$inferSelect;
+
+export type InsertWebUser = typeof webUser.$inferInsert;
+export type SelectWebUser = typeof webUser.$inferSelect;
+
+export type InsertWebEvents = typeof webEvents.$inferInsert;
+export type SelectWebEvents = typeof webEvents.$inferSelect;
