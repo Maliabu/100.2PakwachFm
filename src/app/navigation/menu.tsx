@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client"
 
@@ -40,18 +41,16 @@ export function Menu() {
   }, []);
   return (
     <div>
-
-
-<footer className="row-start-3 sm:p-3 p-4 bg-black text-white flex gap-[24px] text-sm flex-wrap items-center justify-center">
-      <div className="text-sm">Follow us on:</div>
+<div className="flex items-center p-4 sm:p-0 bg-white justify-between">
+<footer className="row-start- sm:p-3 flex sm:gap-[24px] gap-4 text-sm flex-wrap items-center justify-between sm:justify-start">
     <a
-      className="flex items-center sm:gap-2 font-bold tracking-tight hover:underline hover:underline-offset-4"
+      className="flex items-center gap-2 font-bold tracking-tight hover:underline hover:underline-offset-4"
       href="https://www.linkedin.com/company/pakwach-fm/about"
       target="_blank"
       rel="noopener noreferrer"
     >
-    <div className="font-bold rounded-full border-2 w-8 h-8 grid items-center justify-center">ln</div>
-      <span className="sm:block hidden">linkedIn</span>
+    <img src="/linkedin.svg" alt="linkedin" className="w-4 h-4" />
+    <div className="text-xs sm:block hidden text-muted-foreground">@linkedin</div>
     </a>
     <a
       className="flex items-center gap-2 font-bold tracking-tight hover:underline hover:underline-offset-4"
@@ -59,18 +58,41 @@ export function Menu() {
       target="_blank"
       rel="noopener noreferrer"
     >
-    <div className="font-bold rounded-full border-2 w-8 h-8 grid items-center justify-center">i</div>
-    <span className="sm:block hidden">instagram</span>
+    <img src="/instagram.svg" alt="instagram" className="w-4 h-4" />
+    <div className="text-xs sm:block hidden text-muted-foreground">@instagram</div>
+
     </a>
     <a
-      className="flex items-center font-bold tracking-tight sm:gap-2 hover:underline hover:underline-offset-4"
+      className="flex items-center gap-2 font-bold tracking-tight hover:underline hover:underline-offset-4"
+      href="https://www.instagram.com/pakwachfm/"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+    <img src="/twitter.svg" alt="Twitter" className="w-4 h-4" />
+    <div className="text-xs sm:block hidden text-muted-foreground">@twitter</div>
+    </a>
+    <a
+      className="flex items-center gap-2 font-bold tracking-tight hover:underline hover:underline-offset-4"
+      href="https://www.instagram.com/pakwachfm/"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+    <img src="/tiktok.svg" alt="tiktok" className="w-4 h-4 text-background" />
+    <div className="text-xs sm:block hidden text-muted-foreground">@tiktok</div>
+
+    </a>
+    <a
+      className="flex items-center font-bold tracking-tight gap-2 hover:underline hover:underline-offset-4"
       href="https://www.facebook.com/100.2pakwachfm"
       target="_blank"
       rel="noopener noreferrer">
-    <div className="font-bold rounded-full border-2 w-8 h-8 grid items-center justify-center">f</div>
-    <span className="sm:block hidden">facebook</span>
+    <img src="/facebook.svg" alt="facebook" className="w-4 h-4" />
+    <div className="text-xs hidden sm:block text-muted-foreground">@facebook</div>
+
     </a>
   </footer>
+  <SearchBar/>
+  </div>
   <div className="on-air p-16 bg-gradient-to-bl background grid grid-cols-12 gap-2">
     <div className="sm:col-span-3">
       <div className="w-60 h-20">
@@ -89,7 +111,7 @@ export function Menu() {
             className="object-cover"
           /></div>
           : ''}
-  <SearchBar/></div>
+  </div>
     <div className="sm:bg-background bg-secondary sm:p-3 sm:rounded-b-lg">
         <div className="justify-between flex">
             <div className="w-30 h-10 hidden sm:block"><Link href='/'><Image src={Logo} alt="logo"/></Link></div>
@@ -150,6 +172,12 @@ export function Menu() {
     </li>
     <li className="shrink-0">
     <NavItem href="/news#sports" label="Sports"/>
+    </li>
+    <li className="shrink-0">
+    <NavItem href="/community" label="Community"/>
+    </li>
+    <li className="shrink-0">
+    <NavItem href="/services" label="Services"/>
     </li>
     <li className="shrink-0">
       <Link href="/adverts" className="block rounded"><Button><Megaphone size={18}/> Advertise</Button></Link>

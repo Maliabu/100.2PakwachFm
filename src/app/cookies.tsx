@@ -54,25 +54,25 @@ const CookieConsent = () => {
         position: 'fixed',
         bottom: 0,
         width: '100%',
-        background: '#152653',
+        background: '#111',
         color: '#fff',
         padding: '1em',
         textAlign: 'center',
         zIndex: 9999,
       }}
     >
-      <div className="text-sm p-4">
+      <div className="text-sm p-3 grid items-start text-start">
         This website uses cookies to track usage. For more information, see our{' '}
         <Link className="font-bold text-primary" href="/privacy">
           Privacy Policy
         </Link>
       </div>
-      <div className="p-4">
-      <Button onClick={handleAccept} style={{ marginRight: 10 }}>
+      <div className="p-3 sm:text-end">
+      <Button onClick={handleAccept} className='sm:mr-2'>
   {accepted ? "Yay, let's do this!" : 'Accept'}
 </Button>
 
-        <Button variant="outline" className="bg-transparent" onClick={handleDecline}>
+        <Button variant="outline" className="bg-transparent sm:mt-0 mt-2" onClick={handleDecline}>
         {declined ? "OK, Bye!" : 'Decline'}
         </Button>
       </div>
@@ -81,3 +81,5 @@ const CookieConsent = () => {
 };
 
 export default CookieConsent;
+
+// 082f49
