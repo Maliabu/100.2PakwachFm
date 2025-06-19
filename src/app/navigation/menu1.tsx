@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client"
 
 import { Button } from "@/components/ui/button";
@@ -30,9 +31,6 @@ export default function Menu1(){
           <div className="sm:col-span-6 sm:p-2">
         <NavigationMenu className="rounded-lg hidden sm:block">
           <NavigationMenuList>
-          <NavigationMenuItem>
-          <Button><Mail size={18}/> Subscribe</Button>
-            </NavigationMenuItem>
             <NavigationMenuItem>
                 <NavigationMenuLink asChild>
                 <Link href="/services" className={navigationMenuTriggerStyle()}>
