@@ -46,11 +46,12 @@ export default function AddArticle() {
           writer: name,
           image: "",
           date: new Date(),
-          userId: ''
+          userId: id
       },
     })
 
     async function onSubmit(values: z.infer<typeof addArticleSchema>) {
+      values.userId = id
       values.content = value
       values.writer = name
         //create obj
@@ -190,6 +191,7 @@ export default function AddArticle() {
                               <SelectItem value="highlight">Highlight</SelectItem>
                               <SelectItem value="business">Business</SelectItem>
                               <SelectItem value="sports">Sports</SelectItem>
+                              <SelectItem value="political">Political</SelectItem>
                               </SelectContent>
                           </Select>
                       </FormControl>

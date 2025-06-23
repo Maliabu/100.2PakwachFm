@@ -5,7 +5,7 @@ import { db } from "@/db/db";
 import { EventsTable, activityTable, articlesTable, commentsTable, courseTable, currencyTable, editorImagesTable, enrollmentsTable, messagesTable, nextCourseTable, notificationsTable, programmingTable, replyTable, subscriptionsTable, ticketingTable, usersTable, votesTable } from "@/db/schema";
 import "use-server"
 import { z } from "zod";
-import { addArticleSchema, addCourseSchema, addEnrollmentSchema, addEventSchema, addNextCourseSchema, addNotificationSchema, addProgrammingSchema, addSubscriptionSchema, addUserSchema, commentsSchema, deleteArticleSchema, deleteEventSchema, deleteProgrammingSchema, deleteSchema, deleteUserSchema, loginUserSchema, messagesSchema, openTicket, replySchema, updateCourseSchema, uploadProfilePicture, voteSchema } from '@/schema/schema'
+import { addArticleSchema, addCourseSchema, addEnrollmentSchema, addEventSchema, addMessagesSchema, addNextCourseSchema, addNotificationSchema, addProgrammingSchema, addSubscriptionSchema, addUserSchema, commentsSchema, deleteArticleSchema, deleteEventSchema, deleteProgrammingSchema, deleteSchema, deleteUserSchema, loginUserSchema, messagesSchema, openTicket, replySchema, updateCourseSchema, uploadProfilePicture, voteSchema } from '@/schema/schema'
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { File } from "node:buffer";
@@ -532,6 +532,7 @@ Promise<{error: boolean | undefined}> {
     if(profile !== null){
         data.image = profile.url
         await db.insert(articlesTable).values({...data})
+        console.log('user_id: ', data.userId)
         await logActivity('Added article: '+data.title+'on '+data.date, data.userId)
         return {error: false}
     } else {
@@ -648,9 +649,9 @@ Promise<{error: boolean | undefined, message: string}> {
    }
 }
 
-export async function addMessages(unsafeData: z.infer<typeof messagesSchema>) : 
+export async function addMessages(unsafeData: z.infer<typeof addMessagesSchema>) : 
 Promise<{error: boolean | undefined}> {
-   const {success, data} = messagesSchema.safeParse(unsafeData)
+   const {success, data} = addMessagesSchema.safeParse(unsafeData)
 
    if (!success){
     return {error: true}
