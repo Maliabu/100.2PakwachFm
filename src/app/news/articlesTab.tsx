@@ -67,7 +67,7 @@ export function ArticlesTabs(
         <div>
         <div className="">
             <div className="grid sm:grid-cols-12 gap-2">
-    <div className=" sm:col-span-12 rounded-xl">
+    <div className=" sm:col-span-8 col-span-12 rounded-xl">
           <ArticlesCard 
               id={contents.id}
               title={contents.title}
@@ -83,12 +83,12 @@ export function ArticlesTabs(
               createdAt={contents.createdAt} 
               />
     </div>
-        <div className="col-span-12 hidden sm:block">
+        <div className="col-span-12 sm:col-span-4 hidden sm:block">
       <Card className=" border-none p-2 shadow-none">
       <CardHeader>
         <div className="text-2xl font-bold tracking-tight leading-6 mt-4">More happening</div>
       </CardHeader>
-      <div className="scroll-y-blog bg-background py-2 grid grid-cols-3">
+      <div className="scroll-y-blog bg-background py-2">
         {
           allArticles.map((article: { id: number; 
             facebookLink: string | null,

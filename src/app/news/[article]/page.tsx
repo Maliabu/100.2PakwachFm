@@ -50,9 +50,9 @@ export async function generateMetadata({ params }: { params: { article: string }
 export default async function Page({
     params,
   }: {
-    params: Promise<{ article: string }>
+    params: { article: string }
   }) {
-    const slug = (await params).article
+    const slug = decodeURIComponent(params.article)
     const title = decodeURIComponent(slug)
     const [article] = await db
     .query

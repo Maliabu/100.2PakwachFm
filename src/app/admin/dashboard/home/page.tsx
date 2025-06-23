@@ -5,7 +5,7 @@
 'use client'
 
 import useSWR from "swr";
-import { date, fetcher, tokenise } from "@/services/services";
+import { date, dater, fetcher, getMyDay, getMyMonth, tokenise } from "@/services/services";
 import { BarChart2, Calendar, Calendar1, Clock10, ClockAlert, Cloud, CloudFog, Dot, Globe, Info, Loader2, MailOpen, Paperclip, Ticket, User2 } from "lucide-react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend } from 'recharts';
 import Image from "next/image";
@@ -219,12 +219,12 @@ export default function Page() {
               style={{
                 width: '35px',
                 height: '35px',
+                border: '1px solid #A1A1AA',
                 borderRadius: '50%',
-                backgroundColor: '#4ade80', // example fallback color
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                color: 'black',
+                color: '#A1A1AA',
                 fontSize: '16px',
               }}
             >
@@ -258,9 +258,11 @@ export default function Page() {
 
     return `${hours}:${minutes} ${ampm}`;
   };
-  const COLORS = ['#4ade80', '#fa3c00', '#152653', '#ededed'] 
+  // const COLORS = ['#22c55e', '#fa3c00', '#152653', '#ededed'] 
   // #fa3c00 - orange
 // #152653 - blue
+const COLORS = ['#992600', '#fa3c00', '#FF6A3D', '#FFD2C2'] 
+
 
   return (
     <div className=" mt-2">
@@ -277,16 +279,16 @@ export default function Page() {
               <div className="flex"><div className=" mr-2 border-r pr-2">{read.length}</div>Read</div>
               </div>
               <div className="bg-secondary p-3 rounded-lg text-md font-bold tracking-tight mt-2 flex justify-between">
-              <div className="flex"><Globe className="mr-4 text-"/>Web Usage</div>
+              <div className="sm:flex"><Globe className="mr-4 text-"/>Web Usage</div>
               <div>{cooky.length}</div>
               </div>
-              <div className="flex justify-between">
+              <div className="sm:flex sm:justify-between">
               <div className=" font-medium text-sm">
-              <div className="flex mt-4 p-2 bg-secondary rounded"><div className=" mr-2 border-r pr-2">{links.length}</div>Page Visits</div>
-              <div className="flex mt-4 p-2 bg-secondary rounded"><div className=" mr-2 border-r pr-2">{buttons.length}</div>Button Clicks</div>
-              <div className="flex mt-4 p-2 bg-secondary rounded"><div className=" mr-2 border-r pr-2">{submissions.length}</div>Submissions</div>
-              <div className="flex mt-4 p-2 bg-secondary rounded"><div className=" mr-2 border-r pr-2">{message.length}</div>Messages</div>
-              <div className="flex mt-4 p-2 bg-secondary rounded"><div className=" mr-2 border-r pr-2">{cooky.length - (buttons.length + submissions.length + links.length)}</div>Other Interactions</div>
+              <div className="flex mt-4 p-2 border border-black dark:border-white/50 rounded"><div className=" mr-2 border-r pr-2">{links.length}</div>Page Visits</div>
+              <div className="flex mt-4 p-2 border border-black dark:border-white/50 rounded"><div className=" mr-2 border-r pr-2">{buttons.length}</div>Button Clicks</div>
+              <div className="flex mt-4 p-2 border border-black dark:border-white/50 rounded"><div className=" mr-2 border-r pr-2">{submissions.length}</div>Submissions</div>
+              <div className="flex mt-4 p-2 border border-black dark:border-white/50 rounded"><div className=" mr-2 border-r pr-2">{message.length}</div>Messages</div>
+              <div className="flex mt-4 p-2 border border-black dark:border-white/50 rounded"><div className=" mr-2 border-r pr-2">{cooky.length - (buttons.length + submissions.length + links.length)}</div>Other Interactions</div>
               </div>
               <ResponsiveContainer width={300} height={300}>
                 <PieChart>
@@ -325,13 +327,13 @@ export default function Page() {
             </div>
             <div className="text-sm p-6 flex flex-col sm:col-span-4 bg-background text-foreground rounded-lg tracking-tight font-bold ">
               <div className="py-2 px-5 bg-secondary rounded-md flex justify-between items-center"><Calendar1 className="mr-5"/>{greeting}</div>
-              {open.length>0 && <div className="py-2 px-5 bg-secondary rounded-md flex justify-between items-center animate-pulse mt-1"><Ticket className="mr-5"/>You have {open.length} Ticket(s) pending</div>}
-              {newNot.length>0 && <div className="py-2 px-5 bg-secondary rounded-md flex justify-between items-center animate-pulse mt-1"><Info className="mr-5"/>You have {open.length} Notification(s) pending</div>}
-              {message.length>0 && <div className="py-2 px-5 bg-secondary rounded-md flex justify-between items-center mt-1 animate-pulse"><MailOpen className="mr-5"/>You have {message.length} Message(s) pending</div>}
-              <div className="p-5 my-8 bg-primary text-white rounded-xl">
+              {open.length>0 && <div className="py-2 px-5 bg-orange-400/20 text-orange-600 rounded-md flex justify-between items-center animate-pulse mt-1"><Ticket className="mr-5"/>You have {open.length} Ticket(s) pending</div>}
+              {newNot.length>0 && <div className="py-2 px-5 bg-orange-400/20 text-orange-600 rounded-md flex justify-between items-center animate-pulse mt-1"><Info className="mr-5"/>You have {newNot.length} Notification(s) pending</div>}
+              {message.length>0 && <div className="py-2 px-5 bg-orange-400/20 text-orange-600 rounded-md flex justify-between items-center mt-1 animate-pulse"><MailOpen className="mr-5"/>You have {message.length} Message(s) pending</div>}
+              <div className="p-5 my-8 bg-secondary rounded-xl">
               <ClockAlert size={60} className=""/>
               <div className="text-5xl font-bold tracking-tight mt-12">{formatTime(today)}</div>
-              <div className="">{date(today.toString())}</div></div>
+              <div className="font-normal py-2">{getMyDay(today.getDay())}, {today.getDate()} {getMyMonth(today.getMonth()+1)}</div></div>
         <div className="items-center bg-background rounded-lg">
         <Image src={Shape1} alt="shape" height={20} width={80} className="hidden sm:block"/>
         <div className="text-xl tracking-tight text- font-bold my-8 p-2 bg-secondary rounded-lg">User Statistics</div>
@@ -370,7 +372,7 @@ export default function Page() {
                                 <p>{data.name}</p>
                                 </TooltipContent>
                         </ToolTip>}
-                <Dot className={data.isLoggedIn==true?'absolute -mt-6 -mr-8 text-green-400':'absolute -mt-6 -mr-6 text-orange-600'} size={50}/>
+                <Dot className={data.isLoggedIn==true?'absolute -mt-6 -mr-8 text-orange-400':'absolute -mt-6 -mr-6 text-orange-600'} size={50}/>
                 </div>
                 ))
             }
@@ -378,7 +380,7 @@ export default function Page() {
         </div>
         <div className="grid grid-cols-12 text-sm p-2">
             <div className=" col-span-6 flex items-center font-medium">
-                <Dot className="text-green-400" size={30}/> Logged In
+                <Dot className="text-orange-400" size={30}/> Logged In
             </div>
             <div className=" col-span-6 flex items-center font-medium">
                 <Dot className="text-red-400" size={30}/> Logged Out
@@ -387,8 +389,8 @@ export default function Page() {
             </div>
         </div>
       </div>
-      <div className="my-2">
-        <div className="grid sm:grid-cols-12 grid-cols-1 text-lg p-2 gap-4">
+      <div>
+        <div className="grid sm:grid-cols-12 grid-cols-1 text-lg p-1 gap-2">
             {idType=='admin' && <div className="sm:col-span-4">
             <Link href='/admin/dashboard/users' className=" rounded-lg transition-transform duration-300 cursor-pointer hover:scale-105 bg-background flex justify-between">
             <div className="text-sm p-6"><User2 size={20} className="text-"/> Users</div> 
@@ -408,18 +410,29 @@ export default function Page() {
         </div>
 
       </div>
-      {idType=='admin' && <div className="rounded-lg p-6 bg-background my-1">
+      {idType=='admin' && <div className="rounded-lg p-6 p-2 bg-background my-1">
         <div className="sm:grid sm:grid-cols-12">
           <div className="sm:col-span-8">
           <div className="text-xl tracking-tight font-bold text- mb-6">User Activity</div>
-        <BarChart width={400} height={400} data={chartData} barCategoryGap={8} barGap={0}>
+          <div className="sm:hidden">
+        <BarChart width={300} height={300} data={chartData} barCategoryGap={8} barGap={0}>
+          <XAxis dataKey="userId" tick={<CustomTick />} axisLine={false} tickLine={false} interval={0} height={50} />
+          {/* <YAxis axisLine={false} tickLine={false}/> */}
+          <Tooltip />
+          <Legend />
+          <Bar dataKey="activities" fill="#FFD2C2" label={{ position: "top" }} />
+          <Bar dataKey="tickets" fill="#fa3c00" label={{ position: "top" }} />
+        </BarChart></div>
+          <div className="sm:block hidden">
+        <BarChart width={500} height={400} data={chartData} barCategoryGap={8} barGap={0}>
           <XAxis dataKey="userId" tick={<CustomTick />} axisLine={false} tickLine={false} interval={0} height={50} />
           <YAxis axisLine={false} tickLine={false}/>
           <Tooltip />
           <Legend />
-          <Bar dataKey="activities" fill="#4ade80" label={{ position: "top" }} />
+          <Bar dataKey="activities" fill="#FFD2C2" label={{ position: "top" }} />
           <Bar dataKey="tickets" fill="#fa3c00" label={{ position: "top" }} />
-        </BarChart></div>
+        </BarChart>
+          </div></div>
         <div className="sm:col-span-4 admin rounded-lg">
           {
             activity!==undefined?activity.map((activity, index) => (

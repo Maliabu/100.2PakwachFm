@@ -93,7 +93,7 @@ export default function StepWise() {
                 form.setError("root", {
                     "message": "Please wait..."
                     })
-              }, 1500)
+              }, 2500)
               localStorage.setItem("token", first)
               localStorage.setItem("name", name)
               localStorage.setItem("username", username)

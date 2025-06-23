@@ -56,21 +56,21 @@ export default function Header(){
     let hasNew = notes?.some((n: Notify) => n.status === "new");
     function notify(){
         if(hasNew){
-            return "bg-green-400/20 dark:text-green-400 text-green-600 animate-bounce rounded-full w-8 h-8 flex justify-center items-center"
+            return "bg-orange-400/20 dark:text-orange-400 text-orange-600 animate-bounce rounded-full w-8 h-8 flex justify-center items-center"
         } else {
             return "bg-secondary rounded-full w-10 h-10 flex justify-center items-center"
         }
     }
     function ticky(){
         if(open.length > 0){
-            return "bg-green-400/20 dark:text-green-400 text-green-600 animate-bounce rounded-full w-10 ml-2 h-10 flex justify-center items-center"
+            return "bg-orange-400/20 dark:text-orange-400 text-orange-600 animate-bounce rounded-full w-10 ml-2 h-10 flex justify-center items-center"
         } else {
             return "bg-secondary rounded-full w-10 h-10 ml-2 flex justify-center items-center"
         }
     }
     function messaging(){
         if(message.length > 0){
-            return "bg-green-400/20 dark:text-green-400 text-green-600 rounded-full w-10 ml-2 h-10 flex justify-center items-center"
+            return "bg-orange-400/20 dark:text-orange-400 text-orange-600 rounded-full w-10 ml-2 h-10 flex justify-center items-center"
         } else {
             return "bg-secondary rounded-full w-10 h-10 ml-2 flex justify-center items-center"
         }
@@ -95,7 +95,7 @@ export default function Header(){
             <div className=" bg-secondary p-2 rounded-md flex justify-between items-center">
                 <div className="text-sm font-medium">Logged in users: {logged.length}</div>
                 <div className="flex">{logged.map(user => (
-                    <div key={user.id} className="h-8 w-8 -ml-4 bg-muted text-foreground grid rounded-full justify-center items-center">{user.profilePicture?<div style={{ position: 'relative', width: '30px', height: '30px' }}>
+                    <div key={user.id} className="h-8 w-8 -ml-4 bg-background shadow-md text-foreground grid rounded-full justify-center items-center">{user.profilePicture?<div style={{ position: 'relative', width: '30px', height: '30px' }}>
                     <Image
                         src={user.profilePicture}
                         alt="Full size"
@@ -112,7 +112,7 @@ export default function Header(){
                 <div className="flex items-center sm:justify-end">
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                        <Button variant="outline" className="border-none">
+                        <Button variant="outline" className="border border-black dark:border-white/50 shadow-none">
                             <div className="flex justify-center border-none items-center">
                         <Sun className="h-[1.2rem] w-full rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
                         <Moon className="mr-3 h-[1.2rem] w-full rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
