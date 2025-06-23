@@ -15,13 +15,14 @@ export default function Page() {
   const { data: highlights, error: highlightError } = useSWR('/api/articles/highlight', fetcher);
   const { data: sport, error: sportError } = useSWR('/api/articles/sport', fetcher);
   const { data: business, error: businessError } = useSWR('/api/articles/business', fetcher);
+  const { data: political, error: politicalError } = useSWR('/api/articles/political', fetcher);
 
   // Handle loading/error states
-  if (articleError || highlightError || sportError || businessError) {
+  if (articleError || highlightError || sportError || businessError || politicalError) {
     return <div>Error loading data</div>;
   }
 
-  if (!articles || !highlights || !sport || !business) {
+  if (!articles || !highlights || !sport || !business || !political) {
     return <div>Loading...</div>;
   }
 
@@ -38,6 +39,12 @@ export default function Page() {
         <div className="text-sm uppercase text-muted-foreground">WHAT YOU MISSED</div>
         <div className="p-4 rounded-lg mt-4">
           <Highlights articles={highlights} />
+        </div>
+      </div>
+      <div className="bg-background p-8 rounded-lg mt-2">
+        <div className="text-sm uppercase text-muted-foreground">POLITICAL</div>
+        <div className="p-4 rounded-lg mt-4">
+          <Business articles={political} />
         </div>
       </div>
       <div className="bg-background p-8 rounded-lg mt-2">

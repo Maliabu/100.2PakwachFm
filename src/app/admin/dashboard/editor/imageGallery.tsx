@@ -74,8 +74,8 @@ export default function ImageGallery({visible, onClose, onSelect, onDelete}:Prop
                                         setTimeout(() => {
                                             err.style.color = "gray"
                                             err.style.border = "none"
-                                            err.innerHTML = "Upload Size Limit: 1 MB"
-                                        }, 10000)
+                                            err.innerHTML = "Upload Size Limit: 10 MB"
+                                        }, 100000)
                                     }
                                     setIsUploading(false)
                                 }
