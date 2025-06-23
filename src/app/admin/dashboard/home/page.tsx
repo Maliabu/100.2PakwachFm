@@ -267,8 +267,8 @@ const COLORS = ['#992600', '#fa3c00', '#FF6A3D', '#FFD2C2']
   return (
     <div className=" mt-2">
       <div className="rounded-lg my-1">
-        <div className="sm:grid sm:grid-cols-12 gap-2">
-            <div className=" sm:p-8 p-6 sm:col-span-8 bg-background rounded-lg">
+        <div className="grid grid-cols-12 gap-2">
+            <div className=" sm:p-8 p-6 sm:col-span-8 col-span-12 bg-background rounded-lg">
               <div className="text-xl font-bold flex justify-between tracking-tight text-">Overview <Image src={Shape} alt="shape" height={40} width={80}/></div>
             <div className="bg-secondary p-3 rounded-lg text-md font-bold tracking-tight mt-6 flex justify-between">
             <div className="flex"><Info className="mr-4 text-"/>Notifications</div>
@@ -279,7 +279,7 @@ const COLORS = ['#992600', '#fa3c00', '#FF6A3D', '#FFD2C2']
               <div className="flex"><div className=" mr-2 border-r pr-2">{read.length}</div>Read</div>
               </div>
               <div className="bg-secondary p-3 rounded-lg text-md font-bold tracking-tight mt-2 flex justify-between">
-              <div className="sm:flex"><Globe className="mr-4 text-"/>Web Usage</div>
+              <div className="flex"><Globe className="mr-4 text-"/>Web Usage</div>
               <div>{cooky.length}</div>
               </div>
               <div className="sm:flex sm:justify-between">
@@ -325,7 +325,7 @@ const COLORS = ['#992600', '#fa3c00', '#FF6A3D', '#FFD2C2']
               <div>{data.length}</div>
               </div>
             </div>
-            <div className="text-sm p-6 flex flex-col sm:col-span-4 bg-background text-foreground rounded-lg tracking-tight font-bold ">
+            <div className="text-sm p-6 flex flex-col sm:col-span-4 col-span-12 bg-background text-foreground rounded-lg tracking-tight font-bold ">
               <div className="py-2 px-5 bg-secondary rounded-md flex justify-between items-center"><Calendar1 className="mr-5"/>{greeting}</div>
               {open.length>0 && <div className="py-2 px-5 bg-orange-400/20 text-orange-600 rounded-md flex justify-between items-center animate-pulse mt-1"><Ticket className="mr-5"/>You have {open.length} Ticket(s) pending</div>}
               {newNot.length>0 && <div className="py-2 px-5 bg-orange-400/20 text-orange-600 rounded-md flex justify-between items-center animate-pulse mt-1"><Info className="mr-5"/>You have {newNot.length} Notification(s) pending</div>}
@@ -335,7 +335,7 @@ const COLORS = ['#992600', '#fa3c00', '#FF6A3D', '#FFD2C2']
               <div className="text-5xl font-bold tracking-tight mt-12">{formatTime(today)}</div>
               <div className="font-normal py-2">{getMyDay(today.getDay())}, {today.getDate()} {getMyMonth(today.getMonth()+1)}</div></div>
         <div className="items-center bg-background rounded-lg">
-        <Image src={Shape1} alt="shape" height={20} width={80} className="hidden sm:block"/>
+        <Image src={Shape1} alt="shape" height={20} width={80}/>
         <div className="text-xl tracking-tight text- font-bold my-8 p-2 bg-secondary rounded-lg">User Statistics</div>
         <div className=" flex">
             {
@@ -372,7 +372,7 @@ const COLORS = ['#992600', '#fa3c00', '#FF6A3D', '#FFD2C2']
                                 <p>{data.name}</p>
                                 </TooltipContent>
                         </ToolTip>}
-                <Dot className={data.isLoggedIn==true?'absolute -mt-6 -mr-8 text-orange-400':'absolute -mt-6 -mr-6 text-orange-600'} size={50}/>
+                <Dot className={data.isLoggedIn==true?'absolute -mt-6 -mr-8 text-orange-400':'absolute -mt-6 -mr-6 text-black-600'} size={50}/>
                 </div>
                 ))
             }
@@ -383,7 +383,7 @@ const COLORS = ['#992600', '#fa3c00', '#FF6A3D', '#FFD2C2']
                 <Dot className="text-orange-400" size={30}/> Logged In
             </div>
             <div className=" col-span-6 flex items-center font-medium">
-                <Dot className="text-red-400" size={30}/> Logged Out
+                <Dot className="text-black-400" size={30}/> Logged Out
             </div>
         </div>
             </div>
@@ -436,9 +436,9 @@ const COLORS = ['#992600', '#fa3c00', '#FF6A3D', '#FFD2C2']
         <div className="sm:col-span-4 admin rounded-lg">
           {
             activity!==undefined?activity.map((activity, index) => (
-              <div key={index} className="sm:grid bg-secondary p-2 rounded-lg sm:grid-cols-12 mt-1 items-center text-xs">
-                        <div className="h-10 col-span-2 w-10 grid justify-center items-center text-lg dark:text-foreground text-background rounded-full bg-primary">{activity.users_table.name[0].toUpperCase()}</div>
-                        <div className="col-span-10 font-medium">{activity.activity.activity}</div>
+              <div key={index} className="grid bg-secondary p-2 rounded-lg grid-cols-12 mt-1 items-center text-xs">
+                        <div className="h-10 col-span-3 w-10 grid justify-center items-center text-lg dark:text-foreground text-background rounded-full bg-primary">{activity.users_table.name[0].toUpperCase()}</div>
+                        <div className="col-span-9 font-medium">{activity.activity.activity}</div>
               </div>
             )):null
           }
