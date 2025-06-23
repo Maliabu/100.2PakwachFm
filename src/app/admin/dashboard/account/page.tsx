@@ -98,7 +98,7 @@ export default function Page(){
     return<div className=" mt-2">
         <div className="grid sm:grid-cols-3 gap-2 bg-background rounded-lg p-6">
             <div className="col-span-1 text-2xl font-bold tracking-tight">
-                Account <div className="text-sm font-medium">This is your login account to access this dashboard. User accounts can only be created and updated by an admin account.</div>
+                Account <div className="text-sm hidden font-medium">This is your login account to access this dashboard. User accounts can only be created and updated by an admin account.</div>
             </div>
             <div className="p-4 bg-background rounded-md font-medium">
                 <div className="text-sm">Name: <div className="text-muted-foreground text-sm font-medium">{name}</div></div>
@@ -167,7 +167,7 @@ export default function Page(){
                     <div className="h-12 w-12 text-lg -ml-6 border col-span-1 border-8 border-secondary bg-primary text-background grid font-bold rounded-full justify-center items-center">{user?.name[0].toUpperCase()}</div>
                     <div className="text-sm p-2 sm:col-span-2 rounded-full sm:block hidden">{user?.name}</div>
                     <div className="text-sm sm:mr-6 sm:mr-4 sm:ml-0 ml-4 sm:col-span-4 col-span-6"><span className="text-muted-foreground font-bold">last login:</span><br/>{date(user.lastLogin.toString())}</div>
-                    <div className="text-md border-primary border p-2 text-primary font-bold tracking-tight rounded-md col-span-2 text-center capitalize">{user.userType}</div>
+                    <div className="sm:text-md text-sm border-primary border p-2 text-primary font-bold tracking-tight rounded-md col-span-4 sm:col-span-3 text-center capitalize">{user.userType}</div>
                     </div>
                 ))}</div>
             </div>
@@ -175,7 +175,7 @@ export default function Page(){
         <div className=" sm:p-8 p-4 bg-background font-medium rounded-lg">
             <div className="text-2xl font-bold tracking-tight">User Activity / Timeline (Logging)</div>
             <div className="text-sm font-medium text-muted-foreground">Logging user activities on the platform, visible only to the administrator</div>
-            <div className="bg-background p-6 mt-6 rounded-md overflow-auto h-[300px]">
+            <div className="bg-background p-2 rounded-md overflow-auto h-[300px]">
                 <div className="text-sm flex justify-between text-muted-foreground my-4 p-2 bg-secondary rounded-md">
                     <p>User</p>
                     <p>Activities</p>
