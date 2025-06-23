@@ -294,6 +294,11 @@ pre {
   overflow-x: auto;
   padding-left: 5%;
 }
+.scroll-y-blog{
+  scroll-behavior: smooth;
+  overflow-y: auto;
+  height: 150vh;
+}
 .scroll-x::-webkit-scrollbar {
   display: none;
 }

@@ -111,7 +111,7 @@ export function HeadlineTabs(
                     createdAt={articles["2"].createdAt} 
                     />}
                 </div>
-                <div className="sm:hidden">
+                <div className="sm:col-span-6">
           {articles.length > 3 && <HeadLineOtherCard 
                     id={articles["3"].id}
                     title={articles["3"].title}
@@ -125,6 +125,22 @@ export function HeadlineTabs(
                     writer={articles["3"].writer}
                     updatedAt={articles["3"].updatedAt} 
                     createdAt={articles["3"].createdAt} 
+                    />}
+                </div>
+                <div className="sm:col-span-6">
+          {articles.length > 4 && <HeadLineOtherCard 
+                    id={articles["4"].id}
+                    title={articles["4"].title}
+                    content={articles["4"].content}
+                    image={articles["4"].image}
+                    facebookLink={articles["4"].facebookLink}
+                    instagramLink={articles["4"].instagramLink}
+                    twitterLink={articles["4"].twitterLink}
+                    date={articles["4"].date}
+                    articleType={articles["4"].articleType}
+                    writer={articles["4"].writer}
+                    updatedAt={articles["4"].updatedAt} 
+                    createdAt={articles["4"].createdAt} 
                     />}
                 </div>
               </div>
@@ -163,7 +179,7 @@ export function HeadlineTabs(
                     className="object-cover"/>
                   </div>
                   <Link href={ref(article.title)}>
-                <div className="text-2xl font-bold tracking-tight mt-4 leading-6 hover:text-primary text-dark pointer blog capitalize lowercase line-clamp-3">
+                <div className="text-2xl font-bold tracking-tight mt-4 leading-6 hover:text-primary text-dark pointer blog capitalize line-clamp-3">
               {article.title}</div></Link>
               <div className="line-clamp-2 hidden text-sm leading-4 mt-2">
               {parse(article.content)}
@@ -200,7 +216,7 @@ export function HeadlineTabs(
                     className="object-cover"/>
                   </div>
                   <Link href={ref(article.title)}>
-                <div className="text-2xl line-clamp-3 font-bold tracking-tight mt-4 leading-6 text-dark pointer blog lowercase capitalize">
+                <div className="text-2xl line-clamp-3 font-bold tracking-tight mt-4 leading-6 text-dark pointer blog capitalize">
               {article.title}</div></Link>
               <div className="line-clamp-2 text-md leading-6 mt-2">
               {parse(article.content)}
