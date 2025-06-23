@@ -85,7 +85,7 @@ import { Button } from "@/components/ui/button"
     </a>
             </div>
       <div className="px-2 sm:px-0">
-      <div className="text-5xl tracking-tight font-bold leading-11 lowercase">{title}</div>
+      <div className="text-5xl tracking-tight font-bold leading-11">{title}</div>
       <span className="mt-6 sm:float-right sm:mx-12"> {}</span>
       <p className="py-4 border-b text-sm text-muted-foreground">By {writer}</p>
       <p className="py-4 float-right text-sm text-muted-foreground"> { date == null ?

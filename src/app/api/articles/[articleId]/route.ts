@@ -1,7 +1,7 @@
 
 import { db } from '@/db/db';
 import { articlesTable } from '@/db/schema';
-import { eq } from 'drizzle-orm';
+import { desc, eq } from 'drizzle-orm';
 import { NextResponse } from 'next/server';
 
 // API route handler for GET requests
@@ -13,7 +13,8 @@ export async function GET(request: Request, { params }: { params: { articleId: s
     .query
     .articlesTable
     .findMany({
-      where: eq(articlesTable.id, parseInt(articleId))
+      where: eq(articlesTable.id, parseInt(articleId)),
+      orderBy: [desc(articlesTable.createdAt)],
     })
 
       if (!article) {

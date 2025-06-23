@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "./theme-provider";
 import CookieConsent from "./cookies";
 import ClientRootWrapper from "./clientRoot";
+import ScrollToTopButton from "./scrollToTop";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -37,7 +38,7 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <CookieConsent/>
-            <ClientRootWrapper>        {children}
+            <ClientRootWrapper>        {children} <ScrollToTopButton/>
             </ClientRootWrapper>
         </ThemeProvider>
       </body>

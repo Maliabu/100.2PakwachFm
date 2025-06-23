@@ -14,12 +14,14 @@ import Image from "next/image"
 import Link from "next/link"
 import { db } from "@/db/db"
 import { getMyDay, getMyMonth } from "@/services/success"
+import { desc } from "drizzle-orm"
+import { articlesTable } from "@/db/schema"
 
 export default async function Articles() {
   const articles = await db
     .query
     .articlesTable
-    .findMany()
+    .findMany({orderBy: [desc(articlesTable.createdAt)]})
 
   if (!articles) return <div>no articles</div>
   function path(image: string | null){
@@ -43,7 +45,7 @@ export default async function Articles() {
                     unoptimized
                     className="object-cover"/>
                   </div>
-                  <div className="text-2xl my-4 font-bold tracking-tight leading-6 hover:text-primary lowercase line-clamp-3 capitalize"><Link href={'/news/'+encodeURIComponent(news.title)}>{news.title}</Link></div>
+                  <div className="text-2xl my-4 font-bold tracking-tight leading-6 hover:text-primary line-clamp-3 capitalize"><Link href={'/news/'+encodeURIComponent(news.title)}>{news.title}</Link></div>
                   <div className="text-xs uppercase text-muted-foreground">{news.writer} | {
       getMyDay(news.updatedAt.getDay())}, {getMyMonth(news.updatedAt.getMonth())} {news.updatedAt.getDate()}, {news.updatedAt.getFullYear()
       }</div>

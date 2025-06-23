@@ -41,7 +41,7 @@ export default function Highlights({articles}: ArticlesTabsProps) {
                     unoptimized
                     className="object-cover"/>
                   </div>
-                  <div className="text-2xl my-4 line-clamp-3 font-bold tracking-tight leading-5 hover:text-primary lowercase capitalize"><Link href={'/news/'+encodeURIComponent(news.title)}>{news.title}</Link></div>
+                  <div className="text-2xl my-4 line-clamp-3 font-bold tracking-tight leading-5 hover:text-primary capitalize"><Link href={'/news/'+encodeURIComponent(news.title)}>{news.title}</Link></div>
                   <div className="text-xs uppercase text-muted-foreground">{news.writer} | {getMyDay(dater(news.updatedAt).getDay())}, {getMyMonth(dater(news.updatedAt).getMonth())} {dater(news.updatedAt).getDate()}, {dater(news.updatedAt).getFullYear()}</div>
                 </CardContent>
               </Card>

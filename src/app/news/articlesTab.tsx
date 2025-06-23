@@ -110,7 +110,7 @@ export function ArticlesTabs(
                     unoptimized
                     className="object-cover"/>
                   </div>
-                  <Link href={ref(article.title)} className="text-xl line-clamp-3 font-bold tracking-tight leading-5 text-dark pointer lowercase capitalize hover:text-primary">
+                  <Link href={ref(article.title)} className="text-xl line-clamp-3 font-bold tracking-tight leading-5 text-dark pointer capitalize hover:text-primary">
                   <div className="my-4">
                   {article.title}</div></Link>
               <div className="line-clamp-2 hidden text-sm leading-4 mt-2">
@@ -150,7 +150,7 @@ export function ArticlesTabs(
                     unoptimized
                     className="object-cover"/>
                   </div>
-                  <Link href={ref(article.title)} className="text-2xl font-bold tracking-tight leading-5 text-dark pointer capitalize lowercase line-clamp-3">
+                  <Link href={ref(article.title)} className="text-2xl font-bold tracking-tight leading-5 text-dark pointer capitalize line-clamp-3">
                   <div className="pt-4">
                   {article.title}</div></Link>
               <div className="line-clamp-2 text-md leading-5 mt-2">

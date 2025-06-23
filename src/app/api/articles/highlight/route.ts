@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { db } from "@/db/db";
 import { articlesTable } from "@/db/schema";
-import { eq } from "drizzle-orm";
+import { eq, desc } from "drizzle-orm";
 import { NextResponse } from "next/server";
 
 // This will handle the GET request to /api/packaging
@@ -9,7 +9,8 @@ export async function GET() {
   try {
     // Query the database
     const articles = await db.query.articlesTable.findMany({
-        where: eq(articlesTable.articleType, 'highlight')
+        where: eq(articlesTable.articleType, 'highlight'),
+        orderBy: [desc(articlesTable.createdAt)],
     });
     
     // Return the events as a JSON response
