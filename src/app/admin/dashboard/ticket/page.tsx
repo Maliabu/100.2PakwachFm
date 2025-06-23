@@ -24,11 +24,13 @@ export default function Ticket() {
         defaultValues: {
             issue: "",
             opened: parseInt(tokenise()[3]),
-            status: 'open'
+            status: 'open',
+            userId: ''
       },
     })
      
     async function onSubmit(values: z.infer<typeof openTicket>) {
+      values.userId = tokenise()[3]
       
       const app = document.getElementById('submit');
       const text = 'processing';

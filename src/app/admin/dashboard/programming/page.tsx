@@ -32,12 +32,12 @@ export default function AddProgramming() {
           startTime: "",
           endTime: "",
           weekday: '',
+          userId: '',
       },
     })
-    console.log(form.getValues())
 
     async function onSubmit(values: z.infer<typeof addProgrammingSchema>) {
-        console.log(values, form.getValues())
+      values.userId = tokenise()[3]
         //create obj
         const app = document.getElementById('submit');
         const text = 'processing';

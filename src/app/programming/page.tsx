@@ -33,53 +33,29 @@ export default async function Events() {
       <div className="sm:col-span-9 bg-background sm:p-8 p-4 rounded-lg mt-2">
         <div className="text-sm text-muted-foreground uppercase">programming </div>
         <div className="text-3xl tracking-tight leading-10 font-bold my-4 capitalize">Weekdays (Mon - Fri)</div>
-        <div className="overflow-x-auto w-full">
-        <Table className="min-w-full">
-                <TableHeader>
-                    <TableRow >
-                    <TableHead >Programme</TableHead>
-                    <TableHead >Start Time</TableHead>
-                    <TableHead >End Time</TableHead>
-                    </TableRow>
-                </TableHeader>
-                <TableBody>
-                {weekdays.length > 0 && weekdays.map((weekday, index) => (
-                    <TableRow key={index}>
-                        <TableCell>{weekday.programme}</TableCell>
-                        <TableCell>{weekday.startTime}</TableCell>
-                        <TableCell className="font-medium">{weekday.endTime}</TableCell>
-                        </TableRow>
+        <div className="grid grid-cols-12 gap-2">
+        {weekdays.length > 0 && weekdays.map((weekday, index) => (
+                    <div key={index} className="sm:col-span-3 col-span-4 rounded-lg p-8 shadow">
+                        <div className="text-2xl font-bold tracking-tight mt-12 lowercase leading-6">{weekday.programme}</div>
+                        <div className="flex justify-between text-sm py-3">
+                        <div>{weekday.startTime}</div>
+                        <div className="font-medium">{weekday.endTime}</div>
+                        </div>
+                        </div>
                     ))}
-                </TableBody>
-                </Table>
-                </div>
+        </div>
         <div className="text-3xl tracking-tight leading-10 font-bold my-4 mt-8 capitalize">Weekends (Sat & Sun)</div>
-        <Table>
-                <TableHeader>
-                    <TableRow >
-                    <TableHead >Programme</TableHead>
-                    <TableHead >Start Time</TableHead>
-                    <TableHead >End Time</TableHead>
-                    </TableRow>
-                </TableHeader>
-                <TableBody>
-                {weekends.length > 0 && weekends.map((weekday, index) => (
-                    <TableRow key={index}>
-                        <TableCell>{weekday.programme}</TableCell>
-                        <TableCell>{weekday.startTime}</TableCell>
-                        <TableCell className="font-medium">{weekday.endTime}</TableCell>
-                        </TableRow>
+        <div className="grid grid-cols-12 gap-2">
+        {weekends.length > 0 && weekends.map((weekday, index) => (
+                    <div key={index} className="sm:col-span-3 col-span-4 rounded-lg p-8 shadow">
+                        <div className="text-2xl font-bold tracking-tight mt-12 lowercase leading-6">{weekday.programme}</div>
+                        <div className="flex justify-between text-sm py-3">
+                        <div>{weekday.startTime}</div>
+                        <div className="font-medium">{weekday.endTime}</div>
+                        </div>
+                        </div>
                     ))}
-                </TableBody>
-                </Table>
-        {/* <div style={{ position: 'relative', width: '100%', height: '500px' }}>
-        <Image
-            src={Sports}
-            alt="Full size"
-            fill
-            style={{ objectFit: 'cover' }} // or 'contain'
-        />
-        </div> */}
+        </div>
       </div>
         <div className="sm:col-span-3 present rounded-lg p-4 mt-2">
             {/* <Mic size={150} className="border dark:text-primary rounded-full p-10"/> */}

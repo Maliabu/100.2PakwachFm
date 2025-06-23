@@ -579,6 +579,7 @@ Promise<{error: boolean | undefined}> {
    try{
     console.log(data)
         const programmes = await db.insert(programmingTable).values({...data})
+        await logActivity('Added new Programming: '+data.programme, data.userId)
         return {error: false}
     } catch(error){
         console.log(error)
@@ -643,6 +644,7 @@ Promise<{error: boolean | undefined, message: string}> {
    )
    if(checkEmail.length === 0){
     await db.insert(subscriptionsTable).values({...data})
+
     return {error: false, message: "Subscription successful"}
    } else {
     return {error: true, message: "User already subscribed"}

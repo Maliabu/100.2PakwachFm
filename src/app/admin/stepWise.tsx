@@ -87,8 +87,13 @@ export default function StepWise() {
                   app.innerHTML = "Successful";
               }
               form.setError("root", {
-              "message": "Loggin you in..."
+              "message": "Signing you in shortly..."
               })
+              setTimeout(() => {
+                form.setError("root", {
+                    "message": "Please wait..."
+                    })
+              }, 1500)
               localStorage.setItem("token", first)
               localStorage.setItem("name", name)
               localStorage.setItem("username", username)
@@ -319,7 +324,7 @@ function Step1(props:
 
             <div className="text-xs grid justify-center cursor-pointer text-primary pt-4">{props.button}</div>
             {props.form.formState.errors.root && (
-                <div className=" font-bold text-sm mx-4 text-primary p-2 text-center rounded-md">{props.form.formState.errors.root.message}</div>
+                <div className=" font-bold border light:bg-red-100 text-sm mx-4 border-primary text-primary p-2 text-center rounded-md">{props.form.formState.errors.root.message}</div>
             )}
             </form>
             </Form>
