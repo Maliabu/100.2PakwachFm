@@ -160,14 +160,14 @@ export default function Page(){
     </Dialog>
             </div>
         </div>
-        <div className="p-6 my-2 rounded-lg sm:col-span-12 font-medium">
+        <div className="p-2 my-2 rounded-lg sm:col-span-12 font-medium">
                 <div className=" text-2xl font-bold items-center tracking-tight">LoggedIn Users:</div>
                 <div className="p-2 mt-2">{logged.map(user => (
                     <div key={user.id} className=" bg-background p-2 rounded-lg mt-1 grid grid-cols-12 gap-4 justify-between items-center">
-                    <div className="h-12 w-12 text-lg -ml-6 border col-span-1 border-8 border-muted bg-primary text-background grid font-bold rounded-full justify-center items-center">{user?.name[0].toUpperCase()}</div>
+                    <div className="h-12 w-12 text-lg -ml-6 border col-span-1 border-8 border-secondary bg-primary text-background grid font-bold rounded-full justify-center items-center">{user?.name[0].toUpperCase()}</div>
                     <div className="text-sm p-2 sm:col-span-2 rounded-full sm:block hidden">{user?.name}</div>
                     <div className="text-sm sm:mr-6 sm:mr-4 sm:ml-0 ml-4 sm:col-span-4 col-span-6"><span className="text-muted-foreground font-bold">last login:</span><br/>{date(user.lastLogin.toString())}</div>
-                    <div className="text-sm p-2 bg-secondary rounded-md col-span-4 sm:col-span-3 capitalize">{user.userType}</div>
+                    <div className="text-md border-primary border p-2 text-primary font-bold tracking-tight rounded-md col-span-2 text-center capitalize">{user.userType}</div>
                     </div>
                 ))}</div>
             </div>

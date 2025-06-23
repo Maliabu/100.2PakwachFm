@@ -175,3 +175,10 @@ export type currencyType = {
     createdAt: Date
     updatedAt: Date
   }
+export type Cooky = {
+    id: string
+    user_id: string | null
+    event_type: string | null
+    metadata: string
+    createdAt: Date
+}

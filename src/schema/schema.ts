@@ -56,18 +56,20 @@ export const addNotificationSchema = z.object({
     notification: z.string({required_error: "Please provide your notification.",}),
     status: z.string(),
     sender: z.coerce.number({required_error: "Please enter a user id.",}),
+    userId: z.string(),
 })
 
 export const addMessagesSchema = z.object({
     email: z.string({required_error: "Please provide your email address.",}),
     status: z.string(),
-    message: z.string(),
+    message: z.string({required_error: "Please tell us something.",}),
 })
 
 export const openTicket = z.object({
     issue: z.string({required_error: "Please explain your issue.",}),
     status: z.string(),
     opened: z.coerce.number({required_error: "Please enter a user id.",}),
+    userId: z.string(),
 })
 
 //remember to coerce numbers else form doesnot submit
@@ -163,7 +165,8 @@ export const addProgrammingSchema = z.object({
     }).max(200),
     startTime: z.string({required_error: "Please enter a description.",}),
     endTime: z.string(),
-    weekday: z.string()
+    weekday: z.string(),
+    userId: z.string(),
 })
 
 export const addEnrollmentSchema = z.object({

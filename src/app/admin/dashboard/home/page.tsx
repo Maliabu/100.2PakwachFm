@@ -10,13 +10,14 @@ import { BarChart2, Calendar, Calendar1, Clock10, ClockAlert, Cloud, CloudFog, D
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend } from 'recharts';
 import Image from "next/image";
 import Logged from "../../auth/user";
-import { ActivityType, ArticleType, EventType, UserType } from "../types";
+import { ActivityType, ArticleType, Cooky, EventType, UserType } from "../types";
 import { TooltipContent, TooltipProvider, TooltipTrigger, Tooltip as ToolTip } from "@/components/ui/tooltip";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import Shape from '@/app/images/shape.png'
 import Shape1 from '@/app/images/shape2.png'
 import { Message } from "../messages/view/page";
+import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts'
 
 type Activity = {
   activity: {
@@ -67,18 +68,21 @@ export default function Page() {
         setId(tokenise()[4])
         setid(tokenise()[3])
     }, [])
-  const { data, error } = useSWR<Activity[]>("/api/activity", fetcher);
+  const { data, error } = useSWR<Activity[]>('/api/activity', fetcher);
+  const { data:activity, error:activityError } = useSWR<Activity[]>(`/api/activity/${id}`, fetcher);
   const { data:userData, error:userError } = useSWR<UserType[]>("/api/users", fetcher);
   const { data:articles, error:articlesError } = useSWR<ArticleType[]>("/api/articles", fetcher);
   const { data:events, error:eventsError } = useSWR<EventType[]>("/api/events", fetcher);
   const { data:tickets, error:ticketError } = useSWR<Ticketing[]>("/api/tickets", fetcher);
   const { data:notifications, error:notificationError } = useSWR<Notify[]>("/api/notifications", fetcher);
   const { data:messages, error:messageError } = useSWR<Message[]>("/api/messages", fetcher);
+  const { data:cookies, error:cookieError } = useSWR<Cooky[]>('/api/cookies', fetcher);
   const open: Ticketing[] = []
   const closed: Ticketing[] = []
   const newNot: Notify[] = []
   const read: Notify[] = []
   let message: Message[] = []
+  let cooky: Cooky[] = []
 
   if (!data) {
     return (
@@ -110,6 +114,36 @@ export default function Page() {
   if(messages){
     message = messages
   }
+  let links = []
+  let buttons = []
+  let submissions = []
+  if(cookies){
+    cooky = cookies
+    const parsedEvents = cooky.map(cookie => {
+      let metadata: any = {}
+      try {
+        metadata = typeof cookie.metadata === 'string' ? JSON.parse(cookie.metadata) : cookie.metadata
+      } catch (e) {
+        console.warn(`Could not parse metadata for event ${cookie.id}`)
+      }
+
+      return {
+        ...cookie,
+        metadata,
+      }
+    })
+    links = parsedEvents.filter(e => e.metadata.tag === 'A')
+    buttons = parsedEvents.filter(e => e.metadata.tag === 'BUTTON')
+    submissions = parsedEvents.filter(e =>
+      ['FORM', 'INPUT', 'TEXTAREA'].includes(e.metadata.tag ?? '')
+    )
+  }
+  const pieData = [
+    { name: 'Links', value: links.length || 0 },
+    { name: 'Buttons', value: buttons.length || 0 },
+    { name: 'Submissions', value: submissions.length || 0 },
+    { name: 'Others', value: cooky.length - (buttons.length + submissions.length + links.length) || 0 },
+  ]
 
   // Aggregate activity count by user
   const userMap = new Map<number, { name: string; profilePicture: string; count: number; tickets: number }>();
@@ -173,8 +207,8 @@ export default function Page() {
               src={userData.profilePicture}
               alt="avatar"
               style={{
-                width: '40px',
-                height: '40px',
+                width: '35px',
+                height: '35px',
                 borderRadius: '50%',
                 objectFit: 'cover',
                 display: 'block',
@@ -183,14 +217,14 @@ export default function Page() {
           ) : (
             <div
               style={{
-                width: '40px',
-                height: '40px',
+                width: '35px',
+                height: '35px',
                 borderRadius: '50%',
-                backgroundColor: '#152653', // example fallback color
+                backgroundColor: '#4ade80', // example fallback color
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                color: 'white',
+                color: 'black',
                 fontSize: '16px',
               }}
             >
@@ -224,6 +258,9 @@ export default function Page() {
 
     return `${hours}:${minutes} ${ampm}`;
   };
+  const COLORS = ['#4ade80', '#fa3c00', '#152653', '#ededed'] 
+  // #fa3c00 - orange
+// #152653 - blue
 
   return (
     <div className=" mt-2">
@@ -241,13 +278,37 @@ export default function Page() {
               </div>
               <div className="bg-secondary p-3 rounded-lg text-md font-bold tracking-tight mt-2 flex justify-between">
               <div className="flex"><Globe className="mr-4 text-"/>Web Usage</div>
-              <div>0</div>
+              <div>{cooky.length}</div>
               </div>
-              <div className="grid sm:grid-cols-4 grid-cols-2 font-medium text-sm py-4">
-              <div className="flex"><div className=" mr-2 border-r pr-2">0</div>Page Visits</div>
-              <div className="flex"><div className=" mr-2 border-r pr-2">0</div>Button Clicks</div>
-              <div className="flex sm:mt-0 mt-4 "><div className=" mr-2 border-r pr-2">0</div>Submissions</div>
-              <div className="flex sm:mt-0 mt-4 "><div className=" mr-2 border-r pr-2">{message.length}</div>Messages</div>
+              <div className="flex justify-between">
+              <div className=" font-medium text-sm">
+              <div className="flex mt-4 p-2 bg-secondary rounded"><div className=" mr-2 border-r pr-2">{links.length}</div>Page Visits</div>
+              <div className="flex mt-4 p-2 bg-secondary rounded"><div className=" mr-2 border-r pr-2">{buttons.length}</div>Button Clicks</div>
+              <div className="flex mt-4 p-2 bg-secondary rounded"><div className=" mr-2 border-r pr-2">{submissions.length}</div>Submissions</div>
+              <div className="flex mt-4 p-2 bg-secondary rounded"><div className=" mr-2 border-r pr-2">{message.length}</div>Messages</div>
+              <div className="flex mt-4 p-2 bg-secondary rounded"><div className=" mr-2 border-r pr-2">{cooky.length - (buttons.length + submissions.length + links.length)}</div>Other Interactions</div>
+              </div>
+              <ResponsiveContainer width={300} height={300}>
+                <PieChart>
+                  <Pie
+                    data={pieData}
+                    dataKey="value"
+                    nameKey="name"
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={60}
+                    outerRadius={100}
+                    paddingAngle={5}
+                    // label
+                  >
+                    {data.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} stroke="none" />
+                    ))}
+                  </Pie>
+                  <Tooltip />
+                  <Legend verticalAlign="bottom" height={36} wrapperStyle={{ fontSize: '12px' }}  />
+                </PieChart>
+              </ResponsiveContainer>
               </div>
               <div className="bg-secondary p-3 rounded-lg text-md font-bold tracking-tight mt-2 flex justify-between">
               <div className="flex"><Ticket className="mr-4 text-"/>Tickets</div>
@@ -262,19 +323,18 @@ export default function Page() {
               <div>{data.length}</div>
               </div>
             </div>
-            <div className="text-sm p-6 flex flex-col sm:col-span-4 justify-center bg-background text-foreground rounded-lg tracking-tight font-bold ">
+            <div className="text-sm p-6 flex flex-col sm:col-span-4 bg-background text-foreground rounded-lg tracking-tight font-bold ">
               <div className="py-2 px-5 bg-secondary rounded-md flex justify-between items-center"><Calendar1 className="mr-5"/>{greeting}</div>
               {open.length>0 && <div className="py-2 px-5 bg-secondary rounded-md flex justify-between items-center animate-pulse mt-1"><Ticket className="mr-5"/>You have {open.length} Ticket(s) pending</div>}
               {newNot.length>0 && <div className="py-2 px-5 bg-secondary rounded-md flex justify-between items-center animate-pulse mt-1"><Info className="mr-5"/>You have {open.length} Notification(s) pending</div>}
               {message.length>0 && <div className="py-2 px-5 bg-secondary rounded-md flex justify-between items-center mt-1 animate-pulse"><MailOpen className="mr-5"/>You have {message.length} Message(s) pending</div>}
-              <ClockAlert size={60} className="mt-8"/>
-              <div className="text-5xl font-bold tracking-tight my-12">{formatTime(today)}</div>
-                <div className=" p-3 bg-secondary rounded w-[100px]">{date(today.toString())}</div>
-            </div>
-        </div>
-      </div>
-      <div className="my-2">
-        <div className="flex p-4 items-center justify-between bg-background rounded-lg">
+              <div className="p-5 my-8 bg-primary text-white rounded-xl">
+              <ClockAlert size={60} className=""/>
+              <div className="text-5xl font-bold tracking-tight mt-12">{formatTime(today)}</div>
+              <div className="">{date(today.toString())}</div></div>
+        <div className="items-center bg-background rounded-lg">
+        <Image src={Shape1} alt="shape" height={20} width={80} className="hidden sm:block"/>
+        <div className="text-xl tracking-tight text- font-bold my-8 p-2 bg-secondary rounded-lg">User Statistics</div>
         <div className=" flex">
             {
                 userData?.map((data, index)=>(
@@ -315,53 +375,59 @@ export default function Page() {
                 ))
             }
         </div>
-        <Image src={Shape1} alt="shape" height={20} width={80} className="hidden sm:block"/>
-        <div className="text-xl tracking-tight text- font-bold">User Statistics</div>
         </div>
         <div className="grid grid-cols-12 text-sm p-2">
-            <div className="sm:col-span-2 col-span-6 flex items-center font-medium">
+            <div className=" col-span-6 flex items-center font-medium">
                 <Dot className="text-green-400" size={30}/> Logged In
             </div>
-            <div className="sm:col-span-2 col-span-6 flex items-center font-medium">
+            <div className=" col-span-6 flex items-center font-medium">
                 <Dot className="text-red-400" size={30}/> Logged Out
             </div>
         </div>
+            </div>
+        </div>
+      </div>
+      <div className="my-2">
         <div className="grid sm:grid-cols-12 grid-cols-1 text-lg p-2 gap-4">
             {idType=='admin' && <div className="sm:col-span-4">
-            <Link href='/admin/dashboard/users' className="p-6 rounded-lg transition-transform duration-300 cursor-pointer hover:scale-105 bg-background flex justify-between">
-            <div className="text-sm"><User2 size={20} className="text-"/> Users</div> <div className="h-8 w-8 flex font-medium items-center justify-center bg-secondary rounded-full">{userData?.length}</div></Link>
+            <Link href='/admin/dashboard/users' className=" rounded-lg transition-transform duration-300 cursor-pointer hover:scale-105 bg-background flex justify-between">
+            <div className="text-sm p-6"><User2 size={20} className="text-"/> Users</div> 
+            <div className="p-6 flex text-2xl font-medium items-center justify-center bg-primary text-white rounded-r-lg">{userData?.length}</div>
+            </Link>
             </div>}
             <div className="sm:col-span-4">
-            <Link href='/admin/dashboard/articles' className="p-6 rounded-lg transition-transform duration-300 cursor-pointer hover:scale-105 bg-background flex justify-between">
-                <div className="text-sm"><Paperclip size={20} className="text-"/> Articles</div><div className="h-8 w-8 flex items-center justify-center bg-secondary rounded-full">{articles?.length}</div></Link>
+            <Link href='/admin/dashboard/articles' className=" rounded-lg transition-transform duration-300 cursor-pointer hover:scale-105 bg-background flex justify-between">
+                <div className="text-sm p-6"><Paperclip size={20} className="text-"/> Articles</div>
+                <div className="p-6 flex text-2xl font-medium items-center justify-center bg-primary text-white rounded-r-lg">{articles?.length}</div></Link>
             </div>
             <div className="sm:col-span-4">
-            <Link href='/admin/dashboard/events' className="p-6 rounded-lg transition-transform duration-300 cursor-pointer hover:scale-105 bg-background flex justify-between">
-                <div className="text-sm"><Calendar size={20} className="text-"/> Events</div><div className="h-8 w-8 flex items-center justify-center bg-secondary rounded-full">{events?.length}</div></Link>
+            <Link href='/admin/dashboard/events' className=" rounded-lg transition-transform duration-300 cursor-pointer hover:scale-105 bg-background flex justify-between">
+                <div className="text-sm p-6"><Calendar size={20} className="text-"/> Events</div>
+                <div className="p-6 flex text-2xl font-medium items-center justify-center bg-primary text-white rounded-r-lg">{events?.length}</div></Link>
             </div>
         </div>
 
       </div>
       {idType=='admin' && <div className="rounded-lg p-6 bg-background my-1">
         <div className="sm:grid sm:grid-cols-12">
-          <div className="sm:col-span-6">
+          <div className="sm:col-span-8">
           <div className="text-xl tracking-tight font-bold text- mb-6">User Activity</div>
         <BarChart width={400} height={400} data={chartData} barCategoryGap={8} barGap={0}>
-          <XAxis dataKey="userId" tick={<CustomTick />} axisLine={true} interval={0} height={50} />
-          {/* <YAxis axisLine={false} tickLine={false}/> */}
+          <XAxis dataKey="userId" tick={<CustomTick />} axisLine={false} tickLine={false} interval={0} height={50} />
+          <YAxis axisLine={false} tickLine={false}/>
           <Tooltip />
           <Legend />
-          <Bar dataKey="activities" fill="#152653" label={{ position: "top" }} />
+          <Bar dataKey="activities" fill="#4ade80" label={{ position: "top" }} />
           <Bar dataKey="tickets" fill="#fa3c00" label={{ position: "top" }} />
         </BarChart></div>
-        <div className="sm:col-span-6 admin rounded-lg">
+        <div className="sm:col-span-4 admin rounded-lg">
           {
-            data.map((activity, index) => (
+            activity!==undefined?activity.map((activity, index) => (
               <div key={index} className="sm:grid bg-secondary p-2 rounded-lg sm:grid-cols-12 mt-1 items-center text-xs">
                         <div className="h-10 col-span-2 w-10 grid justify-center items-center text-lg dark:text-foreground text-background rounded-full bg-primary">{activity.users_table.name[0].toUpperCase()}</div>
                         <div className="col-span-10 font-medium">{activity.activity.activity}</div>
               </div>
-            ))
+            )):null
           }
         </div>
         </div>

@@ -35,7 +35,7 @@ export default async function Articles() {
         {articles.map((news, index) => (
           <CarouselItem key={index} className="pl-1 md:basis-1/2 lg:basis-1/3">
             <div className="p-1">
-              <Card className="shadow-none border-none">
+              <Card className="shadow-none border-none bg-transparent">
                 <CardContent className="justify-center p-6">
                 <div className="relative h-36 w-full">
                 <Image

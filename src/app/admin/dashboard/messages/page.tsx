@@ -24,12 +24,13 @@ export default function Messages() {
         defaultValues: {
             email: "",
             message: '',
-            status: 'new'
+            status: 'new',
+            
       },
     })
      
     async function onSubmit(values: z.infer<typeof addMessagesSchema>) {
-      
+     
       const app = document.getElementById('submit');
       const text = 'processing';
       if(app !== null){
@@ -95,7 +96,7 @@ export default function Messages() {
           <div className="bg-light p-2 rounded-md">{form.formState.errors.root.message}</div>
         )}
         {form.formState.isSubmitSuccessful && (
-          <div className="border text-sm font-bold border-primary text-primary p-2 text-center rounded-md"> Message added successfully </div>
+          <div className="border text-sm font-bold border-primary text-primary p-2 text-center rounded-md"> Message sent </div>
         )}
       </form>
       </Form>
