@@ -8,6 +8,7 @@ import Image from "next/image"
 // import DeletePage from "./deletePage"
 import { ArticleType } from "../types"
 import { getMyDay, getMyMonth } from "@/services/success"
+import DeletePage from "./deletePage"
 
 
   export function ArticlesCard({
