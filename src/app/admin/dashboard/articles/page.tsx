@@ -51,7 +51,7 @@ export default function AddArticle() {
     })
 
     async function onSubmit(values: z.infer<typeof addArticleSchema>) {
-      values.userId = id
+      values.userId = tokenise()[3]      
       values.content = value
       values.writer = name
         //create obj
@@ -86,8 +86,7 @@ export default function AddArticle() {
   return (
     <div className="p-2">
       {/* <ReusableDrawer page="Article" form={formBuild()}/> */}
-
-      <div className="sm:admin sm:p-12 bg-secondary rounded-lg">
+      <div className="sm:admin sm:p-4 bg-secondary rounded-lg">
       <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <div className="text-2xl font-bold tracking-tight my-4">Add Story/Article</div>
@@ -174,6 +173,7 @@ export default function AddArticle() {
                   )}
                   />
               </div>
+              <div className="text-xs my-2 text-muted-foreground">Image limit: 10 MB</div>
               <div className="flex flex-col space-y-2 mt-4">
               <FormField
                   control={form.control}

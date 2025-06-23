@@ -115,7 +115,7 @@ export const addArticleSchema = z.object({
     image1: z.any({required_error: "Please upload an image.",}),
     date: z.date({required_error: "Please enter a date.",}),
     articleType: z.string(),
-    userId: z.string(),
+    userId: z.string({required_error: "unkown user adding article.",}),
 })
 
 export const resetPasswordSchema = z.object({
