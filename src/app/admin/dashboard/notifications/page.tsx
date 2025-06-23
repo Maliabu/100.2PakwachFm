@@ -14,7 +14,7 @@ import { addNewNotification} from "@/server/fetch.actions"
 import { addNotificationSchema } from '@/schema/schema'
 import { tokenise } from "@/services/services"
 import Image from "next/image"
-import Shape from '@/app/images/shape1.png'
+import Shape from '@/app/images/shape.png'
 
 export default function Notify() {
 

@@ -299,6 +299,9 @@ pre {
   overflow-y: auto;
   height: 150vh;
 }
+.recharts-surface{
+  padding: none !important;
+}
 .scroll-x::-webkit-scrollbar {
   display: none;
 }

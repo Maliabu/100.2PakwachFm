@@ -44,7 +44,7 @@ import { useRouter } from "next/navigation"
 
     const path = image!==null?image:''
     const handleReadMore = (article: string) => {
-        router.push(`/news/${article}`)
+        router.push(`/news/${encodeURIComponent(article)}`)
       }
     return (
       <div>
