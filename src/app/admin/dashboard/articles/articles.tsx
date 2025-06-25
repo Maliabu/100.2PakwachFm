@@ -7,6 +7,8 @@ import { ArticleType } from "../types";
 import { fetcher } from "@/services/services";
 import { ArticlesCard } from "./articlesCard";
 import { Skeleton } from "@/components/ui/skeleton";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export default function Articles(){
     let article: ArticleType[] = []
@@ -19,8 +21,12 @@ export default function Articles(){
   }
     return(
         <div className="mt-2">
-          <div className="p-2 bg-background flex justify-between text-xl font-bold tracking-tight rounded-lg text-sm">Articles <div className="grid items-center justify-center w-8 h-8 bg-primary text-white rounded-full">{article.length}</div></div>
-          {
+<div className="p-4 bg-background rounded-lg flex items-center justify-between text-sm uppercase"> 
+            <div className="text-2xl font-bold tracking-tight capitalize">
+            Articles
+            </div>
+            <Link href='/admin/dashboard/articles'><Button>Add New Articles</Button></Link>
+            total: {article.length}</div>          {
                     article.length > 0 ? (
                       <div className="sm:grid sm:grid-cols-12 gap-2">
                         {article.map(article => (

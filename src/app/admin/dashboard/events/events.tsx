@@ -7,6 +7,8 @@ import { fetcher } from "@/services/services";
 import { EventType } from "../types";
 import { EventCard } from "./view/eventsCard";
 import { Skeleton } from "@/components/ui/skeleton";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export default function Events(){
     let event: EventType[] = []
@@ -19,7 +21,12 @@ export default function Events(){
   }
     return(
         <div className=" rounded-lg p-2 bg-secondary">
-          <div className="p-2 bg-background flex justify-between text-xl font-bold tracking-tight rounded-lg text-sm">Events <div className="grid items-center justify-center w-8 h-8 bg-primary text-white rounded-full">{event.length}</div></div>
+          <div className="p-4 bg-background rounded-lg flex items-center justify-between text-sm uppercase"> 
+            <div className="text-2xl font-bold tracking-tight capitalize">
+            Events
+            </div>
+            <Link href='/admin/dashboard/events'><Button>Add New Events</Button></Link>
+            total: {event.length}</div>
             {
                     event.length > 0 ? (
                       <div className="sm:grid sm:grid-cols-12">
