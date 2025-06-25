@@ -166,6 +166,23 @@ export const addProgrammingSchema = z.object({
     endTime: z.string(),
     weekday: z.string(),
     userId: z.string(),
+    image: z.string(),
+    image1: z.any(),
+})
+
+export const editProgrammingSchema = z.object({
+    programme: z.string(),
+    startTime: z.string(),
+    endTime: z.string(),
+    weekday: z.string(),
+    userId: z.string(),
+    image: z.string(),
+    image1: z
+    .any()
+    .refine((file) => file instanceof File || file === undefined, {
+      message: "Invalid image file",
+    })
+    .optional(),
 })
 
 export const addEnrollmentSchema = z.object({

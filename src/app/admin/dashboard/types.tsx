@@ -33,6 +33,7 @@ export type Programming = {
     startTime: string
     endTime: string | null
     weekday: string
+    image: string
     createdAt: Date
     updatedAt: Date
 }

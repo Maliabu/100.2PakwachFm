@@ -16,7 +16,7 @@ import { Input } from "@/components/ui/input"
 import { z } from "zod"
 import { redirect } from "next/navigation"
 import { handleDecryption, handleEncryption } from "@/services/services"
-import { Eye, EyeOff, Mail, Moon, PhoneCall, Sun} from "lucide-react"
+import { ArrowBigLeft, Eye, EyeOff, LockKeyholeOpenIcon, Mail, Moon, PhoneCall, Sun} from "lucide-react"
 import { loginUserSchema, resetPasswordSchema } from "@/schema/schema"
 import Link from "next/link"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
@@ -32,6 +32,7 @@ export default function StepWise() {
     const { setTheme } = useTheme() 
     const [showPassword, setShowPassword] = useState(false);
     const [buttonText, setButtonText] = useState("Request Password Link");
+    const [loginText, setLoginText] = useState("Sign in");
 
     const togglePasswordVisibility = () => {
       setShowPassword(prev => !prev);
@@ -51,14 +52,55 @@ export default function StepWise() {
             email: "",
         },
       })
+      async function emailCheck(){
+          const email = resetForm.getValues("email")
+          const check = await checkEmail(email)
+          if(check.error == false){
+              resetForm.setError("root", {
+                  "message": "Account doesnot exist"
+              })
+              setTimeout(() => {
+                  resetForm.clearErrors()
+                  }, 5000)
+              return check.name
+          } else {
+              resetForm.setError("root", {
+                  "message": "Account found"
+              })
+              setTimeout(() => {
+                  resetForm.clearErrors()
+                  }, 5000)
+              return check.name
+          }
+      }
+      async function loginEmailCheck(){
+        const email = form.getValues("email")
+        const check = await checkEmail(email)
+        if(check.error == false){
+            form.setError("root", {
+                "message": "Account doesnot exist"
+            })
+            setTimeout(() => {
+                form.clearErrors()
+                }, 5000)
+            return check.name
+        } else {
+            form.setError("root", {
+                "message": "Account found"
+            })
+            setTimeout(() => {
+                form.clearErrors()
+                }, 5000)
+            return check.name
+        }
+    }
        
       async function onSubmit(values: z.infer<typeof loginUserSchema>) {
         //create obj
-      const app = document.getElementById('submit');
-      const text = 'processing';
-      if(app !== null){
-        app.innerHTML = text;
-      }
+        setLoginText('Processing...')
+
+      const account = await loginEmailCheck()
+      if(account !== ''){
         const data = await loginUser(values)
         const first = data[0]
         const second = data[1]
@@ -75,17 +117,13 @@ export default function StepWise() {
       const dec = handleDecryption(second, third)
       dec.then((res) => {
           if(res === undefined){
-              if(app !== null){
-                  app.innerHTML = "Login";
-              }
+              setLoginText('Sign in')
               form.setError("root", {
                   "message": "Invalid login credentails"
               })
           }
           else if(res.toString() === values.password && forth === 'admin' || forth === 'staff'){
-              if(app !== null){
-                  app.innerHTML = "Successful";
-              }
+              setLoginText('Successful')
               form.setError("root", {
               "message": "Signing you in shortly..."
               })
@@ -104,44 +142,32 @@ export default function StepWise() {
               redirect("admin/dashboard/home")
           } 
           else if(res.toString() !== values.password){
+            setLoginText('Failed')
               form.setError("root", {
               "message": "invalid login credentials"
               })
           }else if(forth !== 'admin' && forth !== "staff"){
+            setLoginText('Failed')
               form.setError("root", {
               "message": "unauthorised user login"
               })
           }else{
+            setLoginText('Failed')
               form.setError("root", {
               "message": "contact administration"
               })
           }
           
-      })
-      }
-        async function emailCheck(){
-            const email = resetForm.getValues("email")
-            const check = await checkEmail(email)
-            if(check.error == false){
+      })} else {
+        setLoginText('Sign in')
                 resetForm.setError("root", {
                     "message": "Account doesnot exist"
                 })
                 setTimeout(() => {
-                    resetForm.clearErrors()
-                    }, 5000)
-                return check.name
-            } else {
-                resetForm.setError("root", {
-                    "message": "Account found"
-                })
-                setTimeout(() => {
-                    resetForm.clearErrors()
-                    }, 5000)
-                return check.name
-            }
-        }
-
-
+                resetForm.clearErrors()
+                }, 5000)
+      }
+      }
         async function onSubmit1(values: z.infer<typeof resetPasswordSchema>) {
             setButtonText('processing')
             const account = await emailCheck()
@@ -192,17 +218,17 @@ export default function StepWise() {
         const currStep = currentStep;
         if (currStep == 1) {
             return ( 
-                <div
+                <div className="font-bold flex items-center"
                 onClick = { _next } >
-                Forgot Password? 
+                Forgot Password? <LockKeyholeOpenIcon size={15}/>
                 </div>        
             )
         }
         else {
             return ( 
-                <div
+                <div className="font-bold flex items-center"
                 onClick = { _prev } >
-                Back to Login 
+                <ArrowBigLeft/> Back to Login 
                 </div>        
             )
         }
@@ -239,6 +265,7 @@ export default function StepWise() {
                 onSubmit={onSubmit}
                 togglePasswordVisibility={togglePasswordVisibility}
                 showPassword={showPassword}
+                loginText={loginText}
                 />
                 <Step2
                 currentStep={currentStep}
@@ -255,12 +282,12 @@ export default function StepWise() {
 
 function Step1(props:
     {
-        currentStep: number, form: any, onSubmit: (values: z.infer<typeof loginUserSchema>) => Promise<void>,button:JSX.Element | null, togglePasswordVisibility: () => void, showPassword: boolean}) {
+        currentStep: number,loginText: string, form: any, onSubmit: (values: z.infer<typeof loginUserSchema>) => Promise<void>,button:JSX.Element | null, togglePasswordVisibility: () => void, showPassword: boolean}) {
     if (props.currentStep !== 1) {
         return null
     }
     return (
-        <div className=" p-6 w-[350px] bg-background dark:bg-muted rounded">
+        <div className=" p-6 w-[350px] bg-background dark:bg-muted rounded-lg">
           <div className="text-3xl tracking-tight font-bold sm:mb-8 grid justify-center items-center">Sign in</div>
             <Form {...props.form}>
             <form onSubmit={props.form.handleSubmit(props.onSubmit)}>
@@ -319,12 +346,12 @@ function Step1(props:
                         />
                     </div>
                 </div>
-                <Button className=" text-white w-full mt-4" id="submit" type="submit">Sign in</Button>
+                <Button className=" text-white w-full mt-4" id="submit" type="submit">{props.loginText}</Button>
                 </div>
 
-            <div className="text-xs grid justify-center cursor-pointer text-primary pt-4">{props.button}</div>
+            <div className="text-xs grid justify-center cursor-pointer text-primary py-4">{props.button}</div>
             {props.form.formState.errors.root && (
-                <div className=" font-bold border light:bg-red-100 text-sm mx-4 border-primary text-primary p-2 text-center rounded-md">{props.form.formState.errors.root.message}</div>
+                <div className=" font-semibold border bg-red-400/20 text-sm border-primary text-primary p-2 text-center rounded-md">{props.form.formState.errors.root.message}</div>
             )}
             </form>
             </Form>
@@ -339,7 +366,7 @@ function Step2(props:{
     if (props.currentStep !== 2) {
         return null
     }
-    return (<div className="p-8 w-[350px] bg-background shadow-lg dark:bg-muted rounded">
+    return (<div className="p-8 w-[350px] bg-background dark:bg-muted rounded-lg">
               <div className="text-3xl tracking-tight font-bold grid justify-center items-center">Reset Password</div>
               <div className="text-xs grid justify-center items-center my-4">Enter your email to receive a password reset link so you can change your password.</div>
               <Form {...props.form}>

@@ -18,7 +18,27 @@ import { z } from "zod";
 import { uploadProfileImage } from "@/server/fetch.actions";
 import Image from "next/image";
 import { MapPin } from "lucide-react";
-import { UserType } from "../types";
+import { ActivityType, UserType } from "../types";
+
+export type Activity = {
+  activity: {
+    activity: string;
+    createdAt: string;
+    id: number;
+    user: number;
+  };
+  users_table: {
+    id: number;
+    name: string;
+    profilePicture: string;
+  };
+  tickets:{
+    id: number;
+    issue: string;
+    status: string;
+    opened: number;
+  }
+};
 
 export default function Page(){
     const [email, setEmail] = useState("")
@@ -94,7 +114,11 @@ export default function Page(){
           // useRouter().refresh()
         }
           }
-
+          const uniqueData = data.filter((value: Activity, index: number, self: Activity[]) => 
+            index === self.findIndex((t: Activity) => (
+              t.activity.id === value.activity.id
+            ))
+          );
     return<div className=" mt-2">
         <div className="grid sm:grid-cols-3 gap-2 bg-background rounded-lg p-6">
             <div className="col-span-1 text-2xl font-bold tracking-tight">
@@ -181,7 +205,7 @@ export default function Page(){
                     <p>Activities</p>
                     <p>Date of activity</p>
                 </div>
-                {data.map((item: {activity:{activity: string, createdAt: string, id:number, user: number}, users_table:{name: string}}) => (
+                {uniqueData.map((item: {activity:{activity: string, createdAt: string, id:number, user: number}, users_table:{name: string}}) => (
                     <div className="text-sm py-2 border-b grid grid-cols-3" key={item.activity.id}>
                          <p>{item.users_table?.name}</p>
                          <p className="text-left">{item.activity.activity}</p>

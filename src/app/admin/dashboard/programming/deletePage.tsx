@@ -35,7 +35,7 @@ import { z } from "zod"
       }
     }
     return (
-      <div className="mt-2">
+      <div className="">
         <Button className="text-white ml-1" id={props.submitId} onClick={() => onSubmit({"programId": props.id})}>Delete</Button>
         {form.formState.errors.root && (
           <div className="bg-light p-2 rounded-md">{form.formState.errors.root.message}</div>

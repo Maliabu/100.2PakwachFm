@@ -5,7 +5,7 @@ import { db } from "@/db/db";
 import { EventsTable, activityTable, articlesTable, commentsTable, courseTable, currencyTable, editorImagesTable, enrollmentsTable, messagesTable, nextCourseTable, notificationsTable, programmingTable, replyTable, subscriptionsTable, ticketingTable, usersTable, votesTable } from "@/db/schema";
 import "use-server"
 import { z } from "zod";
-import { addArticleSchema, addCourseSchema, addEnrollmentSchema, addEventSchema, addMessagesSchema, addNextCourseSchema, addNotificationSchema, addProgrammingSchema, addSubscriptionSchema, addUserSchema, commentsSchema, deleteArticleSchema, deleteEventSchema, deleteProgrammingSchema, deleteSchema, deleteUserSchema, loginUserSchema, messagesSchema, openTicket, replySchema, updateCourseSchema, uploadProfilePicture, voteSchema } from '@/schema/schema'
+import { addArticleSchema, addCourseSchema, addEnrollmentSchema, addEventSchema, addMessagesSchema, addNextCourseSchema, addNotificationSchema, addProgrammingSchema, addSubscriptionSchema, addUserSchema, commentsSchema, deleteArticleSchema, deleteEventSchema, deleteProgrammingSchema, deleteSchema, deleteUserSchema, editProgrammingSchema, loginUserSchema, messagesSchema, openTicket, replySchema, updateCourseSchema, uploadProfilePicture, voteSchema } from '@/schema/schema'
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { File } from "node:buffer";
@@ -568,7 +568,7 @@ Promise<{error: boolean | undefined, url: string}> {
 
 }
 
-export async function addprogrammings(unsafeData: z.infer<typeof addProgrammingSchema>) : 
+export async function addprogrammings(unsafeData: z.infer<typeof addProgrammingSchema>, formData: FormData) : 
 Promise<{error: boolean | undefined}> {
    const {success, data} = addProgrammingSchema.safeParse(unsafeData)
 
@@ -577,16 +577,53 @@ Promise<{error: boolean | undefined}> {
    }
     
    try{
-    console.log(data)
-        const programmes = await db.insert(programmingTable).values({...data})
-        await logActivity('Added new Programming: '+data.programme, data.userId)
-        return {error: false}
+        const profile = await uploadAds(formData)
+        if(profile !== null){
+            data.image = profile.url
+            await db.insert(programmingTable).values({...data})
+            await logActivity('Added new Programming: '+data.programme, data.userId)
+            return {error: false}
+        } else {
+            return {error: true}
+        }
     } catch(error){
         console.log(error)
         return {error: true}
     }
 
 }
+
+export async function editProgramming(
+    unsafeData: z.infer<typeof addProgrammingSchema>,
+    formData: FormData | null,
+    id: number
+  ): Promise<{ error: boolean | undefined }> {
+    const { success, data } = addProgrammingSchema.safeParse(unsafeData);
+  
+    if (!success) {
+      return { error: true };
+    }
+  
+    try {
+      // If a new image was provided
+      if (formData) {
+        const profile = await uploadAds(formData);
+        if (profile !== null) {
+          data.image = profile.url; // override with uploaded image
+        }
+      }
+  
+      // Always update the database, with or without image change
+      await db.update(programmingTable).set({ ...data }).where(eq(programmingTable.id, id));
+      await logActivity("Updated Programming: " + data.programme, data.userId);
+  
+      return { error: false };
+    } catch (error) {
+      console.error(error);
+      return { error: true };
+    }
+  }
+  
 
 export async function addEnrollment(unsafeData: z.infer<typeof addEnrollmentSchema>) : 
 Promise<{error: boolean | undefined}> {
