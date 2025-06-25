@@ -21,11 +21,10 @@ import Programmes from "./programmes"
 import useSWR from "swr"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { ReusableDialog } from "../reusableDialog"
-import { DialogClose } from "@/components/ui/dialog"
-
 
 export default function AddProgramming() {
   const [name, setName] = React.useState("")
+
 
     const form = useForm<z.infer<typeof addProgrammingSchema>>({
       resolver: zodResolver(addProgrammingSchema),

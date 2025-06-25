@@ -43,7 +43,7 @@ import EditPage from "./editPage"
         </div>
         </div>
         <div>
-        <p className={weekday=='true'?" text-sm border-t border-b border-black-subtle p-2 uppercase flex justify-center":'text-sm bg-slate-400/30 text-slate-600 p-2 uppercase flex justify-center'}>{weekday=='true'?'weekday':"weekend"}</p></div>
+        <p className={weekday=='true'?" text-sm border-t border-b p-2 uppercase flex justify-center":'text-sm bg-slate-400/30 text-slate-600 p-2 uppercase flex justify-center'}>{weekday=='true'?'weekday':"weekend"}</p></div>
         <div className="flex"><DeletePage id={id} submitId={programme}/> <EditPage id={id} submitId={programme}/> </div>   
       </Card>
       </div>

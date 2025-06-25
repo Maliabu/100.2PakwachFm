@@ -18,7 +18,7 @@ import { getMyDay, getMyMonth } from "@/services/success"
 
     return (
         <div className="mt-2">
-        <Card className=" border-none shadow-none p-8">
+        <Card className=" border-none shadow-none p-2">
         <div style={{ position: 'relative', width: '100%', height: '200px' }}>
           <Image
               src={image}
@@ -29,10 +29,10 @@ import { getMyDay, getMyMonth } from "@/services/success"
               style={{ objectFit: 'cover' }} // or 'contain'
           />
           </div>
-          <div className="">
-          <p className=" text-sm font-bold tracking-tight line-clamp-2">{title}</p>
+          <div className="p-4">
+          <p className=" text-md font-bold tracking-tight line-clamp-2">{title}</p>
           <p className="text-muted-foreground text-xs my-2"> {description}</p>
-          <p className="text-xs bg-secondary p-2 rounded"> {
+          <p className="text-xs capitalize border-t border-b p-2 rounded"> {
         getMyDay(date.getDay())}, {getMyMonth(date.getMonth()+1)} {date.getDate()}, {date.getFullYear()
         }</p></div>
         </Card>
