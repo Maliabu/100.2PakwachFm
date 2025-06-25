@@ -1,0 +1,1 @@
+ALTER TABLE `programming` ADD `programming_image` varchar(255) DEFAULT 'image' NOT NULL;

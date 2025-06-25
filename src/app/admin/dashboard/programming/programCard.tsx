@@ -7,6 +7,7 @@ import { Card } from "@/components/ui/card"
 import Image from "next/image"
 import DeletePage from "./deletePage"
 import { Programming } from "../types"
+import EditPage from "./editPage"
 
 
   export function ProgramCard({
@@ -16,25 +17,35 @@ import { Programming } from "../types"
     endTime,
     createdAt,
     updatedAt,
-    weekday
+    weekday,
+    image
   }: Programming){
 
     return (
-      <div className="sm:flex sm:flex-row sm:justify-between">
-      <Card className="sm:w-5/6 grid sm:grid-cols-5 grid-cols-4 sm:gap-4 p-4 mt-1 border-none shadow-none border-b bg-background rounded-lg">
-        <div className="items-start">
-        <p className=" text-sm font-bold tracking-tight">{programme}</p></div>
-        <div>
+      <div className="mt-2">
+      <Card className=" border-none shadow-none border-b bg-background rounded-lg p-2">
+      <div style={{ position: 'relative', width: '100%', height: '150px' }}>
+                      <Image
+                          src={image}
+                          alt="Full size"
+                          className="rounded-t-lg"
+                          fill
+                          unoptimized
+                          style={{ objectFit: 'cover' }} // or 'contain'
+                      />
+                      </div>
+        <div className="items-start px-4">
+        <p className=" text-lg font-bold tracking-tight">{programme}</p>
+        <div className="flex justify-between">
           <p className=" text-sm">{startTime}</p>
+        <p className=" text-sm">to</p>
+        <p className=" text-sm">{endTime}</p>
         </div>
-        <div className=" sm:block hidden">
-        <p className=" text-sm">to</p></div>
+        </div>
         <div>
-        <p className=" text-sm">{endTime}</p></div>
-        <div>
-        <p className=" text-sm border border-primary text-primary p-2 rounded uppercase flex justify-center">{weekday=='true'?'weekday':"weekend"}</p></div>
+        <p className={weekday=='true'?" text-sm border-t border-b border-black-subtle p-2 uppercase flex justify-center":'text-sm bg-slate-400/30 text-slate-600 p-2 uppercase flex justify-center'}>{weekday=='true'?'weekday':"weekend"}</p></div>
+        <div className="flex"><DeletePage id={id} submitId={programme}/> <EditPage id={id} submitId={programme}/> </div>   
       </Card>
-      <DeletePage id={id} submitId={programme}/>      
       </div>
     )
   }

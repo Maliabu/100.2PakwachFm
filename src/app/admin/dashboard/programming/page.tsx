@@ -20,6 +20,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import Programmes from "./programmes"
 import useSWR from "swr"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+import { ReusableDialog } from "../reusableDialog"
+import { DialogClose } from "@/components/ui/dialog"
 
 
 export default function AddProgramming() {
@@ -33,6 +35,7 @@ export default function AddProgramming() {
           endTime: "",
           weekday: '',
           userId: '',
+          image: ''
       },
     })
 
@@ -44,8 +47,13 @@ export default function AddProgramming() {
         if(app !== null){
           app.innerHTML = text;
         }
+        const file = values.image1
 
-        const data = await addprogrammings(values)
+        const formData = new FormData()
+        formData.append("file", file)
+        formData.append('folder', 'programming')
+
+        const data = await addprogrammings(values, formData)
         if(data?.error){
           form.setError("root", {
             "message": "Programming not added"
@@ -60,12 +68,30 @@ export default function AddProgramming() {
 
     function formBuild(){
       return(
-      <div className="sm:admin sm:pb-36 p-4">
+      <div className=" p-4">
       <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
-        <div className="grid sm:grid-cols-3 sm:w-full sm:gap-4">
-          <div className="col-span-1">
-              <div className="flex flex-col space-y-1.5">
+      <form onSubmit={form.handleSubmit(onSubmit)} id="add-programming-form">
+        <div>
+          <div>
+          <div className="flex flex-col space-y-1.5">
+            <FormField
+                control={form.control}
+                name="image1"
+                render={({ field: { value, onChange, ...fieldProps } }) => (
+                    <FormItem>
+                    <FormLabel>Image</FormLabel>
+                    <FormControl
+                    >
+                        <Input type="file" {...fieldProps} onChange={(event) =>
+                  onChange(event.target.files && event.target.files[0])
+                }/>
+                    </FormControl>
+                    <FormMessage />
+                    </FormItem>
+                )}
+                />
+            </div>
+              <div className="flex flex-col mt-2 space-y-1.5">
               <FormField
                   control={form.control}
                   name="programme"
@@ -163,7 +189,7 @@ export default function AddProgramming() {
 
   return (
     <div className="mt-2">
-      <ReusableDrawer page="Programming" form={formBuild()}/>
+      <ReusableDialog page="Add Programming" form={formBuild()}/>
       <div>
         <Programmes/>
       </div>

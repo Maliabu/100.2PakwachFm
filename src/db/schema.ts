@@ -72,6 +72,7 @@ export const programmingTable = mysqlTable('programming', {
   startTime: text('starts').notNull(),
   endTime: varchar('ends', {length: 255}),
   weekday: text('weekday').default("true"),
+  image: varchar('programming_image', {length: 255}).notNull().default('image'),
     createdAt,
     updatedAt,
 });

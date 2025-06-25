@@ -18,25 +18,8 @@ import Shape from '@/app/images/shape.png'
 import Shape1 from '@/app/images/shape2.png'
 import { Message } from "../messages/view/page";
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts'
+import { Activity } from "../account/page";
 
-type Activity = {
-  activity: {
-    user: number,
-    value: string,
-    activity: string,
-  },
-  users_table: {
-    name: string,
-    profilePicture: string
-    isLoggedIn: boolean
-  },
-  tickets: {
-    opened: number,
-    value: string,
-    issue: string,
-    status: string,
-  }
-};
 export type Ticketing = {
   tickets: {
     opened: number,
@@ -260,10 +243,14 @@ export default function Page() {
   };
   // const COLORS = ['#22c55e', '#fa3c00', '#152653', '#ededed'] 
   // #fa3c00 - orange
-// #152653 - blue
-const COLORS = ['#992600', '#fa3c00', '#FF6A3D', '#FFD2C2'] 
+  // #152653 - blue
+  const COLORS = ['#992600', '#fa3c00', '#FF6A3D', '#FFD2C2'] 
 
-
+  const uniqueData = activity!==undefined?activity.filter((value: Activity, index: number, self: Activity[]) => 
+    index === self.findIndex((t: Activity) => (
+      t.activity.id === value.activity.id
+    ))
+  ):null
   return (
     <div className=" mt-2">
       <div className="rounded-lg my-1">
@@ -435,7 +422,7 @@ const COLORS = ['#992600', '#fa3c00', '#FF6A3D', '#FFD2C2']
           </div></div>
         <div className="sm:col-span-4 admin rounded-lg">
           {
-            activity!==undefined?activity.map((activity, index) => (
+            uniqueData!==null?uniqueData.map((activity, index) => (
               <div key={index} className="grid bg-secondary p-2 rounded-lg grid-cols-12 mt-1 items-center text-xs">
                         <div className="h-10 col-span-3 w-10 grid justify-center items-center text-lg dark:text-foreground text-background rounded-full bg-primary">{activity.users_table.name[0].toUpperCase()}</div>
                         <div className="col-span-9 font-medium">{activity.activity.activity}</div>

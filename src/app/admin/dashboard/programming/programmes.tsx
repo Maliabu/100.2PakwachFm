@@ -10,13 +10,16 @@ export default function Programmes(){
   if(programmes){
       programming = programmes
   }
+  console.log(programming)
     return(
-        <div>
+        <div className="admin rounded">
             {
                     programming.length > 0 ? (
-                      <div className="flex flex-col admin rounded mt-2">
+                      <div className="sm:grid sm:grid-cols-12 gap-2">
                         {programming.map(program => (
-                          <ProgramCard key={program.id} {...program}/>
+                          <div key={program.id} className="sm:col-span-3">
+                          <ProgramCard {...program}/>
+                          </div>
                         ))}
                       </div>
                     ) : null
