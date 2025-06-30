@@ -2,10 +2,10 @@
 "use server"
 
 import { db } from "@/db/db";
-import { EventsTable, activityTable, articlesTable, commentsTable, courseTable, currencyTable, editorImagesTable, enrollmentsTable, messagesTable, nextCourseTable, notificationsTable, programmingTable, replyTable, subscriptionsTable, ticketingTable, usersTable, votesTable } from "@/db/schema";
+import { EventsTable, activityTable, articlesTable, commentsTable, courseTable, currencyTable, editorImagesTable, enrollmentsTable, messagesTable, nextCourseTable, notificationsTable, opportunitiesTable, programmingTable, replyTable, subscriptionsTable, ticketingTable, usersTable, votesTable } from "@/db/schema";
 import "use-server"
 import { z } from "zod";
-import { addArticleSchema, addCourseSchema, addEnrollmentSchema, addEventSchema, addMessagesSchema, addNextCourseSchema, addNotificationSchema, addProgrammingSchema, addSubscriptionSchema, addUserSchema, commentsSchema, deleteArticleSchema, deleteEventSchema, deleteProgrammingSchema, deleteSchema, deleteUserSchema, editProgrammingSchema, loginUserSchema, messagesSchema, openTicket, replySchema, updateCourseSchema, uploadProfilePicture, voteSchema } from '@/schema/schema'
+import { addArticleSchema, addCourseSchema, addEnrollmentSchema, addEventSchema, addMessagesSchema, addNextCourseSchema, addNotificationSchema, addProgrammingSchema, addSubscriptionSchema, addUserSchema, commentsSchema, deleteArticleSchema, deleteEventSchema, deleteProgrammingSchema, deleteSchema, deleteUserSchema, editProgrammingSchema, loginUserSchema, messagesSchema, openTicket, opportunitySchema, replySchema, updateCourseSchema, uploadProfilePicture, voteSchema } from '@/schema/schema'
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { File } from "node:buffer";
@@ -697,6 +697,19 @@ Promise<{error: boolean | undefined}> {
    }
 
    await db.insert(messagesTable).values({...data})
+
+   return {error: false}
+}
+
+export async function addOpportunity(unsafeData: z.infer<typeof opportunitySchema>) : 
+Promise<{error: boolean | undefined}> {
+   const {success, data} = opportunitySchema.safeParse(unsafeData)
+
+   if (!success){
+    return {error: true}
+   }
+
+   await db.insert(opportunitiesTable).values({...data})
 
    return {error: false}
 }

@@ -64,6 +64,13 @@ export const addMessagesSchema = z.object({
     message: z.string({required_error: "Please tell us something.",}),
 })
 
+export const opportunitySchema = z.object({
+    email: z.string(),
+    phone: z.string({required_error: "Please provide your phone number.",}),
+    purpose: z.string(),
+    message: z.string({required_error: "Please tell us something.",}),
+})
+
 export const openTicket = z.object({
     issue: z.string({required_error: "Please explain your issue.",}),
     status: z.string(),
@@ -150,6 +157,11 @@ export const adSchema = z.object({
     folder: z.string({required_error: "Please select a folder.",}).min(2, {
         message: "folder name should be atleast a character"
     }).max(200)
+})
+
+export const gallerySchema = z.object({
+    image: z.string(),
+    image1: z.any(),
 })
 
 export const uploadProfilePicture = z.object({

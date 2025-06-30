@@ -1,0 +1,1 @@
+ALTER TABLE `opportunities_table` ADD `phone` text NOT NULL;

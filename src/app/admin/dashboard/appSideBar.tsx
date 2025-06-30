@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client"
 
-import { BarChart, Calendar, CalendarArrowDown, ChartBar, ChartBarIcon, CheckCheck, Delete, File, FileArchive, FileEdit, Home, Info, LineChart, List, ListChecks, Mail, MailCheck, Mic, Paperclip, PenToolIcon, Pill, Play, Plus, Receipt, Settings2, ShoppingBasket, Store, StoreIcon, Sun, Tag, Ticket, TicketCheck, TruckIcon, User, UserCheck2, Users, Video, Videotape, View, Wallet } from "lucide-react"
+import { BarChart, Calendar, CalendarArrowDown, ChartBar, ChartBarIcon, CheckCheck, Delete, File, FileArchive, FileArchiveIcon, FileEdit, GraduationCap, Home, ImageIcon, Info, LineChart, List, ListChecks, LucideFileImage, Mail, MailCheck, Mic, Paperclip, PenToolIcon, Pill, Play, Plus, Receipt, Settings2, ShoppingBasket, Store, StoreIcon, Sun, Tag, Ticket, TicketCheck, TruckIcon, User, UserCheck2, Users, Video, Videotape, View, Wallet } from "lucide-react"
 
 import {
   Sidebar,
@@ -96,6 +96,42 @@ const data = {
           title: "View",
           icon: Videotape,
           url: "/admin/dashboard/ads/view",
+        },
+      ],
+    },
+    {
+      title: "Community Gallery",
+      url: "#",
+      icon: ImageIcon,
+      isActive: false,
+      items: [
+        {
+          title: "Add",
+          icon: Plus,
+          url: "/admin/dashboard/gallery",
+        },       
+        {
+          title: "View",
+          icon: LucideFileImage,
+          url: "/admin/dashboard/gallery/view",
+        },
+      ],
+    },
+    {
+      title: "Opportunities Board",
+      url: "#",
+      icon: GraduationCap,
+      isActive: false,
+      items: [
+        {
+          title: "Add",
+          icon: Plus,
+          url: "/admin/dashboard/opportunities",
+        },       
+        {
+          title: "View",
+          icon: FileArchiveIcon,
+          url: "/admin/dashboard/opportunities/view",
         },
       ],
     },
