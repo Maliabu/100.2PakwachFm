@@ -153,6 +153,16 @@ export const messagesTable = mysqlTable('messages_table', {
     updatedAt,
 });
 
+export const opportunitiesTable = mysqlTable('opportunities_table', {
+  id: int('id').primaryKey().autoincrement(),
+  phone: text('phone').notNull(),
+  email: text('email'),
+  purpose: text('purpose').notNull(),
+  message: text('message'),
+    createdAt,
+    updatedAt,
+});
+
 export const commentsTable = mysqlTable('comments_table', {
   id: int('id').primaryKey().autoincrement(),
   email: text('email').notNull(),
