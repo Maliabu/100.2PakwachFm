@@ -6,6 +6,8 @@ import { date, fetcher } from "@/services/services";
 import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import useSWR from "swr";
+import CloseTicketing from "./closeTicket";
+import { TicketCard } from "./ticketCard";
 
 export type Ticket = {
     tickets:{
@@ -47,22 +49,13 @@ export default function Ticketing(){
             <div className="bg-secondary rounded-lg sm:p-6 p-4 my-2 admin">
             { notify.length>0?
                         notify.map((notes, index) => (
-                            <div key={index} className="grid grid-cols-12 mb-1 gap-4">
-                     <div className="col-span-1 h-10 w-10 bg-primary text-muted text-2xl rounded-full flex justify-center items-center ">{notes.users_table.name[0]}</div>
-                     <div className="col-span-11 sm:p-6 p-4 mx-4 bg-background rounded-lg flex justify-between">
-                        <div className="w-5/6">
-                     <div className="text-xs font-bold text-muted-foreground">Opened by: {notes.users_table.name}</div>
-                       <div className="text-sm font-medium mt-3">{notes.tickets.issue}</div>
-                       <div className="float-right text-xs text-muted-foreground p-2 font-bold">{date(notes.tickets.createdAt.toString())}</div>
-                       </div>
-                       <div>
-                       <div className={status(notes.tickets.status)}>{notes.tickets.status}</div></div>
-                       </div>
+                            <div key={index}>
+                                <TicketCard {...notes}/>
                             </div>
                         )):<div>No Tickets</div>
                     }
             </div>
-            <div className="text-sm font-medium my-2 p-4 bg-secondary rounded">
+            <div className="text-sm font-medium my-2 p-6 bg-secondary rounded">
             Would you like to 
             <Link href='/admin/dashboard/ticket' className="underline text-primary cursor-pointer"> open a ticket</Link> instead?<br/> Tickets can only be closed by support after the issue explaind in the ticket has been resolved.</div>
         </div>

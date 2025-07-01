@@ -5,13 +5,13 @@ import { Menu } from "./(website)/navigation/menu";
 export default function page() {
   return (
     <div className="sm:px-16 md:px-12 sm:bg-muted">
-      <div className="sm:px-2">
+      <div>
         <Menu/>
       </div>
-      <div className="sm:px-2">
+      <div>
         <Home/>
       </div>
-      <div className="mt-2">
+      <div>
         <Footer/>
       </div>
     </div>

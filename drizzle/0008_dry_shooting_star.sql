@@ -1,0 +1,1 @@
+ALTER TABLE `messages_table` DROP INDEX `messages_table_email_unique`;

@@ -99,8 +99,8 @@ export function Menu() {
     <Image src={Logo} alt="logo"/></div>
     </div>
   </div>
-  <div className="bg-background p-2 flex justify-between">
-    <Link href='/programming'><Button className="bg-primary">Schedule <ChevronRight size={18}/></Button></Link>
+  <div className="bg-background flex justify-between">
+    <Link href='/programming' className="p-2"><Button className="bg-primary">Schedule <ChevronRight size={18}/></Button></Link>
           {images.length > 0?         
           <div className="relative w-full h-24 ml-2">
             <Image

@@ -16,7 +16,7 @@ import { Input } from "@/components/ui/input"
 import { z } from "zod"
 import { redirect } from "next/navigation"
 import { handleDecryption, handleEncryption } from "@/services/services"
-import { ArrowBigLeft, Eye, EyeOff, LockKeyholeOpenIcon, Mail, Moon, PhoneCall, Sun} from "lucide-react"
+import { ArrowBigLeft, CheckCircle, Eye, EyeOff, LockKeyholeOpenIcon, Mail, Moon, PhoneCall, Sun, XCircle} from "lucide-react"
 import { loginUserSchema, resetPasswordSchema } from "@/schema/schema"
 import Link from "next/link"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
@@ -33,6 +33,8 @@ export default function StepWise() {
     const [showPassword, setShowPassword] = useState(false);
     const [buttonText, setButtonText] = useState("Request Password Link");
     const [loginText, setLoginText] = useState("Sign in");
+    const [loginSuccess, setLoginSuccess] = useState(false);
+    const [resetSuccess, setReset] = useState(false);
 
     const togglePasswordVisibility = () => {
       setShowPassword(prev => !prev);
@@ -64,12 +66,6 @@ export default function StepWise() {
                   }, 5000)
               return check.name
           } else {
-              resetForm.setError("root", {
-                  "message": "Account found"
-              })
-              setTimeout(() => {
-                  resetForm.clearErrors()
-                  }, 5000)
               return check.name
           }
       }
@@ -85,12 +81,6 @@ export default function StepWise() {
                 }, 5000)
             return check.name
         } else {
-            form.setError("root", {
-                "message": "Account found"
-            })
-            setTimeout(() => {
-                form.clearErrors()
-                }, 5000)
             return check.name
         }
     }
@@ -117,21 +107,15 @@ export default function StepWise() {
       const dec = handleDecryption(second, third)
       dec.then((res) => {
           if(res === undefined){
-              setLoginText('Sign in')
+              setLoginText('Failed')
               form.setError("root", {
                   "message": "Invalid login credentails"
               })
+              return;
           }
           else if(res.toString() === values.password && forth === 'admin' || forth === 'staff'){
               setLoginText('Successful')
-              form.setError("root", {
-              "message": "Signing you in shortly..."
-              })
-              setTimeout(() => {
-                form.setError("root", {
-                    "message": "Please wait..."
-                    })
-              }, 2500)
+              setLoginSuccess(true)
               localStorage.setItem("token", first)
               localStorage.setItem("name", name)
               localStorage.setItem("username", username)
@@ -146,26 +130,30 @@ export default function StepWise() {
               form.setError("root", {
               "message": "invalid login credentials"
               })
+              return;
           }else if(forth !== 'admin' && forth !== "staff"){
             setLoginText('Failed')
               form.setError("root", {
               "message": "unauthorised user login"
               })
+              return;
           }else{
             setLoginText('Failed')
               form.setError("root", {
               "message": "contact administration"
               })
+              return;
           }
           
       })} else {
-        setLoginText('Sign in')
+        setLoginText('Failed')
                 resetForm.setError("root", {
                     "message": "Account doesnot exist"
                 })
                 setTimeout(() => {
                 resetForm.clearErrors()
                 }, 5000)
+                return;
       }
       }
         async function onSubmit1(values: z.infer<typeof resetPasswordSchema>) {
@@ -178,12 +166,7 @@ export default function StepWise() {
                 const sendEmail = await sendHtmlEmail(values.email, 'Password Reset', account, link)
                 if(sendEmail == true){
                     setButtonText('Email Successful')
-                    resetForm.setError("root", {
-                        "message": "Check your email for a password reset link"
-                    })
-                    setTimeout(() => {
-                        resetForm.clearErrors()
-                        }, 5000)
+                    setReset(true)
                 } else{
                     setButtonText('Email Failed')
                     resetForm.setError("root", {
@@ -192,6 +175,7 @@ export default function StepWise() {
                     setTimeout(() => {
                         resetForm.clearErrors()
                         }, 5000)
+                        return;
                 }
             }else{
                 setButtonText('Email Failed')
@@ -201,6 +185,7 @@ export default function StepWise() {
                 setTimeout(() => {
                 resetForm.clearErrors()
                 }, 5000)
+                return;
             }
         }
 
@@ -266,6 +251,7 @@ export default function StepWise() {
                 togglePasswordVisibility={togglePasswordVisibility}
                 showPassword={showPassword}
                 loginText={loginText}
+                loginSuccess={loginSuccess}
                 />
                 <Step2
                 currentStep={currentStep}
@@ -273,16 +259,17 @@ export default function StepWise() {
                 prev = { nextButton() }
                 form={resetForm}
                 buttonText={buttonText}
+                resetSuccess={resetSuccess}
                 />
                 </div>
-                <div className="text-xs py-4">This portal is a copyright of Pakwach FM Radio Station. Only authorised personnel can have access to it.</div>
+                <div className="text-xs p-4">This portal is a copyright of Pakwach FM Radio Station. Only authorised personnel can have access to it.</div>
     </div>
         )
 }
 
 function Step1(props:
     {
-        currentStep: number,loginText: string, form: any, onSubmit: (values: z.infer<typeof loginUserSchema>) => Promise<void>,button:JSX.Element | null, togglePasswordVisibility: () => void, showPassword: boolean}) {
+        currentStep: number,loginText: string,loginSuccess: boolean, form: any, onSubmit: (values: z.infer<typeof loginUserSchema>) => Promise<void>,button:JSX.Element | null, togglePasswordVisibility: () => void, showPassword: boolean}) {
     if (props.currentStep !== 1) {
         return null
     }
@@ -348,11 +335,16 @@ function Step1(props:
                 </div>
                 <Button className=" text-white w-full mt-4" id="submit" type="submit">{props.loginText}</Button>
                 </div>
-
             <div className="text-xs grid justify-center cursor-pointer text-primary py-4">{props.button}</div>
             {props.form.formState.errors.root && (
-                <div className=" font-semibold border bg-red-400/20 text-sm border-primary text-primary p-2 text-center rounded-md">{props.form.formState.errors.root.message}</div>
+                <div className="rounded text-sm font-bold bg-red-400/10 flex justify-center gap-4 text-red-600 p-2"><XCircle/> {props.form.formState.errors.root.message}</div>
             )}
+            {props.loginSuccess && (
+            <div className="rounded text-sm font-bold bg-green-400/10 flex justify-center gap-4 text-green-600 p-2">
+                <CheckCircle className="animate-spin"/> Signing you in...
+            </div>
+            )}
+
             </form>
             </Form>
         </div>
@@ -360,7 +352,7 @@ function Step1(props:
 }
 
 function Step2(props:{
-    currentStep: number, form: any, buttonText: string, onSubmit: (values: z.infer<typeof loginUserSchema>) => Promise<void>,
+    currentStep: number, form: any,resetSuccess: boolean, buttonText: string, onSubmit: (values: z.infer<typeof loginUserSchema>) => Promise<void>,
     prev: JSX.Element,
     }) {
     if (props.currentStep !== 2) {
@@ -392,8 +384,13 @@ function Step2(props:{
                 </div>
                 <Button className="my-4 text-sm text-white w-full" id="submit1" type="submit">{props.buttonText}</Button>
                 {props.form.formState.errors.root && (
-                    <div className=" bg-green-200 text-primary p-2 text-center rounded-md">{props.form.formState.errors.root.message}</div>
+                    <div className="rounded text-sm font-bold bg-red-400/10 flex justify-center gap-4 text-red-600 p-2"><XCircle/> {props.form.formState.errors.root.message}</div>
                 )}
+                {props.resetSuccess && (
+            <div className="rounded text-sm font-bold bg-green-400/10 flex justify-center gap-4 text-green-600 p-2">
+                <CheckCircle className="animate-spin"/> Reset successful
+            </div>
+            )}
                 <div className="text-primary text-xs cursor-pointer flex justify-center mt-2">{props.prev}</div>
                 </form>
                 </Form>

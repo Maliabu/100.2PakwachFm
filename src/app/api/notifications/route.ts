@@ -1,11 +1,13 @@
 import { db } from "@/db/db";
+import { notificationsTable } from "@/db/schema";
+import { desc } from "drizzle-orm";
 import { NextResponse } from "next/server";
 
 // This will handle the GET request to /api/users
 export async function GET() {
   try {
     // Query the database
-    const notifications = await db.query.notificationsTable.findMany();
+    const notifications = await db.select().from(notificationsTable).orderBy(desc(notificationsTable.createdAt));
     
     // Return the users as a JSON response
     return NextResponse.json(notifications);

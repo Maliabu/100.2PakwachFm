@@ -8,7 +8,7 @@ export default function WebsiteLayout({
     children: React.ReactNode;
   }>) {
     return (
-        <div className="sm:px-16 sm:bg-muted">
+        <div className="sm:px-16 md:px-12 sm:bg-muted">
         <div>
           <Menu/>
         </div>

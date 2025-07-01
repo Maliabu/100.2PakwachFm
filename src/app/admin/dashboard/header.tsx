@@ -54,6 +54,7 @@ export default function Header(){
         notes = notifications
     }
     let hasNew = notes?.some((n: Notify) => n.status === "new");
+    const newMessage = message?.some((n: Message) => n.status === "new");
     function notify(){
         if(hasNew){
             return "bg-orange-400/20 dark:text-orange-400 text-orange-600 animate-bounce rounded-full w-8 h-8 flex justify-center items-center"
@@ -63,16 +64,16 @@ export default function Header(){
     }
     function ticky(){
         if(open.length > 0){
-            return "bg-orange-400/20 dark:text-orange-400 text-orange-600 animate-bounce rounded-full w-10 ml-2 h-10 flex justify-center items-center"
+            return "bg-orange-400/20 dark:text-orange-400 text-orange-600 animate-bounce rounded-full w-10 h-10 flex justify-center items-center"
         } else {
-            return "bg-secondary rounded-full w-10 h-10 ml-2 flex justify-center items-center"
+            return "bg-secondary rounded-full w-10 h-10 flex justify-center items-center"
         }
     }
     function messaging(){
-        if(message.length > 0){
-            return "bg-orange-400/20 dark:text-orange-400 text-orange-600 rounded-full w-10 ml-2 h-10 flex justify-center items-center"
+        if(newMessage){
+            return "bg-orange-400/20 dark:text-orange-400 text-orange-600 rounded-full w-10 h-10 flex justify-center items-center"
         } else {
-            return "bg-secondary rounded-full w-10 h-10 ml-2 flex justify-center items-center"
+            return "bg-secondary rounded-full w-10 h-10 flex justify-center items-center"
         }
     }
     const handleClick = async () => {
@@ -109,7 +110,7 @@ export default function Header(){
             </div>}
             </div>
             <div className="sm:mt-0 mt-2">
-                <div className="flex items-center sm:justify-end">
+                <div className="flex items-center sm:justify-end gap-2">
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <Button variant="outline" className="border border-black dark:border-white/50 shadow-none">
@@ -131,14 +132,15 @@ export default function Header(){
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                     </DropdownMenu>
-                    <div className="mx-2">
+                    <div>
                     <Profile/></div>
                     <Link href="/admin/dashboard/notifications/view" className={notify()} onClick={handleClick}>
                     <Bell size={18}/><Dot className="absolute -mt-5 -mr-4" size={40}/></Link>
                     <Link href="/admin/dashboard/ticket" className={ticky()}>
                     <Ticket size={18}/></Link>
                     <Link href="/admin/dashboard/messages" className={messaging()} onClick={handleClick}>
-                    <MailOpen size={18}/></Link>
+                    {!newMessage?<Mail size={18}/>:<MailOpen size={18}/>}
+                    </Link>
                 </div>
             </div>
         </div>

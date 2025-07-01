@@ -14,7 +14,7 @@ import { ArticleType } from "@/app/admin/dashboard/types";
 
 
 export default function Footer(){
-    return <div className="bg-background rounded-lg">
+    return <div className="bg-background rounded-lg mt-2">
         <div className="flex justify-between p-6">
             <div>
                 <div className="text-2xl font-bold tracking-tight">Subscribe to our NewsLetter</div>
@@ -37,8 +37,8 @@ export default function Footer(){
             <div className="sm:flex sm:justify-between">
             <ul className="text-sm mt-6">
                 <li>Administration:</li>
-                <li>+256-776-994301,</li>
-                <li>Spo+256-753-994300rts</li>
+                <li>+256-776-994301</li>
+                <li>+256-753-994300</li>
                 </ul>
             <ul className="text-sm mt-6">
                 <li>Newsroom:</li>
@@ -47,7 +47,7 @@ export default function Footer(){
             <ul className="text-sm mt-6">
                 <li>Sales:</li>
                 <li>+256-772-748172</li>
-                <li>+256-772-331128,</li>
+                <li>+256-772-331128</li>
                 <li>+256-702-632200</li>
                 </ul>
                 <ul className="text-sm mt-6">

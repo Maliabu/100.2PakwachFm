@@ -205,7 +205,7 @@ button{
 .admin{
   scroll-behavior: scroll !important;
   overflow-x: hidden !important;
-  height: 80vh !important;
+  height: 70vh !important;
 }
 .article{
   scroll-behavior: scroll !important;
