@@ -267,3 +267,10 @@ export const replySchema = z.object({
     article: z.coerce.number({required_error: "Please provide an article.",}),
     comment: z.coerce.number({required_error: "Please provide an article.",}),
 })
+
+export const messageReplySchema = z.object({
+    email: z.string(),
+    reply: z.string(),
+    id: z.coerce.number(),
+    userId: z.string()
+})

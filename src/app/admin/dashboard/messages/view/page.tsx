@@ -2,9 +2,20 @@
 "use client"
 
 import { Button } from "@/components/ui/button";
-import { date, fetcher } from "@/services/services";
-import { Loader2 } from "lucide-react";
+import { date, fetcher, tokenise } from "@/services/services";
+import { CheckCircle, Loader2, X, XCircle } from "lucide-react";
 import useSWR from "swr";
+import { ReusableDialog } from "../../reusableDialog";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { messageReplySchema, replySchema } from "@/schema/schema";
+import { notExists } from "drizzle-orm";
+import { messageReply, sendHtmlEmail } from "@/server/fetch.actions";
+import { useEffect, useState } from "react";
+import { Messagecard } from "./messageCard";
 
 export type Message = {
     id: number;
@@ -23,17 +34,8 @@ export default function Messages(){
     }
     if (!data) return <div className="flex p-6 bg-background rounded-md justify-center items-center mt-2"><Loader2 className="animate-spin"/></div>;
 
-    const today = new Date()
-
-    function status(status: string){
-        if(status == "new"){
-            return 'text-xs p-2 rounded-full text-green-600 dark:text-black bg-green-100 dark:bg-green-600 uppercase float-right'
-        } else {
-            return 'text-xs p-2 rounded-full text-gray-700 bg-gray-100 dark:bg-muted uppercase float-right'
-        }
-    }
     return (
-        <div className="sm:p-6 p-2 bg-background rounded-lg mt-2">
+        <div className="sm:p-6 p-4 bg-background rounded-lg mt-2">
             <div className="flex justify-between items-center">
             <div className="text-2xl font-bold tracking-tight">Web Messages</div>
             <div className="h-10 w-10 bg-primary text-md text-muted font-bold rounded-full flex justify-center items-center ">{notify.length}</div>
@@ -42,16 +44,8 @@ export default function Messages(){
             
             { notify.length>0?
                         notify.map((notes, index) => (
-                            <div key={index} className="grid grid-cols-12 mb-1 gap-4">
-                     <div className="col-span-1 h-10 w-10 bg-primary text-muted text-2xl rounded-full flex justify-center items-center ">{notes.email[0].toUpperCase()}</div>
-                     <div className="col-span-9 sm:p-6 p-4 mx-4 flex justify-between bg-background rounded-lg">
-                        <div>
-                     <div className="text-xs font-bold text-primary">{notes.email}</div>
-                       <div className="text-sm font-medium mt-2">{notes.message}</div>
-                       <div className="float-right text-xs text-primary p-2 font-bold">{date(notes.createdAt.toString())}</div>
-                       </div>
-                       <div><div className={status(notes.status)}>{notes.status}</div></div></div>
-                       <div className="col-span-2 p-2"><Button>Reply</Button></div>
+                            <div key={index} className="mb-1">
+                                <Messagecard {...notes}/>
                             </div>
                         )):<div>No notifications</div>
                     }

@@ -57,6 +57,13 @@
       "when": 1751314274281,
       "tag": "0007_early_iceman",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "5",
+      "when": 1751393918766,
+      "tag": "0008_dry_shooting_star",
+      "breakpoints": true
     }
   ]
 }

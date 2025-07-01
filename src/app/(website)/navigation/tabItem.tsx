@@ -21,7 +21,7 @@ export default function TabNavItem({
     return ( 
     <div className = "tab-nav">
         <div onClick = { handleClick }
-        className = { activeTab === id ? "text-primary text-xs uppercase font-bold cursor-pointer p-3 bg-red-400/10" : "cursor-pointer py-3 text-xs uppercase" } > { title } </div> 
+        className = { activeTab === id ? "text-muted-foreground text-xs uppercase cursor-pointer py-3" : "cursor-pointer py-3 text-xs uppercase" } > { title } </div> 
         </div>
     );
 }

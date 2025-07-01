@@ -183,3 +183,10 @@ export type Cooky = {
     metadata: string
     createdAt: Date
 }
+export type Tickets = {
+    id: number;
+    issue: string;
+    createdAt: Date;
+    updatedAt: Date;
+    status: string;
+}

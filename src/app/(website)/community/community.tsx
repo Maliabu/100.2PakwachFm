@@ -40,7 +40,7 @@ export default function Community({ images, items }: GalleryProps) {
 
   return (
     <div>
-    <div className="grid sm:grid-cols-12 gap-2 rounded-lg">
+    <div className="grid sm:grid-cols-12 gap-1 rounded-lg">
       <div className="sm:col-span-9 bg-background sm:p-8 p-4 rounded-lg">
         <div className="text-sm text-muted-foreground uppercase">our community </div>
         <div className="text-5xl tracking-tight leading-10 font-bold my-4 capitalize">join us</div>
@@ -52,7 +52,7 @@ export default function Community({ images, items }: GalleryProps) {
             <div className="text-sm hidden text-muted-foreground uppercase"><Users2/> </div>
         </div>
     </div>
-    <div className="grid sm:grid-cols-12 gap-2 my-2 rounded-lg">
+    <div className="grid sm:grid-cols-12 gap-1 my-1 rounded-lg">
       <div className="sm:col-span-9">
         <TabContent id="tab1" activeTab={activeTab}>
           <CommunityGallery images={images}/>

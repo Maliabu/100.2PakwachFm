@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use server"
 
@@ -10,7 +11,7 @@ import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { File } from "node:buffer";
 import { promises as fs } from "node:fs";
-import { sendPasswordResetLInk } from "@/nodemailer";
+import { messageReplyHtml, sendPasswordResetLInk } from "@/nodemailer";
 // import { sendEmail } from "@/nodemailer";
 
 const today = new Date()
@@ -135,10 +136,43 @@ export async function uploadEventFile(formData: FormData) {
     revalidatePath("/");
 }
 
-// export async function sendHtmlEmail(email: string, title:string, name:string){
-//     sendEmail(email, title, name)
-//     return true
-// }
+export async function messageReply(email: string, title:string, reply:string, id: number, userId: string) {
+    try {
+        const response = await messageReplyHtml(email, title, reply)
+
+        if(response !== '' && response !== null){
+            await db.update(messagesTable).set({status: 'read'}).where(eq(messagesTable.id, id))
+            await logActivity('Replied to a web message from '+email+'. Reply: '+reply, userId)
+            return { success: true, data: response }
+        } else {
+            return { success: false, error: 'Empty response from messageReplyHtml' }
+        }
+
+    } catch(error: any) {
+        console.error(error)
+
+        // Extract a clean error message
+        const cleanError = error?.message || 'Unknown error'
+        return {
+            success: false,
+            error: cleanError,
+            details: error
+        }
+    }
+}
+
+export async function closeTickets(id: number, userId: string){
+    try{
+        await db.update(ticketingTable).set({status: 'closed'}).where(eq(ticketingTable.id, id))
+        const ticket = await db.query.ticketingTable.findFirst({
+            where: eq(ticketingTable.id, id)
+        })
+        await logActivity('closed ticket '+ticket?.issue, userId)
+        return {success: true, message: "Successful", error:false}
+    } catch(error){
+        return {success: false, message: error, error:false}
+    }
+}
 
 export async function uploadCourseFile(formData: FormData) {
     const file = formData.get("file") as unknown as File;

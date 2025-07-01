@@ -24,7 +24,7 @@ export default async function Events() {
     <div>
     <div className="rounded-lg">
     <div className="grid sm:grid-cols-12 gap-2">
-      <div className="sm:col-span-9 bg-background sm:p-8 p-4 rounded-lg mt-2">
+      <div className="sm:col-span-9 bg-background sm:p-8 p-4 rounded-lg">
         <div className="text-sm text-muted-foreground uppercase">programming </div>
         <div className="text-3xl tracking-tight leading-10 font-bold my-4 capitalize">Weekdays (Mon - Fri)</div>
         <div className="grid sm:grid-cols-12 gap-2">
@@ -75,7 +75,7 @@ export default async function Events() {
                     ))}
         </div>
       </div>
-        <div className="sm:col-span-3 present rounded-lg p-4 mt-2">
+        <div className="sm:col-span-3 present rounded-lg p-4">
             {/* <Mic size={150} className="border dark:text-primary rounded-full p-10"/> */}
             {/* <MegaphoneIcon size={70} className="p-4 ml-2 rounded-full border animate-spin"/> */}
             <div className="text-sm text-muted-foreground uppercase">presenters </div>

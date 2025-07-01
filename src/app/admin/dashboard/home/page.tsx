@@ -63,8 +63,9 @@ export default function Page() {
   const open: Ticketing[] = []
   const closed: Ticketing[] = []
   const newNot: Notify[] = []
+  const newMessage: Message[] = []
+  const oldMessage: Message[] = []
   const read: Notify[] = []
-  let message: Message[] = []
   let cooky: Cooky[] = []
 
   if (!data) {
@@ -95,7 +96,13 @@ export default function Page() {
     })
   }
   if(messages){
-    message = messages
+    messages.forEach(message => {
+      if(message.status==='new'){
+        newMessage.push(message)
+      } else{
+        oldMessage.push(message)
+      }
+    })
   }
   let links = []
   let buttons = []
@@ -121,6 +128,16 @@ export default function Page() {
       ['FORM', 'INPUT', 'TEXTAREA'].includes(e.metadata.tag ?? '')
     )
   }
+  const uniqueData = activity!==undefined?activity.filter((value: Activity, index: number, self: Activity[]) => 
+    index === self.findIndex((t: Activity) => (
+      t.activity.id === value.activity.id
+    ))
+  ):null
+  const uniqueActivity = data!==undefined?data.filter((value: Activity, index: number, self: Activity[]) => 
+    index === self.findIndex((t: Activity) => (
+      t.activity.id === value.activity.id
+    ))
+  ):null
   const pieData = [
     { name: 'Links', value: links.length || 0 },
     { name: 'Buttons', value: buttons.length || 0 },
@@ -131,7 +148,7 @@ export default function Page() {
   // Aggregate activity count by user
   const userMap = new Map<number, { name: string; profilePicture: string; count: number; tickets: number }>();
 
-  data.forEach(({ activity, users_table }) => {
+  uniqueActivity?.forEach(({ activity, users_table }) => {
     const userId = activity.user;
     if (!userMap.has(userId)) {
       userMap.set(userId, {
@@ -246,11 +263,6 @@ export default function Page() {
   // #152653 - blue
   const COLORS = ['#992600', '#fa3c00', '#FF6A3D', '#FFD2C2'] 
 
-  const uniqueData = activity!==undefined?activity.filter((value: Activity, index: number, self: Activity[]) => 
-    index === self.findIndex((t: Activity) => (
-      t.activity.id === value.activity.id
-    ))
-  ):null
   return (
     <div className=" mt-2">
       <div className="rounded-lg my-1">
@@ -274,7 +286,7 @@ export default function Page() {
               <div className="flex mt-4 p-2 border border-black dark:border-white/50 rounded"><div className=" mr-2 border-r pr-2">{links.length}</div>Page Visits</div>
               <div className="flex mt-4 p-2 border border-black dark:border-white/50 rounded"><div className=" mr-2 border-r pr-2">{buttons.length}</div>Button Clicks</div>
               <div className="flex mt-4 p-2 border border-black dark:border-white/50 rounded"><div className=" mr-2 border-r pr-2">{submissions.length}</div>Submissions</div>
-              <div className="flex mt-4 p-2 border border-black dark:border-white/50 rounded"><div className=" mr-2 border-r pr-2">{message.length}</div>Messages</div>
+              <div className="flex mt-4 p-2 border border-black dark:border-white/50 rounded"><div className=" mr-2 border-r pr-2">{messages?.length}</div>Messages</div>
               <div className="flex mt-4 p-2 border border-black dark:border-white/50 rounded"><div className=" mr-2 border-r pr-2">{cooky.length - (buttons.length + submissions.length + links.length)}</div>Other Interactions</div>
               </div>
               <ResponsiveContainer width={300} height={300}>
@@ -309,14 +321,14 @@ export default function Page() {
               </div>
               <div className="bg-secondary p-3 rounded-lg text-md font-bold tracking-tight mt-2 flex justify-between">
               <div className="flex"><BarChart2 className="mr-4 text-"/> Activities</div>
-              <div>{data.length}</div>
+              <div>{uniqueActivity?.length}</div>
               </div>
             </div>
             <div className="text-sm p-6 flex flex-col sm:col-span-4 col-span-12 bg-background text-foreground rounded-lg tracking-tight font-bold ">
               <div className="py-2 px-5 bg-secondary rounded-md flex justify-between items-center"><Calendar1 className="mr-5"/>{greeting}</div>
               {open.length>0 && <div className="py-2 px-5 bg-orange-400/20 text-orange-600 rounded-md flex justify-between items-center animate-pulse mt-1"><Ticket className="mr-5"/>You have {open.length} Ticket(s) pending</div>}
               {newNot.length>0 && <div className="py-2 px-5 bg-orange-400/20 text-orange-600 rounded-md flex justify-between items-center animate-pulse mt-1"><Info className="mr-5"/>You have {newNot.length} Notification(s) pending</div>}
-              {message.length>0 && <div className="py-2 px-5 bg-orange-400/20 text-orange-600 rounded-md flex justify-between items-center mt-1 animate-pulse"><MailOpen className="mr-5"/>You have {message.length} Message(s) pending</div>}
+              {newMessage.length>0 && <div className="py-2 px-5 bg-orange-400/20 text-orange-600 rounded-md flex justify-between items-center mt-1 animate-pulse"><MailOpen className="mr-5"/>You have {newMessage.length} Message(s) pending</div>}
               <div className="p-5 my-8 bg-secondary rounded-xl">
               <ClockAlert size={60} className=""/>
               <div className="text-5xl font-bold tracking-tight mt-12">{formatTime(today)}</div>
