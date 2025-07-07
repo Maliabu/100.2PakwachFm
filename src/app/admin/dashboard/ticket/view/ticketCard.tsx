@@ -36,8 +36,8 @@ import { useEffect, useState } from "react"
     return (
       <div className="mt-2 sm:grid sm:grid-cols-12 bg-background rounded-lg p-4">
       <div className="col-span-1 h-10 w-10 bg-primary text-muted text-2xl rounded-full flex justify-center items-center ">{userName[0]}</div>
-      <div className="col-span-10 sm:p-6 mx-4 sm:bg-background rounded-lg flex justify-between">
-         <div className="w-5/6">
+      <div className="col-span-10 sm:p-6 sm:bg-background rounded-lg flex justify-between">
+         <div className="w-5/6 sm:py-0 py-3">
       <div className="text-xs text-muted-foreground">Opened by: {userName}</div>
         <div className="text-sm font-medium mt-3">{issue}</div>
         <div className="float-right text-xs text-muted-foreground p-2">{date(createdAt.toString())}</div>

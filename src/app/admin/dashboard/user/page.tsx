@@ -14,10 +14,17 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { addUsers, checkEmailPhone } from "@/server/fetch.actions"
 import { addUserSchema } from '@/schema/schema'
 import { handleEncryption, togglePasswordVisibility2, token, tokenise, username } from "@/services/services"
-import { EyeOff } from "lucide-react"
+import { CheckCircle, Eye, EyeOff, XCircle } from "lucide-react"
+import Image from "next/image"
+import Account from '@/app/images/_ (10).jpeg'
 
 export default function AddUser() {
   const [id, setId] = React.useState("")
+  const [showPassword, setShowPassword] = React.useState(false);
+  const [loginSuccess, setLoginSuccess] = React.useState(false);
+  const [buttonText, setButtonText] = React.useState("Sign Up User");
+
+
     React.useEffect(() => {
         setId(tokenise()[3])
     }, [])
@@ -43,17 +50,14 @@ export default function AddUser() {
     const name = form.getValues("name")
     form.setValue("token", token())
     name.length > 0?form.setValue("username", username(name)[0]+String(Math.floor((Math.random() * 100) + 1))+username(name)[1]):form.setValue("username", "")
-    console.log(form.getValues('userId'))
-
+    const togglePasswordVisibility = () => {
+      setShowPassword(prev => !prev);
+    };
      
     async function onSubmit(values: z.infer<typeof addUserSchema>) {  
       values.userId = tokenise()[3]
       
-      const app = document.getElementById('submit');
-      const text = 'processing';
-      if(app !== null){
-        app.innerHTML = text;
-      }
+      setButtonText("Adding User...Please wait...")
       const checkUniqueData = await checkEmailPhone(values.email, values.phone)
 
       if(checkUniqueData.message == "good"){
@@ -68,16 +72,16 @@ export default function AddUser() {
 
         const formData = new FormData()
         formData.append("file", values.image)
+        formData.append('folder', 'users')
 
-        const data = await addUsers(values)
+        const data = await addUsers(values, formData)
         if(data?.error){
           form.setError("root", {
             "message": "user not added"
           })
         } else {
-          if(app !== null){
-            app.innerHTML = "Successful";
-          }
+          setLoginSuccess(true)
+          setButtonText('Successful')
           window.location.reload()
         }
       } else {
@@ -88,13 +92,13 @@ export default function AddUser() {
     }
 
   return (
-    <div className="p-4 pb-0 bg-secondary rounded-lg">
+    <div className=" bg-secondary rounded-lg">
       <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className=" sm:p-8 p-6">
       <div className="text-2xl font-bold tracking-tight">Add New Dashboard User</div>
-        <div className="grid items-center gap-2 mt-4 bg-background p-8 rounded-lg">
+        <div className="grid items-center mt-4 bg-background rounded-lg">
           <div className="grid sm:grid-cols-2 gap-2">
-              <div className="flex flex-col space-y-1.5">
+              <div className="flex flex-col p-8 gap-4">
               <FormField
                   control={form.control}
                   name="name"
@@ -110,8 +114,6 @@ export default function AddUser() {
                       </FormItem>
                   )}
                   />
-              </div>
-              <div className="flex flex-col space-y-1.5">
               <FormField
                   control={form.control}
                   name="email"
@@ -125,10 +127,6 @@ export default function AddUser() {
                       </FormItem>
                   )}
                   />
-              </div>
-          </div>
-          <div className="grid sm:grid-cols-2 gap-2">
-              <div className="flex flex-col space-y-1.5">
               <FormField
                   control={form.control}
                   name="userType"
@@ -151,8 +149,6 @@ export default function AddUser() {
                       </FormItem>
                   )}
                   />
-              </div>
-              <div className="flex flex-col space-y-1.5">
               <FormField
                   control={form.control}
                   name="phone"
@@ -166,8 +162,7 @@ export default function AddUser() {
                       </FormItem>
                   )}
                   />
-              </div>
-              <div className="flex flex-col space-y-1.5">
+                  <div className="flex justify-between">
               <FormField
                   control={form.control}
                   name="encrPass"
@@ -175,17 +170,20 @@ export default function AddUser() {
                       <FormItem>
                       <FormLabel>Password</FormLabel>
                       <FormControl>
-                          <Input type="password" id="pass" placeholder="Password" {...field} />
+                          <Input type={showPassword ? "text" : "password"} placeholder="Password" {...field} />
                       </FormControl>
                       <FormMessage />
                       </FormItem>
                   )}
                   />
-                  <div className="flex justify-between cursor-pointer text-sm text-muted-foreground">
-                    <p className=" mt-2" id="seen" onClick={() => togglePasswordVisibility2()}><EyeOff size={16}/> Toggle password</p>
-                  </div>
-              </div>
-              <div className="flex flex-col space-y-1.5">
+                  <button
+                    type="button"
+                    onClick={togglePasswordVisibility}
+                    className="ml-2 p-2 border rounded-md"
+                    >
+                    {showPassword ? <Eye size={16} /> : <EyeOff size={16} />}
+                    </button>
+                    </div>
               <FormField
                   control={form.control}
                   name="confirmPassword"
@@ -193,14 +191,12 @@ export default function AddUser() {
                       <FormItem>
                       <FormLabel>Confirm Password</FormLabel>
                       <FormControl>
-                          <Input type="password" placeholder="Confirm Password" {...field} />
+                          <Input type={showPassword ? "text" : "password"} placeholder="Confirm Password" {...field} />
                       </FormControl>
                       <FormMessage />
                       </FormItem>
                   )}
                   />
-              </div>
-              <div className="flex flex-col hidden space-y-1.5 mt-6">
               <FormField
                   control={form.control}
                   name="image"
@@ -218,15 +214,28 @@ export default function AddUser() {
                   )}
                   />
               </div>
+              <div className="flex flex-col h-full">
+              <div className="flex-1 relative">
+                <Image
+                alt="logo"
+                src={Account}
+                fill
+                className="object-cover"
+                unoptimized
+                />
+                </div>
+              </div>
           </div>
         </div>
-        <Button id="submit" className="my-4" type="submit">Sign Up User</Button>
+        <Button id="submit" className="my-4" type="submit">{buttonText}</Button>
         {form.formState.errors.root && (
-          <div className="border-2 border-destructive text-destructive p-2 rounded-md">{form.formState.errors.root.message}</div>
-        )}
-        {form.formState.isSubmitSuccessful && (
-          <div className="border border-primary text-primary p-2 text-center rounded-md"> User added successfully </div>
-        )}
+                <div className="rounded text-sm font-bold bg-red-400/10 flex justify-center gap-4 text-red-600 p-2"><XCircle/> {form.formState.errors.root.message}</div>
+            )}
+            {loginSuccess && (
+            <div className="rounded text-sm font-bold bg-green-400/10 flex justify-center gap-4 text-green-600 p-2">
+                <CheckCircle className="animate-pulse"/> Successfully added user
+            </div>
+            )}
       </form>
       </Form>
         </div>

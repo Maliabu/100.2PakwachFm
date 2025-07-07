@@ -154,7 +154,7 @@ export function Menu() {
         </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
-    <div className="sm:block hidden"><Link href='/videos'><Button><Video/> Videos</Button></Link></div>
+    <div className="sm:block hidden"><Link href='/'><Button><Video/> Videos</Button></Link></div>
     </div>
     <div className="sm:hidden overflow-x-auto w-full p-2 scrollbar-hidden scrollbar-hide bg-background">
   <ul className="flex gap-2 min-w-max">

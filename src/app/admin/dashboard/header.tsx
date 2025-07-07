@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 
-import { Bell, Dot, HelpCircle, InboxIcon, Loader2, Mail, MailOpen, Moon, Sun, Ticket } from "lucide-react";
+import { Bell, BellDot, BellOff, Dot, HelpCircle, InboxIcon, Loader2, LucideTicketX, Mail, MailOpen, Moon, Sun, Ticket } from "lucide-react";
 import Profile from "../auth/profile";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
@@ -15,6 +15,7 @@ import Link from "next/link";
 import { Notify } from "./notifications/view/page";
 import { Ticketing } from "./home/page";
 import { Message } from "./messages/view/page";
+import UserAvatar from "./userAvatar";
 
 export default function Header(){
     const { setTheme } = useTheme()
@@ -95,19 +96,38 @@ export default function Header(){
             {tokenise()[4]=="admin" && 
             <div className=" bg-secondary p-2 rounded-md flex justify-between items-center">
                 <div className="text-sm font-medium">Logged in users: {logged.length}</div>
-                <div className="flex">{logged.map(user => (
-                    <div key={user.id} className="h-8 w-8 -ml-4 bg-background shadow-md text-foreground grid rounded-full justify-center items-center">{user.profilePicture?<div style={{ position: 'relative', width: '30px', height: '30px' }}>
-                    <Image
-                        src={user.profilePicture}
-                        alt="Full size"
-                        className="rounded-full"
-                        fill
-                        unoptimized
-                        style={{ objectFit: 'cover' }} // or 'contain'
-                    />
-                    </div>:user.name[0].toUpperCase()}</div>
-                ))}</div>
-            </div>}
+                <div className="flex">
+                {logged.map(user => {
+  const isValidImage = user.profilePicture?.includes('users');
+
+  return (
+    <div
+      key={user.id}
+      className="h-8 w-8 -ml-4 bg-background shadow-md text-foreground grid rounded-full justify-center items-center"
+    >
+      {isValidImage ? (
+        <div style={{ position: 'relative', width: '30px', height: '30px' }}>
+          <Image
+            src={user.profilePicture}
+            alt="User avatar"
+            className="rounded-full"
+            fill
+            unoptimized
+            style={{ objectFit: 'cover' }}
+          />
+        </div>
+      ) : (
+        <span className="text-sm font-medium">
+          {user.name?.[0]?.toUpperCase() || "?"}
+        </span>
+      )}
+    </div>
+  );
+})}
+
+                    </div>
+                </div>
+            }
             </div>
             <div className="sm:mt-0 mt-2">
                 <div className="flex items-center sm:justify-end gap-2">
@@ -135,10 +155,10 @@ export default function Header(){
                     <div>
                     <Profile/></div>
                     <Link href="/admin/dashboard/notifications/view" className={notify()} onClick={handleClick}>
-                    <Bell size={18}/><Dot className="absolute -mt-5 -mr-4" size={40}/></Link>
-                    <Link href="/admin/dashboard/ticket" className={ticky()}>
-                    <Ticket size={18}/></Link>
-                    <Link href="/admin/dashboard/messages" className={messaging()} onClick={handleClick}>
+                    {hasNew?<div><BellDot size={18}/></div>:<BellOff size={18}/>}</Link>
+                    <Link href="/admin/dashboard/ticket/view" className={ticky()}>
+                    {open.length>0?<div><Ticket size={18}/></div>:<LucideTicketX size={18}/>}</Link>
+                    <Link href="/admin/dashboard/messages/view" className={messaging()} onClick={handleClick}>
                     {!newMessage?<Mail size={18}/>:<MailOpen size={18}/>}
                     </Link>
                 </div>

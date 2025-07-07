@@ -10,7 +10,7 @@ export async function GET() {
     // Query the database
     const articles = await db.query.articlesTable.findMany({
         where: eq(articlesTable.articleType, 'highlight'),
-        orderBy: [desc(articlesTable.createdAt)],
+        // orderBy: [desc(articlesTable.createdAt)],
     });
     
     // Return the events as a JSON response

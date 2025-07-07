@@ -75,10 +75,8 @@ type ArticleCardProp = {
             objectFit="contain"
             className="object-cover"/></div>
       <div className="">
-      <div className="text-2xl tracking-tight font-bold line-clamp-3 leading-6 capitalize">{title}</div>
-      <div className="my-4">
-            <Button onClick={() => handleReadMore(title)}>Read full article</Button>
-        </div>
+      <div className="text-2xl tracking-tight font-bold line-clamp-3 leading-6 capitalize hover:text-primary cursor-pointer" onClick={() => handleReadMore(title)}>{title}</div>
+
       </div>
       </Card>
       </div>

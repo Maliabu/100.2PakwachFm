@@ -47,7 +47,7 @@ import { Button } from "@/components/ui/button"
     return (
       <div>
       <Card className="border-none shadow-none background-none sm:p-6 py-0" id={title}>
-      <div className="relative w-full sm:h-96 h-64">
+      <div className="relative w-full sm:h-96 h-72">
         <Image
             src={path}
             alt="article image"
@@ -87,9 +87,9 @@ import { Button } from "@/components/ui/button"
       <div className="px-2 sm:px-0">
       <div className="text-5xl tracking-tight font-bold leading-11">{title}</div>
       <span className="mt-6 sm:float-right sm:mx-12"> {}</span>
-      <p className="py-4 border-b text-sm text-muted-foreground">By {writer}</p>
-      <p className="py-4 float-right text-sm text-muted-foreground"> { date == null ?
-      getMyDay(updatedAt.getDay()): getMyDay(date.getDay())}, {date == null ? getMyMonth(updatedAt.getMonth()): getMyMonth(updatedAt.getMonth())} {date == null ? updatedAt.getDate(): date.getDate()}, {date == null ? updatedAt.getFullYear(): date.getFullYear()
+      <p className="py-4 border-b text-sm uppercase text-muted-foreground">By {writer}</p>
+      <p className="py-4 float-right text-sm text-muted-foreground uppercase"> { date == null ?
+      getMyDay(updatedAt.getDay()): getMyDay(date.getDay())}, {date == null ? getMyMonth(updatedAt.getMonth()): getMyMonth(date.getMonth()+1)} {date == null ? updatedAt.getDate(): date.getDate()}, {date == null ? updatedAt.getFullYear(): date.getFullYear()
       }</p>
       <div className="text-wrap lh-1 mt-20 prose prose-sm sm:prose-base lg:prose-lg xl:prose-2xl focus:outline-none">{parse(content)}</div>
       </div>

@@ -29,8 +29,8 @@ export default function Programmes(){
 
     return(
         <div className="admin">
-        <div className="flex items-center p-2 bg-background rounded mt-2">
-        <div className="mx-4 text-sm">Filter Your Programmes: </div>
+        <div className="flex items-center p-2 bg-background gap-2 rounded mt-2">
+        <div className=" text-sm">Filter Your Programmes: </div>
         <Select onValueChange={(value) => setFilter(value as typeof filter)} defaultValue="all">
           <SelectTrigger className="w-[200px]">
             <SelectValue placeholder="Filter programmes" />
@@ -41,7 +41,7 @@ export default function Programmes(){
             <SelectItem value="weekend">Weekend</SelectItem>
           </SelectContent>
         </Select>
-        <div className="uppercase text-sm mx-4 p-2 h-8 w-8 border border-black dark:border-white rounded-full flex items-center justify-center">{filteredProgrammes.length}</div>
+        <div className="uppercase text-sm p-2 h-8 w-8 border border-black dark:border-white rounded-full flex items-center justify-center">{filteredProgrammes.length}</div>
         </div>
           <div>
             {

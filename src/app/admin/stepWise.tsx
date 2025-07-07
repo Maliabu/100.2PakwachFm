@@ -341,7 +341,7 @@ function Step1(props:
             )}
             {props.loginSuccess && (
             <div className="rounded text-sm font-bold bg-green-400/10 flex justify-center gap-4 text-green-600 p-2">
-                <CheckCircle className="animate-spin"/> Signing you in...
+                <CheckCircle className="animate-pulse"/> Signing you in...
             </div>
             )}
 
@@ -388,7 +388,7 @@ function Step2(props:{
                 )}
                 {props.resetSuccess && (
             <div className="rounded text-sm font-bold bg-green-400/10 flex justify-center gap-4 text-green-600 p-2">
-                <CheckCircle className="animate-spin"/> Reset successful
+                <CheckCircle className="animate-pulse"/> Reset successful
             </div>
             )}
                 <div className="text-primary text-xs cursor-pointer flex justify-center mt-2">{props.prev}</div>
