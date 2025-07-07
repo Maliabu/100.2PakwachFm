@@ -1,5 +1,3 @@
-import Footer from "@/app/(website)/navigation/footer"
-import {Menu} from "@/app/(website)/navigation/menu"
 import { db } from "@/db/db"
 import { articlesTable } from "@/db/schema"
 import { eq } from "drizzle-orm"
@@ -67,9 +65,8 @@ export default async function Page({
 
   if (!article) return <div>no articles</div>
 
-    return <div className="sm:px-16 sm:bg-muted">
-      <Menu/>
-      <div className=" sm:p-8 p-2 rounded-lg bg-background my-2">
+    return <div className="">
+      <div className=" sm:p-8 p-2 rounded-lg bg-background">
         <div className="grid sm:grid-cols-12">
           <div className="sm:col-span-8">
         <ArticlesCard 
@@ -86,7 +83,8 @@ export default async function Page({
               updatedAt={article.updatedAt} 
               createdAt={article.createdAt} 
               /></div>
-              <div className="sm:col-span-4">
+              <div className="sm:col-span-4 scroll-y-blog">
+              <div className="text-sm uppercase my-8 text-muted-foreground">Read more articles</div>
               {
           articles.map((article: { id: number; title: string; 
             facebookLink: string | null;
@@ -100,6 +98,5 @@ export default async function Page({
         }
               </div>
         </div></div>
-      <Footer/>
       </div>
   }

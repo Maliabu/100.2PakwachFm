@@ -5,7 +5,6 @@
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import parse from 'html-react-parser'
-import { CardContent } from '@/components/ui/card'
 
 export function ReadMoreCard({ article }: { article: { id: number; 
     facebookLink: string | null,
@@ -20,9 +19,8 @@ export function ReadMoreCard({ article }: { article: { id: number;
   }
 
   return (
-    <CardContent className="" key={article.id}>
-      <div className="text-sm uppercase my-8 text-muted-foreground">Read more articles</div>
-      <div className="mt-1 pb-6 cursor-pointer" onClick={handleReadMore}>
+    <div key={article.id}>
+      <div className="pb-8 cursor-pointer" onClick={handleReadMore}>
         <div>
           <div className="relative h-36 w-full">
             <Image
@@ -42,6 +40,6 @@ export function ReadMoreCard({ article }: { article: { id: number;
           </div>
         </div>
       </div>
-    </CardContent>
+    </div>
   )
 }

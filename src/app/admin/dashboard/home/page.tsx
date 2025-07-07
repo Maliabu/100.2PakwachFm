@@ -202,7 +202,7 @@ export default function Page() {
     return (
         <g transform={`translate(${x},${y})`}>
         <foreignObject x={-15} y={0} width={40} height={40}>
-          {userData?.profilePicture ? (
+          {userData?.profilePicture.includes('users')?(
             <img
               src={userData.profilePicture}
               alt="avatar"
@@ -326,7 +326,7 @@ export default function Page() {
             </div>
             <div className="text-sm p-6 flex flex-col sm:col-span-4 col-span-12 bg-background text-foreground rounded-lg tracking-tight font-bold ">
               <div className="py-2 px-5 bg-secondary rounded-md flex justify-between items-center"><Calendar1 className="mr-5"/>{greeting}</div>
-              {open.length>0 && <div className="py-2 px-5 bg-orange-400/20 text-orange-600 rounded-md flex justify-between items-center animate-pulse mt-1"><Ticket className="mr-5"/>You have {open.length} Ticket(s) pending</div>}
+              {open.length>0 && <Link href='/admin/dashboard/ticket/view'><div className="py-2 px-5 bg-orange-400/20 text-orange-600 rounded-md flex justify-between items-center animate-pulse mt-1"><Ticket className="mr-5"/>You have {open.length} Ticket(s) pending</div></Link>}
               {newNot.length>0 && <div className="py-2 px-5 bg-orange-400/20 text-orange-600 rounded-md flex justify-between items-center animate-pulse mt-1"><Info className="mr-5"/>You have {newNot.length} Notification(s) pending</div>}
               {newMessage.length>0 && <div className="py-2 px-5 bg-orange-400/20 text-orange-600 rounded-md flex justify-between items-center mt-1 animate-pulse"><MailOpen className="mr-5"/>You have {newMessage.length} Message(s) pending</div>}
               <div className="p-5 my-8 bg-secondary rounded-xl">
@@ -340,7 +340,7 @@ export default function Page() {
             {
                 userData?.map((data, index)=>(
                     <div className="flex mr-1" key={index}>
-                        {data.profilePicture!==''?
+                        {data.profilePicture.includes('users')?
                         <div style={{ position: 'relative', width: '40px', height: '40px' }}>
                             <TooltipProvider>
                             <ToolTip>

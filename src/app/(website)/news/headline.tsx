@@ -3,8 +3,8 @@ import * as React from "react"
 
 import Link from "next/link"
 import {
-  CardContent,
   Card,
+  CardContent,
   CardHeader,
 } from "@/components/ui/card"
 import { useState } from "react"
@@ -14,6 +14,7 @@ import { HeadLineCard } from "./headlineCard"
 import { HeadLineOtherCard } from "./headlineOther"
 import { ArticlesTabsProps } from "../../admin/dashboard/types"
 import { date } from "@/services/services"
+import { ReadMoreCard } from "./[article]/card"
 
 export function HeadlineTabs(
     {articles}: ArticlesTabsProps){
@@ -150,44 +151,21 @@ export function HeadlineTabs(
       <CardHeader>
         <div className="text-2xl font-bold tracking-tight leading-6">Highlights</div>
       </CardHeader>
+      <CardContent>
       <div className="scroll-y-blog bg-background py-2">
-        {
-          allArticles.map((article: { 
-            id: number; 
-            title: string; 
-            content: string; 
-            writer: string, 
-            image: string | null,
-            facebookLink: string | null,
-            twitterLink: string | null,
-            instagramLink: string | null,
-            date: Date,
-            articleType: string,
-            updatedAt: Date, 
-            createdAt: Date}
+      {
+          articles.map((article: { id: number; title: string; 
+            facebookLink: string | null;
+            twitterLink: string | null;
+            instagramLink: string | null;
+            date: Date;
+            articleType: string; content: string; writer: string, image: string | null, updatedAt: Date, createdAt: Date}
           ) => (
-            <CardContent className="" key={article.id}>
-            <div className="mt-1 pb-6" 
-            onClick={() => getContent(article)}>
-              <div>
-                <div className="relative h-36 w-full">
-                <Image
-                    alt="article image"
-                    src={path(article.image)}
-                    fill
-                    unoptimized
-                    className="object-cover"/>
-                  </div>
-                  <Link href={ref(article.title)}>
-                <div className="text-2xl font-bold tracking-tight mt-4 leading-6 hover:text-primary text-dark pointer blog capitalize line-clamp-3">
-              {article.title}</div></Link>
-              <div className="line-clamp-2 hidden text-sm leading-4 mt-2">
-              {parse(article.content)}
-              </div></div>
-              </div>
-              </CardContent>
+            <ReadMoreCard key={article.id} article={article} />
           ))
-        }</div>
+        }
+      </div>
+      </CardContent>
     </Card>
     </div>
     </div>

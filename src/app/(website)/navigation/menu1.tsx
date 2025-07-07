@@ -46,7 +46,7 @@ export default function Menu1(){
                 </NavigationMenuLink>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <Link href='/videos#music'>
+              <Link href='/'>
               <Button><Mic size={18}/> Music</Button></Link>
             </NavigationMenuItem>
           </NavigationMenuList>

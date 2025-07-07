@@ -58,10 +58,7 @@ import { useRouter } from "next/navigation"
             objectFit="cover"
             className="object-cover"/></div>
       <div className="">
-      <div className="sm:text-5xl text-4xl tracking-tight font-bold sm:leading-12 leading-10">{title}</div>
-      <div className="my-4">
-            <Button onClick={() => handleReadMore(title)}>Read full article</Button>
-        </div>
+      <div className="sm:text-5xl text-4xl tracking-tight font-bold sm:leading-12 leading-10 hover:text-primary cursor-pointer" onClick={() => handleReadMore(title)}>{title}</div>
       </div>
       </Card>
       </div>

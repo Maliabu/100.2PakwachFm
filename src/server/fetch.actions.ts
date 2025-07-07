@@ -28,15 +28,18 @@ function env(){
 
 const cpanelUrl = 'https://uploads.pakwachfm.com/editor'
 
-export async function addUsers(unsafeData: z.infer<typeof addUserSchema>) : 
+export async function addUsers(unsafeData: z.infer<typeof addUserSchema>, formData: FormData) : 
 Promise<{error: boolean | undefined}> {
    const {success, data} = addUserSchema.safeParse(unsafeData)
 
    if (!success){
     return {error: true}
    }
-
-//    uploadFile(formData)
+   if(formData.get('file') !== ''){
+    // if we have a file name,
+    // upload the profile picture
+        uploadFile(formData)
+    }
 
    const dataAdd = await db.insert(usersTable).values({...data})
    if(dataAdd){
