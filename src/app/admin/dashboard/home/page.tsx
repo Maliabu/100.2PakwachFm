@@ -202,7 +202,7 @@ export default function Page() {
     return (
         <g transform={`translate(${x},${y})`}>
         <foreignObject x={-15} y={0} width={40} height={40}>
-          {userData?.profilePicture.includes('users') ? (
+          {userData?.profilePicture.includes('users')?(
             <img
               src={userData.profilePicture}
               alt="avatar"
