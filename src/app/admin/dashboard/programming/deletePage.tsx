@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { deleteArticleSchema, deleteEventSchema, deleteProgrammingSchema, deleteSchema } from "@/schema/schema"
 import { deleteArticle, deleteCourse, deleteEvent, deleteProgramming } from "@/server/fetch.actions"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { Trash2 } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
@@ -36,7 +37,7 @@ import { z } from "zod"
     }
     return (
       <div className="">
-        <Button className="text-white ml-1" id={props.submitId} onClick={() => onSubmit({"programId": props.id})}>Delete</Button>
+        <Button className="text-white rounded-full" id={props.submitId} onClick={() => onSubmit({"programId": props.id})}><Trash2/></Button>
         {form.formState.errors.root && (
           <div className="bg-light p-2 rounded-md">{form.formState.errors.root.message}</div>
         )}

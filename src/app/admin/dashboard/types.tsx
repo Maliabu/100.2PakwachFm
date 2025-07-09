@@ -190,3 +190,17 @@ export type Tickets = {
     updatedAt: Date;
     status: string;
 }
+
+export type WebActivity = {
+    id: string;
+    event_type: string;
+    createdAt: Date;
+    metadata: {
+        class: string;
+        id: string | null;
+        tag: string;
+        text: string;
+    }
+    user_id: string;
+    total: number
+}
