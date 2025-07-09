@@ -212,6 +212,11 @@ button{
   overflow-x: hidden !important;
   height: 40vh !important;
 }
+.graph{
+  scroll-behavior: scroll !important;
+  overflow-x: hidden !important;
+  height: 20vh !important;
+}
 
 pre {
   background: #0D0D0D;

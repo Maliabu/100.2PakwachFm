@@ -780,6 +780,9 @@ export async function logout(formData: FormData): Promise<{error: boolean}>{
          eq(usersTable.email, data)
      )
      if(logout){
+        //get user id from email
+        const userid = await db.query.usersTable.findMany({where:eq(usersTable.email, data)})
+        await logActivity('Logged out', userid[0].id.toString())
      return {error: false}
     } else {
         return {error: true}

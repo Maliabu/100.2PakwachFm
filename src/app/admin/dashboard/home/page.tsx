@@ -19,6 +19,10 @@ import Shape1 from '@/app/images/shape2.png'
 import { Message } from "../messages/view/page";
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts'
 import { Activity } from "../account/page";
+import MonthlyActivity from "./monthlyActivity";
+import { computeUserHealthScore, estimateSessionTime, getLastLogin, getUserKeywordActivityCount } from "./activityMetrics";
+import { DashboardHealthGauge } from "./dashboardHealth";
+import { Button } from "@/components/ui/button";
 
 export type Ticketing = {
   tickets: {
@@ -104,9 +108,9 @@ export default function Page() {
       }
     })
   }
-  let links = []
-  let buttons = []
-  let submissions = []
+  let links: string | any[] = []
+  let buttons: string | any[] = []
+  let submissions: string | any[] = []
   if(cookies){
     cooky = cookies
     const parsedEvents = cooky.map(cookie => {
@@ -263,20 +267,46 @@ export default function Page() {
   // #152653 - blue
   const COLORS = ['#992600', '#fa3c00', '#FF6A3D', '#FFD2C2'] 
 
+  const lastLogin = getLastLogin(activity!==undefined?activity:[]);
+  const activityCount = getUserKeywordActivityCount(activity!==undefined?activity:[]);
+  const sessionMinutes = estimateSessionTime(activity!==undefined?activity:[]);
+
+  const healthScore = computeUserHealthScore({
+    lastLogin,
+    activityCount,
+    sessionMinutes
+  });
+
+
   return (
     <div className=" mt-2">
       <div className="rounded-lg my-1">
         <div className="grid grid-cols-12 gap-2">
             <div className=" sm:p-8 p-6 sm:col-span-8 col-span-12 bg-background rounded-lg">
-              <div className="text-xl font-bold flex justify-between tracking-tight text-">Overview <Image src={Shape} alt="shape" height={40} width={80}/></div>
-            <div className="bg-secondary p-3 rounded-lg text-md font-bold tracking-tight mt-6 flex justify-between">
-            <div className="flex"><Info className="mr-4 text-"/>Notifications</div>
+              <div className="text-xl hidden font-bold flex justify-between tracking-tight text-">Overview <Image src={Shape} alt="shape" height={40} width={80}/></div>
+
+              <div className="grid grid-cols-12 gap-2">
+                <div className="col-span-8">
+              <div className="bg-secondary p-3 rounded-lg text-md font-bold tracking-tight flex justify-between">
+              <div className="flex gap-4"><Info/>Notifications</div>
               <div>{newNot.length + read.length}</div>
               </div>
               <div className="grid grid-cols-3 font-medium text-sm py-4">
               <div className="flex"><div className=" mr-2 border-r pr-2">{newNot.length}</div>New</div>
               <div className="flex"><div className=" mr-2 border-r pr-2">{read.length}</div>Read</div>
               </div>
+              <div className="bg-secondary p-3 rounded-lg text-md font-bold tracking-tight mt-2 flex justify-between">
+              <div className="flex gap-4"><Ticket/>Tickets</div>
+              <div>{open.length + closed.length}</div>
+              </div>
+              <div className="grid grid-cols-3 font-medium text-sm py-4">
+              <div className="flex"><div className=" mr-2 border-r pr-2">{open.length}</div>Opened</div>
+              <div className="flex"><div className=" mr-2 border-r pr-2">{closed.length}</div>Closed</div>
+              </div></div>
+                <div className="col-span-4 rounded-lg advertise gap-2 flex justify-center items-center">
+                <Ticket className="hidden"/><Info className="hidden"/>
+                </div>
+                </div>
               <div className="bg-secondary p-3 rounded-lg text-md font-bold tracking-tight mt-2 flex justify-between">
               <div className="flex"><Globe className="mr-4 text-"/>Web Usage</div>
               <div>{cooky.length}</div>
@@ -311,17 +341,14 @@ export default function Page() {
                 </PieChart>
               </ResponsiveContainer>
               </div>
-              <div className="bg-secondary p-3 rounded-lg text-md font-bold tracking-tight mt-2 flex justify-between">
-              <div className="flex"><Ticket className="mr-4 text-"/>Tickets</div>
-              <div>{open.length + closed.length}</div>
-              </div>
-              <div className="grid grid-cols-3 font-medium text-sm py-4">
-              <div className="flex"><div className=" mr-2 border-r pr-2">{open.length}</div>Opened</div>
-              <div className="flex"><div className=" mr-2 border-r pr-2">{closed.length}</div>Closed</div>
-              </div>
-              <div className="bg-secondary p-3 rounded-lg text-md font-bold tracking-tight mt-2 flex justify-between">
-              <div className="flex"><BarChart2 className="mr-4 text-"/> Activities</div>
+              <div className="bg-secondary p-3 rounded-lg text-md font-bold tracking-tight my-2 flex justify-between">
+              <div className="flex"><BarChart2 className="mr-4 text-"/>Summary Activity Log</div>
+              <div className="text-xs p-2 rounded bg-secondary graph">{uniqueActivity?.map((activity) => (activity.activity.activity))}</div>
               <div>{uniqueActivity?.length}</div>
+              </div>
+              {idType=='admin'&&<Link href='/admin/dashboard/account'><Button>See Full Log</Button></Link>}
+            <div className="py-6">
+              <MonthlyActivity links={links} buttons={buttons} submissions={submissions} />
               </div>
             </div>
             <div className="text-sm p-6 flex flex-col sm:col-span-4 col-span-12 bg-background text-foreground rounded-lg tracking-tight font-bold ">
@@ -329,14 +356,14 @@ export default function Page() {
               {open.length>0 && <Link href='/admin/dashboard/ticket/view'><div className="py-2 px-5 bg-orange-400/20 text-orange-600 rounded-md flex justify-between items-center animate-pulse mt-1"><Ticket className="mr-5"/>You have {open.length} Ticket(s) pending</div></Link>}
               {newNot.length>0 && <div className="py-2 px-5 bg-orange-400/20 text-orange-600 rounded-md flex justify-between items-center animate-pulse mt-1"><Info className="mr-5"/>You have {newNot.length} Notification(s) pending</div>}
               {newMessage.length>0 && <div className="py-2 px-5 bg-orange-400/20 text-orange-600 rounded-md flex justify-between items-center mt-1 animate-pulse"><MailOpen className="mr-5"/>You have {newMessage.length} Message(s) pending</div>}
-              <div className="p-5 my-8 bg-secondary rounded-xl">
+              <div className="p-5 my-8 bg-primary text-white rounded-xl">
               <ClockAlert size={60} className=""/>
               <div className="text-5xl font-bold tracking-tight mt-12">{formatTime(today)}</div>
               <div className="font-normal py-2">{getMyDay(today.getDay())}, {today.getDate()} {getMyMonth(today.getMonth()+1)}</div></div>
         <div className="items-center bg-background rounded-lg">
-        <Image src={Shape1} alt="shape" height={20} width={80}/>
-        <div className="text-xl tracking-tight text- font-bold my-8 p-2 bg-secondary rounded-lg">User Statistics</div>
-        <div className=" flex">
+        <Image src={Shape1} alt="shape" height={20} width={80} className="hidden"/>
+        <div className="text-xl tracking-tight text- font-bold p-2 bg-secondary rounded-lg">User Statistics</div>
+        <div className=" flex py-8">
             {
                 userData?.map((data, index)=>(
                     <div className="flex mr-1" key={index}>
@@ -371,7 +398,7 @@ export default function Page() {
                                 <p>{data.name}</p>
                                 </TooltipContent>
                         </ToolTip>}
-                <Dot className={data.isLoggedIn==true?'absolute -mt-6 -mr-8 text-orange-400':'absolute -mt-6 -mr-6 text-black-600'} size={50}/>
+                <Dot className={data.isLoggedIn==true?'absolute -mt-6 -mr-8 text-orange-600':'absolute -mt-6 -mr-6 text-black-600'} size={50}/>
                 </div>
                 ))
             }
@@ -384,7 +411,20 @@ export default function Page() {
             <div className=" col-span-6 flex items-center font-medium">
                 <Dot className="text-black-400" size={30}/> Logged Out
             </div>
-        </div>
+          </div>
+            <div className="grid grid-cols-2 gap-2">
+              {idType=='admin' && userData?.map((data, index) => (
+                <div key={index} className=" p-2 rounded-lg bg-secondary text-xs">{data.name}</div>
+              ))}
+            </div>
+            <div className="py-8">
+              <div className="text-xl leading-6">Dashboard health and performance</div>
+              <DashboardHealthGauge score={healthScore} />
+              <div className="mt-20 text-xs">Your dashboard performance is determined by:</div>
+              <div className="mt-6">Your Last Login: {lastLogin!==null?date(lastLogin.toString()):null}</div>
+              <div>Your Activity Count: {activityCount}</div>
+              <div>Your Session Minutes: {sessionMinutes}</div>
+            </div>
             </div>
         </div>
       </div>
@@ -392,19 +432,19 @@ export default function Page() {
         <div className="grid sm:grid-cols-12 grid-cols-1 text-lg p-1 gap-2">
             {idType=='admin' && <div className="sm:col-span-4">
             <Link href='/admin/dashboard/users' className=" rounded-lg transition-transform duration-300 cursor-pointer hover:scale-105 bg-background flex justify-between">
-            <div className="text-sm p-6"><User2 size={20} className="text-"/> Users</div> 
-            <div className="p-6 flex text-2xl font-medium items-center justify-center bg-primary text-white rounded-r-lg">{userData?.length}</div>
+            <div className="text-sm p-6">{userData?.length} Users</div> 
+            <div className="p-6 flex text-2xl font-medium items-center justify-center bg-primary text-white rounded-r-lg"><User2 size={20} className="text-"/> </div>
             </Link>
             </div>}
             <div className="sm:col-span-4">
             <Link href='/admin/dashboard/articles' className=" rounded-lg transition-transform duration-300 cursor-pointer hover:scale-105 bg-background flex justify-between">
-                <div className="text-sm p-6"><Paperclip size={20} className="text-"/> Articles</div>
-                <div className="p-6 flex text-2xl font-medium items-center justify-center bg-primary text-white rounded-r-lg">{articles?.length}</div></Link>
+                <div className="text-sm p-6">{articles?.length} Articles</div>
+                <div className="p-6 flex text-2xl font-medium items-center justify-center bg-primary text-white rounded-r-lg"><Paperclip size={20} className="text-"/> </div></Link>
             </div>
             <div className="sm:col-span-4">
             <Link href='/admin/dashboard/events' className=" rounded-lg transition-transform duration-300 cursor-pointer hover:scale-105 bg-background flex justify-between">
-                <div className="text-sm p-6"><Calendar size={20} className="text-"/> Events</div>
-                <div className="p-6 flex text-2xl font-medium items-center justify-center bg-primary text-white rounded-r-lg">{events?.length}</div></Link>
+                <div className="text-sm p-6">{events?.length} Events</div>
+                <div className="p-6 flex text-2xl font-medium items-center justify-center bg-primary text-white rounded-r-lg"><Calendar size={20} className="text-"/></div></Link>
             </div>
         </div>
 
@@ -436,8 +476,20 @@ export default function Page() {
           {
             uniqueData!==null?uniqueData.map((activity, index) => (
               <div key={index} className="grid bg-secondary p-2 rounded-lg grid-cols-12 mt-1 items-center text-xs">
-                        <div className="h-10 col-span-3 w-10 grid justify-center items-center text-lg dark:text-foreground text-background rounded-full bg-primary">{activity.users_table.name[0].toUpperCase()}</div>
-                        <div className="col-span-9 font-medium">{activity.activity.activity}</div>
+                        <div className="h-8 col-span-3 w-8 grid justify-center items-center text-lg dark:text-foreground text-background rounded-full bg-primary">
+                          {activity.users_table.profilePicture.includes('users')?
+                          <div className="h-8 w-8 relative">
+                          <Image
+                          src={activity.users_table.profilePicture}
+                          alt="Full size"
+                          className="rounded-full"
+                          fill
+                          unoptimized
+                          style={{ objectFit: 'cover' }} // or 'contain'
+                      /></div>:
+                          activity.users_table.name[0].toUpperCase()}
+                          </div>
+                        <div className="col-span-9 font-bold text-xs">{activity.activity.activity}</div>
               </div>
             )):null
           }
