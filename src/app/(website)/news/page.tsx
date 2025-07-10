@@ -18,12 +18,12 @@ export default async function News() {
     <div>
     <div>
     <div className="rounded-lg">
-    <div className="grid sm:grid-cols-12 gap-2">
-      <div className="sm:col-span-10 bg-background sm:p-8 p-4 mt-2 rounded-lg">
-        <div className="text-sm text-muted-foreground uppercase my-2">news </div>
+    <div className="sm:grid sm:grid-cols-12">
+      <div className="sm:col-span-10 bg-background p-4 rounded-lg">
+        <div className="text-sm text-muted-foreground uppercase sm:px-8 mt-2">news </div>
         <ArticlesTabs articles={votes}/>
       </div>
-      <div className="col-span-2 rounded-lg">
+      <div className="sm:col-span-2 rounded-lg">
         <Ads/>
       </div>
     </div>

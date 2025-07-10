@@ -302,7 +302,7 @@ pre {
 .scroll-y-blog{
   scroll-behavior: smooth;
   overflow-y: auto;
-  height: 150vh;
+  height: 200vh;
 }
 .recharts-surface{
   padding: none !important;

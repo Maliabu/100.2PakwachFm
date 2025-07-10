@@ -46,9 +46,17 @@ import Outline from '@/app/images/outline.png'
     const insta = instagramLink!==null?instagramLink:''
     return (
       <div>
-      <Card className="border-none shadow-none background-none sm:p-6 py-0" id={title}>
+      <Card className="border-none shadow-none background-none sm:p-4" id={title}>
       <div className="relative w-full sm:h-96 h-72">
-        <span className="absolute bottom-8 flex left-1/2 -translate-x-1/2 items-center uppercase text-xs text-white rounded z-10">
+        <Image
+            src={path}
+            alt="article image"
+            fill
+            unoptimized
+            objectFit="contain"
+            className="object-cover"/></div>
+            <div className="row-start-3 p-2 flex gap-[24px] text-sm flex-wrap items-center justify-center">
+        <span className="flex items-center uppercase text-xs rounded">
         <Image
             src={Outline}
             alt="logo"
@@ -57,22 +65,14 @@ import Outline from '@/app/images/outline.png'
             className="mr-2"
             unoptimized/>
          <span className="p-1 font-bold border-t border-r border-b rounded">{articleType}</span></span>
-        <Image
-            src={path}
-            alt="article image"
-            fill
-            unoptimized
-            objectFit="contain"
-            className="object-cover"/></div>
-            <div className="row-start-3 p-2 bg-secondary flex gap-[24px] text-sm flex-wrap items-center justify-center">
+         <div className="text-xs text-muted-foreground">Follow the story: </div>
             <a
       className="flex items-center gap-2 font-bold tracking-tight hover:underline hover:underline-offset-4"
       href={facebook}
       target="_blank"
       rel="noopener noreferrer"
     >
-    <div className="font-bold rounded- bg-black text-white w-7 h-7 grid items-center justify-center">x</div>
-      
+    <img src="/facebook.svg" alt="instagram" className="w-5 h-5" />
     </a>
     <a
       className="flex items-center gap-2 font-bold tracking-tight hover:underline hover:underline-offset-4"
@@ -80,24 +80,20 @@ import Outline from '@/app/images/outline.png'
       target="_blank"
       rel="noopener noreferrer"
     >
-    <div className="font-bold rounded- bg-pink-400 text-white w-7 h-7 grid items-center justify-center">i</div>
-
-      
-    </a>
+    <img src="/instagram.svg" alt="instagram" className="w-5 h-5" /></a>
     <a
       className="flex items-center font-bold tracking-tight gap-2 hover:underline hover:underline-offset-4"
       href={twitter}
       target="_blank"
       rel="noopener noreferrer">
-    <div className="font-bold rounded- bg-blue-600 text-white w-7 h-7 grid items-center justify-center">f</div>
-      
+    <img src="/twitter.svg" alt="instagram" className="w-5 h-5" />
     </a>
             </div>
       <div className="px-2 sm:px-0">
       <div className="text-5xl tracking-tight font-bold leading-11">{title}</div>
       <span className="mt-6 sm:float-right sm:mx-12"> {}</span>
-      <p className="py-4 border-b text-sm uppercase text-muted-foreground">By {writer}</p>
-      <p className="py-4 float-right text-sm text-muted-foreground uppercase"> { date == null ?
+      <p className="py-4 border-b text-xs uppercase text-muted-foreground">By {writer}</p>
+      <p className="py-4 float-right text-xs text-muted-foreground uppercase"> { date == null ?
       getMyDay(updatedAt.getDay()): getMyDay(date.getDay())}, {date == null ? getMyMonth(updatedAt.getMonth()): getMyMonth(date.getMonth()+1)} {date == null ? updatedAt.getDate(): date.getDate()}, {date == null ? updatedAt.getFullYear(): date.getFullYear()
       }</p>
       <div className="text-wrap lh-1 mt-20 prose prose-sm sm:prose-base lg:prose-lg xl:prose-2xl focus:outline-none">{parse(content)}</div>
