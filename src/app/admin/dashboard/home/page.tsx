@@ -6,7 +6,7 @@
 
 import useSWR from "swr";
 import { date, dater, fetcher, getMyDay, getMyMonth, tokenise } from "@/services/services";
-import { BarChart2, Calendar, Calendar1, Clock10, ClockAlert, Cloud, CloudFog, Dot, Globe, Info, Loader2, MailOpen, Paperclip, Ticket, User2 } from "lucide-react";
+import { BarChart2, Calendar, Calendar1, Clock10, ClockAlert, Cloud, CloudFog, Dot, Globe, Info, Loader2, MailOpen, Paperclip, SunDim, Ticket, User2 } from "lucide-react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend } from 'recharts';
 import Image from "next/image";
 import Logged from "../../auth/user";
@@ -244,7 +244,7 @@ export default function Page() {
   const today = new Date()
   let ampm = today.getHours() >= 12 ? 'PM' : 'AM';
   const hour = today.getHours();
-  if (hour >= 5 && hour < 12) {
+  if (hour >= 5 && hour < 12 && ampm == 'AM') {
     greeting = 'Good Morning';
   } else if (hour >= 12 && hour < 17) {
     greeting = 'Good Afternoon';
@@ -285,8 +285,8 @@ export default function Page() {
             <div className=" sm:p-8 p-6 sm:col-span-8 col-span-12 bg-background rounded-lg">
               <div className="text-xl hidden font-bold flex justify-between tracking-tight text-">Overview <Image src={Shape} alt="shape" height={40} width={80}/></div>
 
-              <div className="grid grid-cols-12 gap-2">
-                <div className="col-span-8">
+              <div className="sm:grid sm:grid-cols-12 sm:gap-6">
+                <div className="sm:col-span-8">
               <div className="bg-secondary p-3 rounded-lg text-md font-bold tracking-tight flex justify-between">
               <div className="flex gap-4"><Info/>Notifications</div>
               <div>{newNot.length + read.length}</div>
@@ -303,8 +303,8 @@ export default function Page() {
               <div className="flex"><div className=" mr-2 border-r pr-2">{open.length}</div>Opened</div>
               <div className="flex"><div className=" mr-2 border-r pr-2">{closed.length}</div>Closed</div>
               </div></div>
-                <div className="col-span-4 rounded-lg advertise gap-2 flex justify-center items-center">
-                <Ticket className="hidden"/><Info className="hidden"/>
+                <div className="sm:col-span-4 text-background rounded-lg bg-primary advertise gap-2 sm:flex justify-center items-center">
+                <SunDim size={80} className="animate-pulse"/>
                 </div>
                 </div>
               <div className="bg-secondary p-3 rounded-lg text-md font-bold tracking-tight mt-2 flex justify-between">
@@ -356,10 +356,10 @@ export default function Page() {
               {open.length>0 && <Link href='/admin/dashboard/ticket/view'><div className="py-2 px-5 bg-orange-400/20 text-orange-600 rounded-md flex justify-between items-center animate-pulse mt-1"><Ticket className="mr-5"/>You have {open.length} Ticket(s) pending</div></Link>}
               {newNot.length>0 && <div className="py-2 px-5 bg-orange-400/20 text-orange-600 rounded-md flex justify-between items-center animate-pulse mt-1"><Info className="mr-5"/>You have {newNot.length} Notification(s) pending</div>}
               {newMessage.length>0 && <div className="py-2 px-5 bg-orange-400/20 text-orange-600 rounded-md flex justify-between items-center mt-1 animate-pulse"><MailOpen className="mr-5"/>You have {newMessage.length} Message(s) pending</div>}
-              <div className="p-5 my-8 bg-primary text-white rounded-xl">
+              <div className="p-5 my-8 bg-primary text-background rounded-xl">
               <ClockAlert size={60} className=""/>
               <div className="text-5xl font-bold tracking-tight mt-12">{formatTime(today)}</div>
-              <div className="font-normal py-2">{getMyDay(today.getDay())}, {today.getDate()} {getMyMonth(today.getMonth()+1)}</div></div>
+              <div className="uppercase font-semibold text-xs py-2">{getMyDay(today.getDay())}, {today.getDate()} {getMyMonth(today.getMonth()+1)}</div></div>
         <div className="items-center bg-background rounded-lg">
         <Image src={Shape1} alt="shape" height={20} width={80} className="hidden"/>
         <div className="text-xl tracking-tight text- font-bold p-2 bg-secondary rounded-lg">User Statistics</div>
@@ -418,7 +418,7 @@ export default function Page() {
               ))}
             </div>
             <div className="py-8">
-              <div className="text-xl leading-6">Dashboard health and performance</div>
+              <div className="text-xl leading-6">Dashboard health and performance (DHP)</div>
               <DashboardHealthGauge score={healthScore} />
               <div className="mt-20 text-xs">Your dashboard performance is determined by:</div>
               <div className="mt-6">Your Last Login: {lastLogin!==null?date(lastLogin.toString()):null}</div>

@@ -64,7 +64,7 @@ export default function MonthRepGraph(props: { pages: YearData[], buttons: YearD
   }, {} as Record<number, Record<string, { day: number; total: number }[]>>);
 
   // Calculate total sales for each year and type
-  const calculateTotalSales = (yearNum: number, type: string) => {
+  const calculateTotal = (yearNum: number, type: string) => {
     const typeData = groupedData[yearNum]?.[type] || [];
     return typeData.reduce((total, data: {day: number, total: number}) => total + data.total, 0);
   };
@@ -94,46 +94,47 @@ export default function MonthRepGraph(props: { pages: YearData[], buttons: YearD
     return acc;
   }, [] as { day: number, Pages: number, Buttons: number, Submissions: number }[]);
 
+
   // Line components for both pages and receipts
   const lineCombinedComponents = [
     ...props.pages.map((yearData) => (
-      <Area
+      <Line
         key={`${yearData.year} Page Visits`}
         type="monotone"
         dot={false}
         dataKey="Pages"
-        stroke="#2196f3"
-        fill='#2196f3'  // Green for pages
+        stroke="#992600"
+        fill='#992600'  // Green for pages
         name={`${yearData.year} Pages`} // Including year in the name
       />
     )),
     ...props.buttons.map((yearData) => (
-      <Area
+      <Line
         key={`${yearData.year} Buttons`}
         dot={false}
         type="monotone"
         dataKey="Buttons"
-        fill='#4caf60'
-        stroke='#4caf60'  // Blue for receipts
+        fill='#fa3c00'
+        stroke='#fa3c00'  // Blue for receipts
         name={`${yearData.year} Buttons`} // Including year in the name
       />
     )),
     ...props.submissions.map((yearData) => (
-      <Area
+      <Line
         key={`${yearData.year} Submissions`}
         type="monotone"
         dot={false}
         dataKey="Submissions"
-        fill='#ceff00'
-        stroke="#ceff00"  // Blue for receipts
+        fill='#FFD2C2'
+        stroke="#FFD2C2"  // Blue for receipts
         name={`${yearData.year} Submissions`} // Including year in the name
       />
     ))
   ];
 
   return (
-    <ResponsiveContainer width="100%" height={400}>
-      <AreaChart data={transformedData}>
+    <ResponsiveContainer width="100%" height={300}>
+      <LineChart data={transformedData}>
         <CartesianGrid strokeDasharray="none" stroke="none" />
         {/* <XAxis dataKey="day" tick={{ fontSize: 12 }} />  XAxis shows days */}
         {/* <YAxis tick={{ fontSize: 12 }} className='hidden' /> */}
@@ -163,11 +164,11 @@ export default function MonthRepGraph(props: { pages: YearData[], buttons: YearD
         <Legend
           content={({ payload }) => {
             return (
-              <div style={{ fontSize: '13px', listStyleType: 'none' }} className='grid grid-cols-3 gap-8 mt-4 admin'>
+              <div style={{ fontSize: '13px', listStyleType: 'none' }} className='grid grid-cols-3 gap-8 mt-4 graph'>
                 {payload?.map((entry, index) => {
                   // Split the year and type from the entry value (e.g., "2021 pages")
                   const [year, ...typeParts] = entry.value.split(' ');
-                  const type = typeParts.join(' ').trim(); // Join the rest of the parts to get the type (pages or Receipts)
+                  const type = typeParts.join(' '); // Join the rest of the parts to get the type (pages or Receipts)
 
                   const yearNum = parseInt(year);  // Convert year to number
 
@@ -181,14 +182,11 @@ export default function MonthRepGraph(props: { pages: YearData[], buttons: YearD
                   const typeData = groupedData[yearNum]?.[type] || [];  // Safely access type data for this year
 
                   // Calculate total sales for this year and type
-                  const totalSales = calculateTotalSales(yearNum, type);
-                  console.log('🔍 Legend entry value:', entry.value);
-                    console.log('🧩 groupedData:', groupedData);
-
+                  const total = calculateTotal(yearNum, type);
 
                   return (
                     <div key={index} style={{ marginBottom: '10px' }} className='flex flex-col'>
-                      <strong>{entry.value}: Total: {totalSales.toLocaleString()}</strong>
+                      <strong>{entry.value}: Total: {total.toLocaleString()}</strong>
                       <div className='graph-scroll'>
                         {typeData.length > 0 ? (
                           typeData.map((data, i) => (
@@ -208,7 +206,7 @@ export default function MonthRepGraph(props: { pages: YearData[], buttons: YearD
           }}
         />
         {lineCombinedComponents}
-      </AreaChart>
+      </LineChart>
     </ResponsiveContainer>
   );
 }
