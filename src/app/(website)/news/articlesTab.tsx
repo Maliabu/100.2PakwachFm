@@ -84,7 +84,7 @@ export function ArticlesTabs(
               />
     </div>
         <div className="col-span-12 sm:col-span-4 hidden sm:block">
-      <Card className=" border-none shadow-none">
+      <Card className="p-0 border-none shadow-none">
       <CardHeader>
         <div className="text-sm uppercase text-muted-foreground">More happening</div>
       </CardHeader>
