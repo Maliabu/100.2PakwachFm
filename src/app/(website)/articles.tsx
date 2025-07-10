@@ -50,7 +50,7 @@ export default function Articles() {
   const updatedDate = new Date(news.updatedAt);
   return (
     <div className="text-xs uppercase text-muted-foreground">
-      {news.writer} | {getMyDay(updatedDate.getDay())}, {getMyMonth(updatedDate.getMonth())} {updatedDate.getDate()}, {updatedDate.getFullYear()}
+      {news.articleType} | {getMyDay(updatedDate.getDay())}, {getMyMonth(updatedDate.getMonth())} {updatedDate.getDate()}, {updatedDate.getFullYear()}
     </div>
   );
 })()}

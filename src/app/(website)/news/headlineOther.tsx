@@ -72,10 +72,10 @@ type ArticleCardProp = {
             alt="article image"
             fill
             unoptimized
-            objectFit="contain"
+            objectFit="cover"
             className="object-cover"/></div>
       <div className="">
-      <div className="text-2xl tracking-tight font-bold line-clamp-3 leading-6 capitalize hover:text-primary cursor-pointer" onClick={() => handleReadMore(title)}>{title}</div>
+      <div className="text-2xl tracking-tight select-none font-bold line-clamp-3 leading-6 capitalize hover:text-primary cursor-pointer" onClick={() => handleReadMore(title)}>{title}</div>
 
       </div>
       </Card>

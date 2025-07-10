@@ -9,10 +9,11 @@ import { getMyDay, getMyMonth } from "@/services/success"
 import parse from 'html-react-parser'
 import useSWR from "swr"
 import { date, fetcher } from "@/services/services"
-import { Loader2, MessageCircle, MessageCircleDashed } from "lucide-react"
+import { ArrowBigDownDash, Loader2, MessageCircle, MessageCircleDashed } from "lucide-react"
 import { ArticleType, ArticleVotesComments } from "../../admin/dashboard/types"
 import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation"
+import Link from "next/link"
 
   export function HeadLineCard({
     id,
@@ -50,15 +51,22 @@ import { useRouter } from "next/navigation"
       <div>
       <Card className="border-none shadow-none background-none" id={title}>
       <div className="relative w-full sm:h-96 h-64">
-        <Image
+          <span className="absolute top-2 left-2 bg-primary text-sm text-white p-2 uppercase rounded z-10">
+            {articleType} | Headlines
+          </span>
+          <span className="absolute top-14 flex left-2 bg-primary/50 text-white p-2 uppercase rounded-full z-10">
+            <Link href={'#'+articleType}><ArrowBigDownDash/></Link>
+          </span>
+          <Image
             src={path}
             alt="article image"
             fill
             unoptimized
-            objectFit="cover"
-            className="object-cover"/></div>
+            className="object-cover"
+          />
+        </div>
       <div className="">
-      <div className="sm:text-5xl text-4xl tracking-tight font-bold sm:leading-12 leading-10 hover:text-primary cursor-pointer" onClick={() => handleReadMore(title)}>{title}</div>
+      <div className="sm:text-5xl select-none text-4xl tracking-tight font-bold sm:leading-12 leading-10 hover:text-primary cursor-pointer" onClick={() => handleReadMore(title)}>{title}</div>
       </div>
       </Card>
       </div>

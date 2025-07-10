@@ -63,7 +63,7 @@ export function HeadlineTabs(
         <div>
         <div className="">
             <div className="grid sm:grid-cols-12 gap-2">
-    <div className=" sm:col-span-8 rounded-xl p-6">
+    <div className=" sm:col-span-8 rounded-xl sm:p-0 p-4">
     <HeadLineCard 
               id={contents.id}
               title={contents.title}
@@ -79,7 +79,7 @@ export function HeadlineTabs(
               createdAt={contents.createdAt} 
               />
               
-              <div className="grid sm:grid-cols-12 gap-4">
+              <div className="grid sm:grid-cols-12 gap-8">
                 <div className="sm:col-span-6">
           {articles.length > 1 && <HeadLineOtherCard 
                     id={articles["1"].id}

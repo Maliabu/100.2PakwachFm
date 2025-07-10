@@ -11,7 +11,7 @@ import useSWR from "swr"
 import { date, fetcher } from "@/services/services"
 import { Loader2, MessageCircle, MessageCircleDashed } from "lucide-react"
 import { ArticleType, ArticleVotesComments } from "../../admin/dashboard/types"
-import { Button } from "@/components/ui/button"
+import Outline from '@/app/images/outline.png'
 
   export function ArticlesCard({
     id,
@@ -48,6 +48,15 @@ import { Button } from "@/components/ui/button"
       <div>
       <Card className="border-none shadow-none background-none sm:p-6 py-0" id={title}>
       <div className="relative w-full sm:h-96 h-72">
+        <span className="absolute bottom-8 flex left-1/2 -translate-x-1/2 items-center uppercase text-xs text-white rounded z-10">
+        <Image
+            src={Outline}
+            alt="logo"
+            height={30}
+            width={30}
+            className="mr-2"
+            unoptimized/>
+         <span className="p-1 font-bold border-t border-r border-b rounded">{articleType}</span></span>
         <Image
             src={path}
             alt="article image"
