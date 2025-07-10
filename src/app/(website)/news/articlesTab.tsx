@@ -84,11 +84,11 @@ export function ArticlesTabs(
               />
     </div>
         <div className="col-span-12 sm:col-span-4 hidden sm:block">
-      <Card className=" border-none p-2 shadow-none">
+      <Card className=" border-none shadow-none">
       <CardHeader>
-        <div className="text-2xl font-bold tracking-tight leading-6 mt-4">More happening</div>
+        <div className="text-sm uppercase text-muted-foreground">More happening</div>
       </CardHeader>
-      <div className="scroll-y-blog bg-background py-2">
+      <div className="scroll-y-blog bg-background">
         {
           allArticles.map((article: { id: number; 
             facebookLink: string | null,
@@ -98,7 +98,7 @@ export function ArticlesTabs(
             articleType: string, title: string; content: string; writer: string, image: string | null, updatedAt: Date, createdAt: Date}
           ) => (
             <CardContent className="" key={article.id}>
-            <div className="mt-1 pb-6" 
+            <div className="mt-1 pb-4" 
             onClick={() => getContent(article)}>
               <TabNavItem id="tab1" activeTab={activeTab} setActiveTab={setActiveTab} 
               title={<div>
@@ -110,7 +110,7 @@ export function ArticlesTabs(
                     unoptimized
                     className="object-cover"/>
                   </div>
-                  <Link href={ref(article.title)} className="text-xl line-clamp-3 font-bold tracking-tight leading-5 text-dark pointer capitalize hover:text-primary">
+                  <Link href={ref(article.title)} className="text-xl line-clamp-3 font-bold tracking-tight leading-5 hover:text-primary">
                   <div className="my-4">
                   {article.title}</div></Link>
               <div className="line-clamp-2 hidden text-sm leading-4 mt-2">

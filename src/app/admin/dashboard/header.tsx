@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 
-import { Bell, BellDot, BellOff, Dot, HelpCircle, InboxIcon, Loader2, LucideTicketX, Mail, MailOpen, Moon, Sun, Ticket } from "lucide-react";
+import { Bell, BellDot, BellOff, Dot, Gauge, HelpCircle, InboxIcon, Loader2, LucideTicketX, Mail, MailOpen, Moon, Sun, Ticket } from "lucide-react";
 import Profile from "../auth/profile";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
@@ -16,9 +16,19 @@ import { Notify } from "./notifications/view/page";
 import { Ticketing } from "./home/page";
 import { Message } from "./messages/view/page";
 import UserAvatar from "./userAvatar";
+import { Activity } from "./account/page";
+import { useEffect, useState } from "react";
+import { computeUserHealthScore, estimateSessionTime, getLastLogin, getUserKeywordActivityCount } from "./home/activityMetrics";
+import { CustomGauge } from "./gauge";
 
 export default function Header(){
     const { setTheme } = useTheme()
+    const [id, setid] = useState("")
+
+    useEffect(() => {
+      setid(tokenise()[3])
+  }, [])
+
     let user: UserType[] = []
     let notes: Notify[] = []
     const logged: UserType[] = []
@@ -26,6 +36,7 @@ export default function Header(){
     const { data: notifications, error: notError } = useSWR("/api/notifications", fetcher);
     const { data:tickets, error:ticketError } = useSWR<Ticketing[]>("/api/tickets", fetcher);
     const { data:messages, error:messageError } = useSWR<Message[]>("/api/messages", fetcher);
+    const { data:activity, error:activityError } = useSWR<Activity[]>(`/api/activity/${id}`, fetcher);
     const open: Ticketing[] = []
     const closed: Ticketing[] = []
     let message: Message[] = []
@@ -77,6 +88,15 @@ export default function Header(){
             return "bg-secondary rounded-full w-10 h-10 flex justify-center items-center"
         }
     }
+    const lastLogin = getLastLogin(activity!==undefined?activity:[]);
+  const activityCount = getUserKeywordActivityCount(activity!==undefined?activity:[]);
+  const sessionMinutes = estimateSessionTime(activity!==undefined?activity:[]);
+
+  const healthScore = computeUserHealthScore({
+    lastLogin,
+    activityCount,
+    sessionMinutes
+  });
     const handleClick = async () => {
         hasNew = false;
         const userId = tokenise()[3]
@@ -92,10 +112,10 @@ export default function Header(){
       };
     return <div className="">
         <div className=" rounded sm:grid sm:grid-cols-2 sm:gap-2">
-            <div className="">
+            <div className="flex gap-2 items-center justify-between">
             {tokenise()[4]=="admin" && 
-            <div className=" bg-secondary p-2 rounded-md flex justify-between items-center">
-                <div className="text-sm font-medium">Logged in users: {logged.length}</div>
+            <div className=" bg-secondary p-2 rounded-md flex w-2/3 justify-between items-center">
+                <div className="text-sm font-medium">Logged In: {logged.length}</div>
                 <div className="flex">
                 {logged.map(user => {
   const isValidImage = user.profilePicture?.includes('users');
@@ -124,10 +144,22 @@ export default function Header(){
     </div>
   );
 })}
-
                     </div>
                 </div>
             }
+            <div className="flex items-center gap-2">   
+            {/* <CustomGauge percent={healthScore}/>    */}
+            <CustomGauge
+              percent={healthScore}
+              label="DHP"
+              size={80}
+              strokeColor="#ccc"  // sky-500
+              needleColor="#fa3c00"  // red-500
+              showTicks={true}
+            />
+
+              <div className='bg-primary text-xs text-white rounded p-1 font-bold my-2 text-center'> {healthScore>25?'FAIR':healthScore>50?'GOOD':healthScore>75?'PERFECT':'BAD'}</div>
+            </div>
             </div>
             <div className="sm:mt-0 mt-2">
                 <div className="flex items-center sm:justify-end gap-2">

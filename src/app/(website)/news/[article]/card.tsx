@@ -20,7 +20,7 @@ export function ReadMoreCard({ article }: { article: { id: number;
 
   return (
     <div key={article.id}>
-      <div className="pb-8 cursor-pointer" onClick={handleReadMore}>
+      <div className="pb-8 cursor-pointer select-none" onClick={handleReadMore}>
         <div>
           <div className="relative h-36 w-full">
             <Image
