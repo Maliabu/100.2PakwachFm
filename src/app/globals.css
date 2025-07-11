@@ -215,7 +215,7 @@ button{
 .graph{
   scroll-behavior: scroll !important;
   overflow-x: hidden !important;
-  height: 20vh !important;
+  height: 30vh !important;
 }
 
 pre {
@@ -343,4 +343,19 @@ tspan{
 
 .slide-in-up {
   animation: slideInUp 1.5s ease-out forwards;
+}
+.awesome{
+  background-color: #FFD2C2;
+}
+
+.good{
+  background-color: #FF6A3D;
+}
+
+.fair{
+  background-color: #ff3a00;
+}
+
+.bad{
+  background-color: #992600;
 }

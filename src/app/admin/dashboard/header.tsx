@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 
-import { Bell, BellDot, BellOff, Dot, Gauge, HelpCircle, InboxIcon, Loader2, LucideTicketX, Mail, MailOpen, Moon, Sun, Ticket } from "lucide-react";
+import { Bell, BellDot, BellOff, Dot, Gauge, HelpCircle, InboxIcon, LightbulbIcon, Loader2, LucideTicketX, Mail, MailOpen, Moon, Sun, Ticket } from "lucide-react";
 import Profile from "../auth/profile";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
@@ -20,6 +20,7 @@ import { Activity } from "./account/page";
 import { useEffect, useState } from "react";
 import { computeUserHealthScore, estimateSessionTime, getLastLogin, getUserKeywordActivityCount } from "./home/activityMetrics";
 import { CustomGauge } from "./gauge";
+import { Toast } from "@/components/ui/toast";
 
 export default function Header(){
     const { setTheme } = useTheme()
@@ -69,28 +70,39 @@ export default function Header(){
     const newMessage = message?.some((n: Message) => n.status === "new");
     function notify(){
         if(hasNew){
-            return "bg-orange-400/20 dark:text-orange-400 text-orange-600 animate-bounce rounded-full w-8 h-8 flex justify-center items-center"
+            return "bg-primary/20 text-primary animate-bounce rounded-full w-8 h-8 flex justify-center items-center"
         } else {
             return "bg-secondary rounded-full w-10 h-10 flex justify-center items-center"
         }
     }
     function ticky(){
         if(open.length > 0){
-            return "bg-orange-400/20 dark:text-orange-400 text-orange-600 animate-bounce rounded-full w-10 h-10 flex justify-center items-center"
+            return "bg-primary/20 text-primary animate-bounce rounded-full w-10 h-10 flex justify-center items-center"
         } else {
             return "bg-secondary rounded-full w-10 h-10 flex justify-center items-center"
         }
     }
     function messaging(){
         if(newMessage){
-            return "bg-orange-400/20 dark:text-orange-400 text-orange-600 rounded-full w-10 h-10 flex justify-center items-center"
+            return "bg-primary/20 text-primary rounded-full w-10 h-10 flex justify-center items-center"
         } else {
             return "bg-secondary rounded-full w-10 h-10 flex justify-center items-center"
         }
     }
-    const lastLogin = getLastLogin(activity!==undefined?activity:[]);
-  const activityCount = getUserKeywordActivityCount(activity!==undefined?activity:[]);
-  const sessionMinutes = estimateSessionTime(activity!==undefined?activity:[]);
+    const today =  new Date()
+    const dateToday = today.getDate()+today.getMonth()+today.getFullYear()
+  const activitiesToday:Activity[] = []
+  activity?.forEach(activity => {
+    const date = new Date(activity.activity.createdAt)
+    const daysActivity = date.getDate()+date.getMonth()+date.getFullYear()
+    if(daysActivity == dateToday){
+      activitiesToday.push(activity)
+    }
+  })
+
+    const lastLogin = getLastLogin(activitiesToday!==undefined?activitiesToday:[]);
+  const activityCount = getUserKeywordActivityCount(activitiesToday!==undefined?activitiesToday:[]);
+  const sessionMinutes = estimateSessionTime(activitiesToday!==undefined?activitiesToday:[]);
 
   const healthScore = computeUserHealthScore({
     lastLogin,
@@ -110,44 +122,17 @@ export default function Header(){
           });
           
       };
+      function openSonner(){
+        return <Toast value='hey'/>
+      }
     return <div className="">
         <div className=" rounded sm:grid sm:grid-cols-2 sm:gap-2">
             <div className="flex gap-2 items-center justify-between">
-            {tokenise()[4]=="admin" && 
-            <div className=" bg-secondary p-2 rounded-md flex w-2/3 justify-between items-center">
-                <div className="text-sm font-medium">Logged In: {logged.length}</div>
-                <div className="flex">
-                {logged.map(user => {
-  const isValidImage = user.profilePicture?.includes('users');
+            <div className="flex items-center gap-2"> 
 
-  return (
-    <div
-      key={user.id}
-      className="h-8 w-8 -ml-4 bg-background shadow-md text-foreground grid rounded-full justify-center items-center"
-    >
-      {isValidImage ? (
-        <div style={{ position: 'relative', width: '30px', height: '30px' }}>
-          <Image
-            src={user.profilePicture}
-            alt="User avatar"
-            className="rounded-full"
-            fill
-            unoptimized
-            style={{ objectFit: 'cover' }}
-          />
-        </div>
-      ) : (
-        <span className="text-sm font-medium">
-          {user.name?.[0]?.toUpperCase() || "?"}
-        </span>
-      )}
-    </div>
-  );
-})}
-                    </div>
-                </div>
-            }
-            <div className="flex items-center gap-2">   
+<div className={healthScore>75?'awesome border text-xs rounded p-1 font-bold my-2 text-center':healthScore>50?'good text-background text-xs rounded p-1 font-bold my-2 text-center':healthScore>25?'fair text-xs text-white rounded p-1 font-bold my-2 text-center':'bad text-xs text-white rounded p-1 font-bold my-2 text-center'}> 
+  {healthScore>75?'AWESOME':healthScore>50?'GOOD':healthScore>25?'FAIR':'BAD'}
+  </div>  
             {/* <CustomGauge percent={healthScore}/>    */}
             <CustomGauge
               percent={healthScore}
@@ -157,9 +142,42 @@ export default function Header(){
               needleColor="#fa3c00"  // red-500
               showTicks={true}
             />
-
-              <div className='bg-primary text-xs text-white rounded p-1 font-bold my-2 text-center'> {healthScore>25?'FAIR':healthScore>50?'GOOD':healthScore>75?'PERFECT':'BAD'}</div>
             </div>
+              {activityCount==0?<LightbulbIcon onClick={() => openSonner()} className="text-primary animate-pulse p-2 rounded-full bg-primary/10 h-8 w-8"/>:null}
+            {tokenise()[4]=="admin" && 
+            <div className=" bg-secondary p-2 rounded-md flex w-2/3 justify-between items-center">
+                <div className="text-sm font-medium">Logged In: {logged.length}</div>
+                <div className="flex">
+                {logged.map(user => {
+                  const isValidImage = user.profilePicture?.includes('users');
+                  return (
+                    <div
+                      key={user.id}
+                    >
+                      {isValidImage ? (
+                        <div style={{ position: 'relative', width: '30px', height: '30px' }}
+                        className="-ml-4">
+                          <Image
+                            src={user.profilePicture}
+                            alt="User avatar"
+                            className="rounded-full border-2 border-secondary"
+                            fill
+                            unoptimized
+                            style={{ objectFit: 'cover' }}
+                          />
+                        </div>
+                      ) : (
+                        <div
+                        className="h-8 w-8 -ml-4 text-sm font-medium border-2 border-secondary bg-primary text-background grid rounded-full justify-center items-center">
+                          {user.name?.[0]?.toUpperCase() || "?"}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+                    </div>
+                </div>
+            }
             </div>
             <div className="sm:mt-0 mt-2">
                 <div className="flex items-center sm:justify-end gap-2">
