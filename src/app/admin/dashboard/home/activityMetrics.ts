@@ -1,10 +1,10 @@
 import { Activity } from "../account/page";
 
-const keywords = ['ticket', 'message', 'programming', 'user'];
+const keywords = ['ticket', 'message', 'programming', 'user', 'article', 'profile', 'notification'];
 
 export function getLastLogin(logs: Activity[]): Date | null {
   const last = logs
-    .filter(l => l.activity.activity.includes('logged in'))
+    .filter(l => l.activity.activity.includes('Logged in'))
     .map(l => new Date(l.activity.createdAt))
     .sort((a, b) => b.getTime() - a.getTime())[0];
 
@@ -26,18 +26,26 @@ export function estimateSessionTime(logs: Activity[]): number {
 
   for (const log of sorted) {
     const time = new Date(log.activity.createdAt);
-    if (log.activity.activity.includes('logged in')) {
+    const now = new Date()
+    if (log.activity.activity.includes('Logged in')) {
       loginTime = time;
     }
-    if (log.activity.activity.includes('logged out') && loginTime) {
+    if (log.activity.activity.includes('Logged out') && loginTime) {
       const duration = (time.getTime() - loginTime.getTime()) / (1000 * 60);
-      if (duration > 0 && duration < 240) {
+      if (duration > 0) {
+        totalMinutes += duration;
+      }
+      loginTime = null;
+    }  
+    if (!log.activity.activity.includes('Logged out') && loginTime){
+      const duration = (now.getTime() - loginTime.getTime()) / (1000 * 60);
+      // why less than 240
+      if (duration > 0) {
         totalMinutes += duration;
       }
       loginTime = null;
     }
   }
-
   return Math.round(totalMinutes);
 }
 
