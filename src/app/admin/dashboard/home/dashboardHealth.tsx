@@ -44,9 +44,10 @@ const renderNeedle = (score: number) => ({
 };
 
 const getGaugeData = () => [
-  { value: 33.3, color: '#992600' },
-  { value: 33.3, color: '#fa3c00' },
-  { value: 33.4, color: '#FFD2C2' },
+  { value: 25, color: '#992600' },
+  { value: 25, color: '#fa3c00' },
+  { value: 25, color: '#FF6A3D' },
+  { value: 25, color: '#FFD2C2' },
 ];
 
 export const DashboardHealthGauge: React.FC<GaugeProps> = ({ score }) => {
@@ -55,7 +56,9 @@ export const DashboardHealthGauge: React.FC<GaugeProps> = ({ score }) => {
   return (
     <div style={{ width: '100%', height: 200 }}>
       <h3 className='border border-dark rounded p-2 my-2'>Dashboard Health: {score}/100</h3>
-      <h3 className='bg-primary text-white rounded p-2 my-2 w-auto text-center'> {score>25?'FAIR':score>50?'GOOD':score>75?'EXCELLENT':'BAD'}</h3>
+      <h3 className={score>75?'awesome text-white rounded p-2 my-2 text-center':score>50?'good text-white rounded p-2 font-bold my-2 text-center':score>25?'fair text-white rounded p-2 my-2 text-center':'bad text-white rounded p-2 my-2 text-center'}> 
+                {score>75?'AWESOME':score>50?'GOOD':score>25?'FAIR':'BAD'}
+                </h3>
       <ResponsiveContainer width="100%" height="100%">
         <PieChart>
           <Pie

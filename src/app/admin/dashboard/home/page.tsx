@@ -6,7 +6,7 @@
 
 import useSWR from "swr";
 import { date, dater, fetcher, getMyDay, getMyMonth, tokenise } from "@/services/services";
-import { BarChart2, Calendar, Calendar1, Clock10, ClockAlert, Cloud, CloudFog, Dot, Globe, Info, Loader2, MailOpen, Paperclip, SunDim, Ticket, User2 } from "lucide-react";
+import { BarChart2, Calendar, Calendar1, ChartColumn, CheckCircle, Clock, Clock10, ClockAlert, Cloud, CloudFog, Dot, Gauge, Globe, Info, Loader2, LogIn, MailOpen, Paperclip, SunDim, Ticket, User2, XCircle } from "lucide-react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend } from 'recharts';
 import Image from "next/image";
 import Logged from "../../auth/user";
@@ -267,15 +267,30 @@ export default function Page() {
   // #152653 - blue
   const COLORS = ['#992600', '#fa3c00', '#FF6A3D', '#FFD2C2'] 
 
-  const lastLogin = getLastLogin(activity!==undefined?activity:[]);
-  const activityCount = getUserKeywordActivityCount(activity!==undefined?activity:[]);
-  const sessionMinutes = estimateSessionTime(activity!==undefined?activity:[]);
+  const dateToday = today.getDate()+today.getMonth()+today.getFullYear()
+  const activitiesToday:Activity[] = []
+  uniqueActivity?.forEach(activity => {
+    const date = new Date(activity.activity.createdAt)
+    const daysActivity = date.getDate()+date.getMonth()+date.getFullYear()
+    if(daysActivity == dateToday){
+      activitiesToday.push(activity)
+    } else null
+  })
+
+  const lastLogin = getLastLogin(activitiesToday!==undefined?activitiesToday:[]);
+  const activityCount = getUserKeywordActivityCount(activitiesToday!==null?activitiesToday:[]);
+  const sessionMinutes = estimateSessionTime(activitiesToday!==undefined?activitiesToday:[]);
 
   const healthScore = computeUserHealthScore({
     lastLogin,
     activityCount,
     sessionMinutes
   });
+  const dashMetClass = "p-4 -secondary border-1 rounded-lg border-white-subtle text-center"
+  const smallHead = "text-xs my-3 p-1 bg-secondary rounded"
+  const activityDiv = "flex mt-4 p-2 border border-black dark:border-white/50 rounded"
+  const smallActHead = " mr-2 border-r pr-2"
+  const dashSumm = "text-xs p-1 rounded font-bold border dark:border-black text-center"
 
 
   return (
@@ -303,8 +318,11 @@ export default function Page() {
               <div className="flex"><div className=" mr-2 border-r pr-2">{open.length}</div>Opened</div>
               <div className="flex"><div className=" mr-2 border-r pr-2">{closed.length}</div>Closed</div>
               </div></div>
-                <div className="sm:col-span-4 text-background rounded-lg bg-primary advertise gap-2 sm:flex justify-center items-center">
-                <SunDim size={80} className="animate-pulse"/>
+                <div className="sm:col-span-4 flex flex-col justify-center gap-2 p-6 text-background rounded-lg bg-primary">
+                  <div className="text-lg font-bold flex gap-4 tracking-tight mb-4 leading-5"><Gauge/> Summary</div>
+                <div className="flex justify-between">{lastLogin!==null?<CheckCircle/>:<XCircle/>} <span className={dashSumm}>Last Login</span></div>
+                <div className="flex justify-between">{activityCount>0?<CheckCircle/>:<XCircle/>} <span className={dashSumm}>Activity Count</span></div>
+                <div className="flex justify-between">{sessionMinutes>0?<CheckCircle/>:<XCircle/>} <span className={dashSumm}>Session Time</span></div>
                 </div>
                 </div>
               <div className="bg-secondary p-3 rounded-lg text-md font-bold tracking-tight mt-2 flex justify-between">
@@ -313,11 +331,11 @@ export default function Page() {
               </div>
               <div className="sm:flex sm:justify-between">
               <div className=" font-medium text-sm">
-              <div className="flex mt-4 p-2 border border-black dark:border-white/50 rounded"><div className=" mr-2 border-r pr-2">{links.length}</div>Page Visits</div>
-              <div className="flex mt-4 p-2 border border-black dark:border-white/50 rounded"><div className=" mr-2 border-r pr-2">{buttons.length}</div>Button Clicks</div>
-              <div className="flex mt-4 p-2 border border-black dark:border-white/50 rounded"><div className=" mr-2 border-r pr-2">{submissions.length}</div>Submissions</div>
-              <div className="flex mt-4 p-2 border border-black dark:border-white/50 rounded"><div className=" mr-2 border-r pr-2">{messages?.length}</div>Messages</div>
-              <div className="flex mt-4 p-2 border border-black dark:border-white/50 rounded"><div className=" mr-2 border-r pr-2">{cooky.length - (buttons.length + submissions.length + links.length)}</div>Other Interactions</div>
+              <div className={activityDiv}><div className={smallActHead}>{links.length}</div>Page Visits</div>
+              <div className={activityDiv}><div className={smallActHead}>{buttons.length}</div>Button Clicks</div>
+              <div className={activityDiv}><div className={smallActHead}>{submissions.length}</div>Submissions</div>
+              <div className={activityDiv}><div className={smallActHead}>{messages?.length}</div>Messages</div>
+              <div className={activityDiv}><div className={smallActHead}>{cooky.length - (buttons.length + submissions.length + links.length)}</div>Other Interactions</div>
               </div>
               <ResponsiveContainer width={300} height={300}>
                 <PieChart>
@@ -347,15 +365,16 @@ export default function Page() {
               <div>{uniqueActivity?.length}</div>
               </div>
               {idType=='admin'&&<Link href='/admin/dashboard/account'><Button>See Full Log</Button></Link>}
+              {idType=='admin'&&<Button variant='link'>Download Summary</Button>}
             <div className="py-6">
               <MonthlyActivity links={links} buttons={buttons} submissions={submissions} />
               </div>
             </div>
             <div className="text-sm p-6 flex flex-col sm:col-span-4 col-span-12 bg-background text-foreground rounded-lg tracking-tight font-bold ">
               <div className="py-2 px-5 bg-secondary rounded-md flex justify-between items-center"><Calendar1 className="mr-5"/>{greeting}</div>
-              {open.length>0 && <Link href='/admin/dashboard/ticket/view'><div className="py-2 px-5 bg-orange-400/20 text-orange-600 rounded-md flex justify-between items-center animate-pulse mt-1"><Ticket className="mr-5"/>You have {open.length} Ticket(s) pending</div></Link>}
-              {newNot.length>0 && <div className="py-2 px-5 bg-orange-400/20 text-orange-600 rounded-md flex justify-between items-center animate-pulse mt-1"><Info className="mr-5"/>You have {newNot.length} Notification(s) pending</div>}
-              {newMessage.length>0 && <div className="py-2 px-5 bg-orange-400/20 text-orange-600 rounded-md flex justify-between items-center mt-1 animate-pulse"><MailOpen className="mr-5"/>You have {newMessage.length} Message(s) pending</div>}
+              {open.length>0 && <Link href='/admin/dashboard/ticket/view'><div className="py-2 px-5 bg-primary/20 text-primary rounded-md flex justify-between items-center animate-pulse mt-1"><Ticket className="mr-5"/>You have {open.length} Ticket(s) pending</div></Link>}
+              {newNot.length>0 && <div className="py-2 px-5 bg-primary/20 text-primary rounded-md flex justify-between items-center animate-pulse mt-1"><Info className="mr-5"/>You have {newNot.length} Notification(s) pending</div>}
+              {newMessage.length>0 && <div className="py-2 px-5 bg-primary/20 text-primary rounded-md flex justify-between items-center mt-1 animate-pulse"><MailOpen className="mr-5"/>You have {newMessage.length} Message(s) pending</div>}
               <div className="p-5 my-8 bg-primary text-background rounded-xl">
               <ClockAlert size={60} className=""/>
               <div className="text-5xl font-bold tracking-tight mt-12">{formatTime(today)}</div>
@@ -366,7 +385,7 @@ export default function Page() {
         <div className=" flex py-8">
             {
                 userData?.map((data, index)=>(
-                    <div className="flex mr-1" key={index}>
+                    <div className="flex -ml-2" key={index}>
                         {data.profilePicture.includes('users')?
                         <div style={{ position: 'relative', width: '40px', height: '40px' }}>
                             <TooltipProvider>
@@ -375,7 +394,7 @@ export default function Page() {
                                 <Image
                                     src={data.profilePicture}
                                     alt="Full size"
-                                    className="rounded-full cursor-pointer"
+                                    className="rounded-full cursor-pointer border-2 border-background"
                                     fill
                                     title={data.name}
                                     unoptimized
@@ -392,13 +411,13 @@ export default function Page() {
                     </div>
                     </div>:<ToolTip>
                         <TooltipTrigger asChild>
-                        <div className="h-10 cursor-pointer w-10 grid justify-center items-center dark:text-foreground rounded-full bg-secondary">{data.name[0].toUpperCase()}</div>
+                        <div className="h-10 cursor-pointer w-10 grid justify-center items-center text-background border-2 border-background rounded-full bg-primary">{data.name[0].toUpperCase()}</div>
                         </TooltipTrigger>
                         <TooltipContent>
                                 <p>{data.name}</p>
                                 </TooltipContent>
                         </ToolTip>}
-                <Dot className={data.isLoggedIn==true?'absolute -mt-6 -mr-8 text-orange-600':'absolute -mt-6 -mr-6 text-black-600'} size={50}/>
+                <Dot className={data.isLoggedIn==true?'absolute -mt-6 -mr-8 text-primary':'absolute -mt-6 -mr-6 text-black-600'} size={50}/>
                 </div>
                 ))
             }
@@ -406,7 +425,7 @@ export default function Page() {
         </div>
         <div className="grid grid-cols-12 text-sm p-2">
             <div className=" col-span-6 flex items-center font-medium">
-                <Dot className="text-orange-400" size={30}/> Logged In
+                <Dot className="text-primary" size={30}/> Logged In
             </div>
             <div className=" col-span-6 flex items-center font-medium">
                 <Dot className="text-black-400" size={30}/> Logged Out
@@ -420,10 +439,12 @@ export default function Page() {
             <div className="py-8">
               <div className="text-xl leading-6">Dashboard health and performance (DHP)</div>
               <DashboardHealthGauge score={healthScore} />
-              <div className="mt-20 text-xs">Your dashboard performance is determined by:</div>
-              <div className="mt-6">Your Last Login: {lastLogin!==null?date(lastLogin.toString()):null}</div>
-              <div>Your Activity Count: {activityCount}</div>
-              <div>Your Session Minutes: {sessionMinutes}</div>
+              <div className="mt-20 text-xs">Your dashboard health and performance is determined by your daily:</div>
+              <div className="grid sm:grid-cols-2 gap-1 mt-6">
+              <div className={dashMetClass}><LogIn/><div className={smallHead}>Last Login</div> {lastLogin!==null?date(lastLogin.toString()):null}</div>
+              <div className={dashMetClass}><ChartColumn/><div className={smallHead}>Activity Count</div> {activityCount}</div>
+              <div className={dashMetClass}><Clock/><div className={smallHead}>Session Minutes</div> {sessionMinutes}</div>
+              </div>
             </div>
             </div>
         </div>

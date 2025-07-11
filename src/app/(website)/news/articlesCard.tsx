@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable prefer-const */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client"
@@ -55,7 +56,7 @@ import Outline from '@/app/images/outline.png'
             unoptimized
             objectFit="contain"
             className="object-cover"/></div>
-            <div className="row-start-3 p-2 flex gap-[24px] text-sm flex-wrap items-center justify-center">
+            <div className="row-start-3 p-2 flex gap-[24px] text-sm flex-wrap bg-white items-center justify-center">
         <span className="flex items-center uppercase text-xs rounded">
         <Image
             src={Outline}
@@ -64,7 +65,7 @@ import Outline from '@/app/images/outline.png'
             width={30}
             className="mr-2"
             unoptimized/>
-         <span className="p-1 font-bold border-t border-r border-b rounded">{articleType}</span></span>
+         <span className="p-1 font-bold text-black border-black border-t border-r border-b rounded">{articleType}</span></span>
          <div className="text-xs text-muted-foreground">Follow the story: </div>
             <a
       className="flex items-center gap-2 font-bold tracking-tight hover:underline hover:underline-offset-4"

@@ -133,7 +133,7 @@ export default function MonthRepGraph(props: { pages: YearData[], buttons: YearD
   ];
 
   return (
-    <ResponsiveContainer width="100%" height={300}>
+    <ResponsiveContainer width="100%" height={450}>
       <LineChart data={transformedData}>
         <CartesianGrid strokeDasharray="none" stroke="none" />
         {/* <XAxis dataKey="day" tick={{ fontSize: 12 }} />  XAxis shows days */}
@@ -153,7 +153,7 @@ export default function MonthRepGraph(props: { pages: YearData[], buttons: YearD
                 boxShadow: '0 0px 0px rgba(0, 0, 0, 0.1)', // Shadow effect
                 color: '#333', // Text color
               }}>
-                <p><strong>Day: </strong>{label}</p>  {/* Showing Day */}
+                <p><strong>Day: </strong>{label+1}</p>  {/* Showing Day */}
                 <p><strong>Page Visits: </strong>{Pages}</p>
                 <p><strong>Button Clicks: </strong>{Buttons}</p>
                 <p><strong>Form Submissions: </strong>{Submissions}</p>
@@ -186,12 +186,12 @@ export default function MonthRepGraph(props: { pages: YearData[], buttons: YearD
 
                   return (
                     <div key={index} style={{ marginBottom: '10px' }} className='flex flex-col'>
-                      <strong>{entry.value}: Total: {total.toLocaleString()}</strong>
+                      <div className='font-bold text-xs tracking-tight'>{entry.value}: Total: {total.toLocaleString()}</div>
                       <div className='graph-scroll'>
                         {typeData.length > 0 ? (
                           typeData.map((data, i) => (
                             <div key={i} className='flex p-1 border-b mt-1'>
-                              <span className='mr-5'>Day {data.day}:</span> {data.total}
+                              <span className='mr-5 font-bold tracking-tight'>Day {data.day}:</span> {data.total}
                             </div>
                           ))
                         ) : (
