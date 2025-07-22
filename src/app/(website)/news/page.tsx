@@ -11,9 +11,10 @@ import Image from "next/image";
 import mtn1 from '../images/mtn1.jpg'
 import mtn2 from '../images/mtn2.jpg'
 import { Ads } from "./ads";
+import { desc } from "drizzle-orm";
 
 export default async function News() {
-  const votes =  await db.select().from(articlesTable)
+  const votes =  await db.select().from(articlesTable).orderBy(desc(articlesTable.createdAt))
   return (
     <div>
     <div>
