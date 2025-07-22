@@ -82,6 +82,7 @@ export const presentersTable = mysqlTable('presenters', {
   name: text('full_name'),
   radioName: text('nickName').notNull(),
   programme: int("programme").notNull().references(() => programmingTable.id, {onDelete: 'cascade'}),
+  profilePicture: varchar('profile_picture', {length: 255}).notNull(),
     createdAt,
     updatedAt,
 });
@@ -101,7 +102,6 @@ export const EventsTable = mysqlTable('events_table', {
 export const notificationsTable = mysqlTable('notifications', {
   id: int('id').primaryKey().autoincrement(),
   sender: int("user_id").notNull().references(() => usersTable.id, {onDelete: 'cascade'}),
-  status: text('status').notNull(),
   notification: text('notification').notNull(),
     createdAt,
     updatedAt,
@@ -118,6 +118,7 @@ export const ticketingTable = mysqlTable('tickets', {
 
 export const notificationUsersTable = mysqlTable('notification_users', {
   id: int('id').primaryKey().autoincrement(),
+  status: text('status').notNull(),
   notification: int('notification_id').notNull().references(() => notificationsTable.id, { onDelete: 'cascade' }),
   user: int('user_id').notNull().references(() => usersTable.id, { onDelete: 'cascade' }),
 });

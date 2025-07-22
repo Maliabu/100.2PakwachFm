@@ -24,6 +24,7 @@ export type Activity = {
   activity: {
     activity: string;
     createdAt: string;
+    updatedAt: string
     id: number;
     user: number;
   };

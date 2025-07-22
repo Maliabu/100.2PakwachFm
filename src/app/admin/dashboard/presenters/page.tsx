@@ -11,94 +11,119 @@ import { useForm } from "react-hook-form"
 import z, { any } from 'zod'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { addprogrammings } from "@/server/fetch.actions"
-import { addProgrammingSchema } from '@/schema/schema'
-import { ReusableDrawer } from "../reusableDrawer"
+import { addPresenter } from "@/server/fetch.actions"
+import { addPresenterSchema } from '@/schema/schema'
 import { fetcher, tokenise } from "@/services/services"
-import Editor from "../editor/editor"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import Programmes from "./programmes"
 import useSWR from "swr"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { ReusableDialog } from "../reusableDialog"
-import { CheckCircle, XCircle } from "lucide-react"
+import { CheckCircle, Info, XCircle } from "lucide-react"
+import { Programming } from "../types"
+import Presenters from "./presenters"
 
-export default function AddProgramming() {
-  const [buttonText, setButtonText] = React.useState("Add Programming")
+export default function AddPresenter() {
+  const [buttonText, setButtonText] = React.useState("Add Presenter")
   const [success, setSuccess] = React.useState(false)
-
-    const form = useForm<z.infer<typeof addProgrammingSchema>>({
-      resolver: zodResolver(addProgrammingSchema),
+  
+    const form = useForm<z.infer<typeof addPresenterSchema>>({
+      resolver: zodResolver(addPresenterSchema),
         defaultValues: {
-          programme: "",
-          startTime: "",
-          endTime: "",
-          weekday: '',
+          programmeName: "",
+          name: "",
+          radioName: "",
           userId: '',
-          image: ''
+          profilePicture: '',
+          programme: 0,
       },
     })
 
-    async function onSubmit(values: z.infer<typeof addProgrammingSchema>) {
+    const {data, error} = useSWR<Programming[]>('/api/programming', fetcher)
+    if(!data){
+      return <div className="text-xs">Fetching Programming...</div>
+    }
+
+    async function onSubmit(values: z.infer<typeof addPresenterSchema>) {
       values.userId = tokenise()[3]
         //create obj
-        setButtonText("Adding Programmes...")
-        const file = values.image1
+        setButtonText('Adding Presenter...')
+        const file = values.profilePicture1
         // to burst vercel caching
         const timestamp = Date.now()
+        if(file.size > 10 * 1024 * 1024){
+          form.setError("root", {
+            "message": 'Your image is too big'
+          })
+        } else{
 
         const formData = new FormData()
         formData.append("file", file, file.name + '-' + timestamp)
-        formData.append('folder', 'programming')
+        formData.append('folder', 'presenters')
 
-        const data = await addprogrammings(values, formData)
+        const data = await addPresenter(values, formData)
         if(data?.error){
           form.setError("root", {
-            "message": "Programming not added"
+            "message": "Presenter not added"
           })
         } else {
-          setButtonText('Successful')
+          setButtonText('successful')
           setSuccess(true)
           window.location.reload()
         }
+      }
     }
 
     function formBuild(){
       return(
       <div className=" p-4">
       <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} id="add-programming-form">
+      <form onSubmit={form.handleSubmit(onSubmit)} id="add-presenter-form">
         <div>
-          <div>
           <div className="flex flex-col space-y-1.5">
             <FormField
                 control={form.control}
-                name="image1"
+                name="profilePicture1"
                 render={({ field: { value, onChange, ...fieldProps } }) => (
                     <FormItem>
-                    <FormLabel>Image</FormLabel>
+                    <FormLabel>profile Picture</FormLabel>
                     <FormControl
                     >
                         <Input type="file" {...fieldProps} onChange={(event) =>
-                  onChange(event.target.files && event.target.files[0])
-                }/>
+{                  
+  const file = event.target.files?.[0]
+  if(file && file.size > 10 * 1024 * 1024){
+    form.setError('profilePicture1',{
+      "message":"Image is too big"
+    });
+  } else{
+    form.clearErrors('profilePicture1')
+  }
+  onChange(event.target.files && event.target.files[0])
+}                }/>
                     </FormControl>
                     <FormMessage />
                     </FormItem>
                 )}
                 />
+                <div className="text-xs p-2 mt-1 bg-secondary rounded-md flex items-center"><Info className="mx-4"/> Image size should not exceed 10mb</div>
             </div>
               <div className="flex flex-col mt-2 space-y-1.5">
               <FormField
                   control={form.control}
-                  name="programme"
+                  name="programmeName"
                   render={({ field }) => (
                       <FormItem>
-                      <FormLabel>Programme Name</FormLabel>
+                      <FormLabel>Select a Programme</FormLabel>
                       <FormControl>
-                          <Input 
-                          type="text" 
-                          placeholder="Programme Name" {...field} />
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                              <SelectTrigger id="programmeName">
+                              <SelectValue placeholder="Programme"/>
+                              </SelectTrigger>
+                              <SelectContent position="popper">
+                                {data?.map((programme, index) => (
+                              <SelectItem key={index} value={programme.programme}>{programme.programme}</SelectItem>
+                                ))}
+                              </SelectContent>
+                          </Select>
                       </FormControl>
                       <FormMessage />
                       </FormItem>
@@ -108,12 +133,12 @@ export default function AddProgramming() {
               <div className="flex flex-col my-2 space-y-1.5">
               <FormField
                   control={form.control}
-                  name="startTime"
+                  name="name"
                   render={({ field }) => (
                       <FormItem>
-                      <FormLabel>From</FormLabel>
+                      <FormLabel>Presenter&apos;s Full Names</FormLabel>
                       <FormControl>
-                          <Input type="text" placeholder="start Time - 10:00 AM format" {...field} />
+                          <Input type="text" placeholder="First Name Last Name" {...field} />
                       </FormControl>
                       <FormMessage />
                       </FormItem>
@@ -123,54 +148,17 @@ export default function AddProgramming() {
               <div className="flex flex-col my-2 space-y-1.5">
               <FormField
                   control={form.control}
-                  name="endTime"
+                  name="radioName"
                   render={({ field }) => (
                       <FormItem>
-                      <FormLabel>To</FormLabel>
+                      <FormLabel>Stage Name</FormLabel>
                       <FormControl>
-                          <Input type="text" placeholder="Time it ends" {...field} />
+                          <Input type="text" placeholder="Stage/Studio/Radio Alias Name" {...field} />
                       </FormControl>
                       <FormMessage />
                       </FormItem>
                   )}
                   />
-              </div>
-              <div className="flex flex-col my-3 space-y-1.5">
-              <FormField
-                  control={form.control}
-                  name="weekday"
-                  render={({ field }) => (
-                      <FormItem>
-                      <FormLabel>Is this a weekday programme? (mon - fri)?</FormLabel>
-                      <FormControl>
-                      <RadioGroup
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                  className="flex flex-col space-y-1"
-                >
-                  <FormItem className="flex items-center space-x-3 space-y-0">
-                    <FormControl>
-                      <RadioGroupItem value='true' />
-                    </FormControl>
-                    <FormLabel className="font-normal">
-                      Yes, Week-day Programme
-                    </FormLabel>
-                  </FormItem>
-                  <FormItem className="flex items-center space-x-3 space-y-0">
-                    <FormControl>
-                      <RadioGroupItem value='false' />
-                    </FormControl>
-                    <FormLabel className="font-normal">
-                      No, week-end programme
-                    </FormLabel>
-                  </FormItem>
-                </RadioGroup>
-                      </FormControl>
-                      <FormMessage />
-                      </FormItem>
-                  )}
-                  />
-              </div>
           </div></div>
         <Button className="my-4 text-white" type="submit">{buttonText}</Button>
         {form.formState.errors.root && (
@@ -178,7 +166,7 @@ export default function AddProgramming() {
             )}
             {success && (
             <div className="rounded text-sm font-bold bg-green-400/10 flex justify-center gap-4 text-green-600 p-2">
-                <CheckCircle className="animate-pulse"/> Programming added successfully
+                <CheckCircle className="animate-pulse"/> Presenter added successfully
             </div>
             )}
       </form>
@@ -188,9 +176,9 @@ export default function AddProgramming() {
 
   return (
     <div className="mt-2">
-      <ReusableDialog page="Add Programming" form={formBuild()}/>
+      <ReusableDialog page="Add Presenter" form={formBuild()}/>
       <div>
-        <Programmes/>
+        <Presenters/>
       </div>
     </div>
   )

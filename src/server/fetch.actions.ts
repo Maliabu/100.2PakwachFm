@@ -3,18 +3,18 @@
 "use server"
 
 import { db } from "@/db/db";
-import { EventsTable, activityTable, articlesTable, commentsTable, courseTable, currencyTable, editorImagesTable, enrollmentsTable, messagesTable, nextCourseTable, notificationsTable, opportunitiesTable, programmingTable, replyTable, subscriptionsTable, ticketingTable, usersTable, votesTable } from "@/db/schema";
+import { EventsTable, activityTable, articlesTable, commentsTable, courseTable, currencyTable, editorImagesTable, enrollmentsTable, messagesTable, nextCourseTable, notificationUsersTable, notificationsTable, opportunitiesTable, presentersTable, programmingTable, replyTable, subscriptionsTable, ticketingTable, usersTable, votesTable } from "@/db/schema";
 import "use-server"
 import { z } from "zod";
-import { addArticleSchema, addCourseSchema, addEnrollmentSchema, addEventSchema, addMessagesSchema, addNextCourseSchema, addNotificationSchema, addProgrammingSchema, addSubscriptionSchema, addUserSchema, commentsSchema, deleteArticleSchema, deleteEventSchema, deleteProgrammingSchema, deleteSchema, deleteUserSchema, editProgrammingSchema, loginUserSchema, messagesSchema, openTicket, opportunitySchema, replySchema, updateCourseSchema, uploadProfilePicture, voteSchema } from '@/schema/schema'
-import { eq } from "drizzle-orm";
+import { addArticleSchema, addCourseSchema, addEnrollmentSchema, addEventSchema, addMessagesSchema, addNextCourseSchema, addNotificationSchema, addPresenterSchema, addProgrammingSchema, addSubscriptionSchema, addUserSchema, commentsSchema, deleteArticleSchema, deleteEventSchema, deleteProgrammingSchema, deleteSchema, deleteUserSchema, editProgrammingSchema, loginUserSchema, messagesSchema, openTicket, opportunitySchema, replySchema, updateCourseSchema, uploadProfilePicture, voteSchema } from '@/schema/schema'
+import { desc, eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { File } from "node:buffer";
 import { promises as fs } from "node:fs";
 import { messageReplyHtml, sendPasswordResetLInk } from "@/nodemailer";
 // import { sendEmail } from "@/nodemailer";
 
-const today = new Date()
+const today = new Date(Date.now()); // UTC
 
 function env(){
     if(process.env.NODE_ENV == "development" || process.env.NODE_ENV == "test"){
@@ -360,8 +360,20 @@ Promise<{error: boolean | undefined}> {
    if (!success){
     return {error: true}
    }
-
    await db.insert(notificationsTable).values({...data})
+   const [notification] = await db
+  .select()
+  .from(notificationsTable)
+  .orderBy(desc(notificationsTable.id))
+  .limit(1);
+  const users = await db.select().from(usersTable);
+  await db.insert(notificationUsersTable).values(
+    users.map((user) => ({
+      user: user.id,
+      notification: notification.id,
+      status: "new",
+    }))
+  );
 
    await logActivity("Added new Notification: "+data.notification, data.sender.toString())
 
@@ -630,6 +642,36 @@ Promise<{error: boolean | undefined}> {
 
 }
 
+export async function addPresenter(unsafeData: z.infer<typeof addPresenterSchema>, formData: FormData) : 
+Promise<{error: boolean | undefined}> {
+   const {success, data} = addPresenterSchema.safeParse(unsafeData)
+
+   if (!success){
+    return {error: true}
+   }
+    
+   try{
+        const profile = await uploadAds(formData)
+        if(profile !== null){
+            data.profilePicture = profile.url
+            //get id of programme
+            const programming = await db.query.programmingTable.findFirst({where:eq(programmingTable.programme,data.programmeName)})
+            if(programming!==undefined){
+                data.programme = programming.id
+            await db.insert(presentersTable).values({...data})
+            await logActivity('Added new Presenter: '+data.radioName, data.userId)
+            return {error: false}}
+            return {error: true}
+        } else {
+            return {error: true}
+        }
+    } catch(error){
+        console.log(error)
+        return {error: true}
+    }
+
+}
+
 export async function editProgramming(
     unsafeData: z.infer<typeof addProgrammingSchema>,
     formData: FormData | null,
@@ -660,6 +702,38 @@ export async function editProgramming(
       return { error: true };
     }
   }
+
+  export async function editPresenter(
+    unsafeData: z.infer<typeof addPresenterSchema>,
+    formData: FormData | null,
+    id: number
+  ): Promise<{ error: boolean | undefined }> {
+    const { success, data } = addPresenterSchema.safeParse(unsafeData);
+  
+    if (!success) {
+      return { error: true };
+    }
+  
+    try {
+      // If a new image was provided
+      if (formData) {
+        const profile = await uploadAds(formData);
+        if (profile !== null) {
+          data.profilePicture = profile.url; // override with uploaded image
+        }
+      }
+  
+      // Always update the database, with or without image change
+      await db.update(presentersTable).set({ ...data }).where(eq(presentersTable.id, id));
+      await logActivity("Updated Presenter data: " + data.programme, data.userId);
+  
+      return { error: false };
+    } catch (error) {
+      console.error(error);
+      return { error: true };
+    }
+  }
+
   
 
 export async function addEnrollment(unsafeData: z.infer<typeof addEnrollmentSchema>) : 

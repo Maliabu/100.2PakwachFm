@@ -66,3 +66,17 @@ export async function messageReplyHtml(email: string, title: string, reply: stri
 
   return info1.messageId
 }
+
+export async function emailVerification(email: string, title: string, verificationcode: string) {
+
+  const info1 = await transporter.sendMail({
+    from: '"Pakwach FM" <info@pakwachfm.com>',
+    to: email, // list of receivers
+    subject: title, // Subject line
+    text: "Account Verification",
+    html: "<!DOCTYPE html><html><head><meta charset='utf-8'><meta http-equiv='X-UA-Compatible' content='IE=edge'><title> Verify your Account </title><meta name='viewport' content='width=device-width, initial-scale=1'><link rel='stylesheet' type='text/css' media='screen' href='main.css'><script src='main.js'></script></head><body><div><p>Hello "+email+"</p><p>We received your request and your verification code is </p><h3> "+verificationcode+"</h3><p>If you didnt make this request please ignore this email. If you need more assistance please let us know</p><p>Regards<br/>Team at Pakwach Fm,</p><p>Call center: <br/><li>+256-772-331128</li><li>+256-702-632200</li></p></div></body></html>",
+    // html: JSON.stringify(template(email, title))
+  });
+
+  return info1.messageId
+}

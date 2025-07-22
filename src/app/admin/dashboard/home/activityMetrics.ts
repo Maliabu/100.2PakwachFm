@@ -3,11 +3,11 @@ import { Activity } from "../account/page";
 const keywords = ['ticket', 'message', 'programming', 'user', 'article', 'profile', 'notification'];
 
 export function getLastLogin(logs: Activity[]): Date | null {
+    // EAT time
   const last = logs
     .filter(l => l.activity.activity.includes('Logged in'))
-    .map(l => new Date(l.activity.createdAt))
+    .map(l => new Date(l.activity.updatedAt))
     .sort((a, b) => b.getTime() - a.getTime())[0];
-
   return last ?? null;
 }
 
@@ -17,35 +17,62 @@ export function getUserKeywordActivityCount(logs: Activity[]): number {
   ).length;
 }
 
-export function estimateSessionTime(logs: Activity[]): number {
-  const sorted = logs
-    .sort((a, b) => new Date(a.activity.createdAt).getTime() - new Date(b.activity.createdAt).getTime());
+export function estimateSessionTime(logs: Activity[], dayDate: Date = new Date()): number {
+  const dayStart = new Date(dayDate);
+  dayStart.setHours(0, 0, 0, 0);
+  const dayEnd = new Date(dayStart);
+  dayEnd.setHours(23, 59, 59, 999);
+
+  // Filter logs for the given day and relevant login/logout activities
+  const dayLogs = logs
+    .filter(log => {
+      const time = new Date(log.activity.updatedAt);
+      return (
+        time >= dayStart &&
+        time <= dayEnd &&
+        (log.activity.activity.includes('Logged in') || log.activity.activity.includes('Logged out'))
+      );
+    })
+    .sort((a, b) => new Date(a.activity.updatedAt).getTime() - new Date(b.activity.updatedAt).getTime());
 
   let loginTime: Date | null = null;
   let totalMinutes = 0;
 
-  for (const log of sorted) {
-    const time = new Date(log.activity.createdAt);
-    const now = new Date()
+  for (const log of dayLogs) {
+    const time = new Date(log.activity.updatedAt);
+
     if (log.activity.activity.includes('Logged in')) {
-      loginTime = time;
+      if (!loginTime) {
+        loginTime = time;
+      }
     }
-    if (log.activity.activity.includes('Logged out') && loginTime) {
-      const duration = (time.getTime() - loginTime.getTime()) / (1000 * 60);
-      if (duration > 0) {
-        totalMinutes += duration;
+
+    if (log.activity.activity.includes('Logged out')) {
+      if (loginTime) {
+        const sessionStart = loginTime < dayStart ? dayStart : loginTime;
+        const sessionEnd = time > dayEnd ? dayEnd : time;
+        const duration = (sessionEnd.getTime() - sessionStart.getTime()) / (1000 * 60);
+
+        if (duration > 0) {
+          totalMinutes += duration;
+        }
+        loginTime = null;
       }
-      loginTime = null;
-    }  
-    if (!log.activity.activity.includes('Logged out') && loginTime){
-      const duration = (now.getTime() - loginTime.getTime()) / (1000 * 60);
-      // why less than 240
-      if (duration > 0) {
-        totalMinutes += duration;
-      }
-      loginTime = null;
     }
   }
+
+  // If still logged in (no logout by day end), count till now or day end
+  if (loginTime) {
+    const now = new Date();
+    const sessionStart = loginTime < dayStart ? dayStart : loginTime;
+    const sessionEnd = now < dayEnd ? now : dayEnd;
+    const duration = (sessionEnd.getTime() - sessionStart.getTime()) / (1000 * 60);
+
+    if (duration > 0) {
+      totalMinutes += duration;
+    }
+  }
+
   return Math.round(totalMinutes);
 }
 

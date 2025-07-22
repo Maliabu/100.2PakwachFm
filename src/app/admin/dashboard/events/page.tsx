@@ -13,8 +13,11 @@ import { addEvents } from "@/server/fetch.actions"
 import { addEventSchema } from '@/schema/schema'
 import { DatePicker } from "../datePicker"
 import { tokenise } from "@/services/services"
+import { CheckCircle, XCircle } from "lucide-react"
 
 export default function AddEvents() {
+  const [buttonText, setButtonText] = React.useState("Add Article")
+  const [success, setSuccess] = React.useState(false)
 
     const form = useForm<z.infer<typeof addEventSchema>>({
       resolver: zodResolver(addEventSchema),
@@ -33,11 +36,7 @@ export default function AddEvents() {
         values.userId = tokenise()[3]
 
         //create obj
-        const app = document.getElementById('submit');
-        const text = 'processing';
-        if(app !== null){
-          app.innerHTML = text;
-        }
+        setButtonText('Processing Event...')
         const file = values.image1
 
         const formData = new FormData()
@@ -50,9 +49,8 @@ export default function AddEvents() {
             "message": "event not added"
           })
         } else {
-          if(app !== null){
-            app.innerHTML = "Successful";
-          }
+          setButtonText('Successful')
+          setSuccess(true)
           window.location.reload()
         }
     }
@@ -164,13 +162,13 @@ export default function AddEvents() {
             </div>
         </div>
       </div>
-      <Button id="submit" className="my-4 text-white" type="submit">Add Event</Button>
+      <Button id="submit" className="my-4 text-white" type="submit">{buttonText}</Button>
       {form.formState.errors.root && (
-        <div className="border-1 border-destructive text-destructive p-2 rounded-md">{form.formState.errors.root.message}</div>
-      )}
-      {form.formState.isSubmitSuccessful && (
-        <div className="border-1 border-primary text-primary p-2 text-center rounded-md"> Event added successfully </div>
-      )}
+          <div className="bg-red-400/10 text-primary text-sm p-2 text-center rounded-md"><XCircle/> {form.formState.errors.root.message}</div>
+        )}
+        {success && (
+          <div className=" bg-green-400/10 text-green-600 text-sm p-2 text-center rounded-md"><CheckCircle/> Event added successfully </div>
+        )}
     </form>
     </Form>
       </div>

@@ -64,6 +64,13 @@
       "when": 1751393918766,
       "tag": "0008_dry_shooting_star",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "5",
+      "when": 1753102487888,
+      "tag": "0009_nervous_scalphunter",
+      "breakpoints": true
     }
   ]
 }

@@ -9,13 +9,11 @@ import { Button } from "@/components/ui/button";
 import { useTheme } from "next-themes";
 import { fetcher, tokenise } from "@/services/services";
 import useSWR from "swr";
-import { UserType } from "./types";
+import { Notifications, UserType } from "./types";
 import Image from "next/image";
 import Link from "next/link";
-import { Notify } from "./notifications/view/page";
 import { Ticketing } from "./home/page";
 import { Message } from "./messages/view/page";
-import UserAvatar from "./userAvatar";
 import { Activity } from "./account/page";
 import { useEffect, useState } from "react";
 import { computeUserHealthScore, estimateSessionTime, getLastLogin, getUserKeywordActivityCount } from "./home/activityMetrics";
@@ -31,10 +29,12 @@ export default function Header(){
   }, [])
 
     let user: UserType[] = []
-    let notes: Notify[] = []
+    let notes: Notifications[] = []
     const logged: UserType[] = []
+    const userId = id
+    const { data:act, error:actError } = useSWR<Activity[]>('/api/activity', fetcher);
     const { data, error } = useSWR("/api/users", fetcher);
-    const { data: notifications, error: notError } = useSWR("/api/notifications", fetcher);
+    const { data: notifications, error: notError } = useSWR(`/api/notifications/${userId}`, fetcher);
     const { data:tickets, error:ticketError } = useSWR<Ticketing[]>("/api/tickets", fetcher);
     const { data:messages, error:messageError } = useSWR<Message[]>("/api/messages", fetcher);
     const { data:activity, error:activityError } = useSWR<Activity[]>(`/api/activity/${id}`, fetcher);
@@ -66,7 +66,7 @@ export default function Header(){
     if(notifications){
         notes = notifications
     }
-    let hasNew = notes?.some((n: Notify) => n.status === "new");
+    let hasNew = notes?.some((n: Notifications) => n.notification_users.status === "new");
     const newMessage = message?.some((n: Message) => n.status === "new");
     function notify(){
         if(hasNew){
@@ -89,11 +89,16 @@ export default function Header(){
             return "bg-secondary rounded-full w-10 h-10 flex justify-center items-center"
         }
     }
+    const uniqueActivity = act!==undefined?act.filter((value: Activity, index: number, self: Activity[]) => 
+      index === self.findIndex((t: Activity) => (
+        t.activity.id === value.activity.id
+      ))
+    ):null
     const today =  new Date()
     const dateToday = today.getDate()+today.getMonth()+today.getFullYear()
   const activitiesToday:Activity[] = []
-  activity?.forEach(activity => {
-    const date = new Date(activity.activity.createdAt)
+  uniqueActivity?.forEach(activity => {
+    const date = new Date(activity.activity.updatedAt)
     const daysActivity = date.getDate()+date.getMonth()+date.getFullYear()
     if(daysActivity == dateToday){
       activitiesToday.push(activity)
@@ -109,12 +114,13 @@ export default function Header(){
     activityCount,
     sessionMinutes
   });
+
     const handleClick = async () => {
         hasNew = false;
         const userId = tokenise()[3]
     
         // Mark notifications as read
-        await fetch(`/api/notifications/${userId}`, {
+        await fetch(`/api/notifications/${userId}/read`, {
             method: "GET",
             headers: {
               "Content-Type": "application/json",

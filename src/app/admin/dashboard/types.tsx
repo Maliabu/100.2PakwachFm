@@ -37,6 +37,15 @@ export type Programming = {
     createdAt: Date
     updatedAt: Date
 }
+export type Presenter = {
+    id: number
+    programme: number
+    name: string | null
+    radioName: string
+    profilePicture: string
+    createdAt: Date
+    updatedAt: Date
+}
 
 export type ArticleType = {
     id: number
@@ -203,4 +212,20 @@ export type WebActivity = {
     }
     user_id: string;
     total: number
+}
+
+export type Notifications = {
+    notifications: {
+        id: number;
+        sender: number;
+        notification: string;
+        createdAt: Date;
+        updatedAt: Date;
+    };
+    notification_users: {
+        id: number;
+        status: string;
+        notification: number;
+        user: number;
+    };
 }
