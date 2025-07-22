@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client"
 
-import { BarChart, Calendar, CalendarArrowDown, ChartBar, ChartBarIcon, CheckCheck, Delete, File, FileArchive, FileArchiveIcon, FileEdit, GraduationCap, Home, ImageIcon, Info, LineChart, List, ListChecks, LucideFileImage, Mail, MailCheck, Mic, Paperclip, PenToolIcon, Pill, Play, Plus, Receipt, Settings2, ShoppingBasket, Store, StoreIcon, Sun, Tag, Ticket, TicketCheck, TruckIcon, User, UserCheck2, Users, Video, Videotape, View, Wallet } from "lucide-react"
+import { BarChart, Calendar, CalendarArrowDown, ChartBar, ChartBarIcon, CheckCheck, Delete, File, FileArchive, FileArchiveIcon, FileEdit, GraduationCap, Home, ImageIcon, Info, LineChart, List, ListChecks, LucideFileImage, Mail, MailCheck, Mic, Paperclip, PenToolIcon, Pill, Play, Plus, Receipt, Settings2, ShoppingBasket, Store, StoreIcon, Sun, Tag, Ticket, TicketCheck, TruckIcon, User, UserCheck2, UserCheck2Icon, Users, Video, Videotape, View, Wallet } from "lucide-react"
 
 import {
   Sidebar,
@@ -60,6 +60,19 @@ const data = {
           title: "Add",
           icon: Plus,
           url: "/admin/dashboard/programming",
+        },
+      ],
+    },
+    {
+      title: "Presenters",
+      url: "#",
+      icon: Mic,
+      isActive: false,
+      items: [
+        {
+          title: "Add",
+          icon: Mic,
+          url: "/admin/dashboard/presenters",
         },
       ],
     },

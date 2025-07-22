@@ -1,0 +1,1 @@
+ALTER TABLE `presenters` ADD `profile_picture` varchar(255) NOT NULL;

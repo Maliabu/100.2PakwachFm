@@ -12,6 +12,11 @@ typescript: {
   // !! WARN !!
   ignoreBuildErrors: true,
 },
+experimental:{
+  serverActions: {
+    bodySizeLimit: '10mb',
+  },
+},
 // images: {
 //   domains: ["uploads.pakwachfm.com"], // Ensure the domain is allowed
 // },

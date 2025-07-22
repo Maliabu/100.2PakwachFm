@@ -13,16 +13,13 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { uploadAds } from "@/server/fetch.actions"
 import {gallerySchema } from '@/schema/schema'
 import { tokenise } from "@/services/services"
+import { CheckCircle, XCircle } from "lucide-react"
 
 
 export default function AddImage() {
-  const [value, setValue] = React.useState("")
-  const [name, setName] = React.useState("")
-
-  React.useEffect(() => {
-    setName(tokenise()[0])
-  }, [])
-
+  const [buttonText, setButtonText] = React.useState("Upload Image")
+  const [success, setSuccess] = React.useState(false)
+  
     const form = useForm<z.infer<typeof gallerySchema>>({
       resolver: zodResolver(gallerySchema),
         defaultValues: {
@@ -33,11 +30,7 @@ export default function AddImage() {
     async function onSubmit(values: z.infer<typeof gallerySchema>) {
         const folders = 'gallery'
         //create obj
-        const app = document.getElementById('submit');
-        const text = 'processing';
-        if(app !== null){
-          app.innerHTML = text;
-        }
+        setButtonText('Uploading...')
         const file = values.image1
 
         const formData = new FormData()
@@ -50,9 +43,8 @@ export default function AddImage() {
             "message": "Image not uploaded"
           })
         } else {
-          if(app !== null){
-            app.innerHTML = "Successful";
-          }
+          setButtonText('Successful')
+          setSuccess(true)
           window.location.reload()
           // useRouter().refresh()
         }
@@ -88,12 +80,12 @@ export default function AddImage() {
                   )}
                   />
         </div>
-        <Button id="submit" className="my-4 text-white" type="submit">Upload Image</Button>
+        <Button id="submit" className="my-4 text-white" type="submit">{buttonText}</Button>
         {form.formState.errors.root && (
-          <div className="text-primary text-sm border-2 border-primary p-2 rounded-md">{form.formState.errors.root.message}</div>
+          <div className="bg-red-400/10 text-primary text-sm p-2 text-center rounded-md"><XCircle/> {form.formState.errors.root.message}</div>
         )}
-        {form.formState.isSubmitSuccessful && (
-          <div className="text-primary text-sm p-2 border-2 border-primary text-center rounded-md"> Image uploaded successfully </div>
+        {success && (
+          <div className=" bg-green-400/10 text-green-600 text-sm p-2 text-center rounded-md"><CheckCircle/> Image added successfully </div>
         )}
       </form>
       </Form>

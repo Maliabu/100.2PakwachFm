@@ -6,7 +6,7 @@
 
 import useSWR from "swr";
 import { date, dater, fetcher, getMyDay, getMyMonth, tokenise } from "@/services/services";
-import { BarChart2, Calendar, Calendar1, ChartColumn, CheckCircle, Clock, Clock10, ClockAlert, Cloud, CloudFog, Dot, Gauge, Globe, Info, Loader2, LogIn, MailOpen, Paperclip, SunDim, Ticket, User2, XCircle } from "lucide-react";
+import { BarChart2, Calendar, Calendar1, ChartColumn, CheckCircle, Clock, Clock10, ClockAlert, Cloud, CloudFog, Dot, DotIcon, Gauge, Globe, Info, Loader2, LogIn, MailOpen, Paperclip, SunDim, Ticket, User2, XCircle } from "lucide-react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend } from 'recharts';
 import Image from "next/image";
 import Logged from "../../auth/user";
@@ -23,6 +23,7 @@ import MonthlyActivity from "./monthlyActivity";
 import { computeUserHealthScore, estimateSessionTime, getLastLogin, getUserKeywordActivityCount } from "./activityMetrics";
 import { DashboardHealthGauge } from "./dashboardHealth";
 import { Button } from "@/components/ui/button";
+import AutoLogout from "../../autoLogout";
 
 export type Ticketing = {
   tickets: {
@@ -55,13 +56,14 @@ export default function Page() {
         setId(tokenise()[4])
         setid(tokenise()[3])
     }, [])
+    const userId = id
   const { data, error } = useSWR<Activity[]>('/api/activity', fetcher);
   const { data:activity, error:activityError } = useSWR<Activity[]>(`/api/activity/${id}`, fetcher);
   const { data:userData, error:userError } = useSWR<UserType[]>("/api/users", fetcher);
   const { data:articles, error:articlesError } = useSWR<ArticleType[]>("/api/articles", fetcher);
   const { data:events, error:eventsError } = useSWR<EventType[]>("/api/events", fetcher);
   const { data:tickets, error:ticketError } = useSWR<Ticketing[]>("/api/tickets", fetcher);
-  const { data:notifications, error:notificationError } = useSWR<Notify[]>("/api/notifications", fetcher);
+  const { data:notifications, error:notificationError } = useSWR<Notify[]>(`/api/notifications/${userId}`, fetcher);
   const { data:messages, error:messageError } = useSWR<Message[]>("/api/messages", fetcher);
   const { data:cookies, error:cookieError } = useSWR<Cooky[]>('/api/cookies', fetcher);
   const open: Ticketing[] = []
@@ -251,6 +253,8 @@ export default function Page() {
   } else {
     greeting = 'Good Evening';
   }
+  
+  
   const formatTime = (date: Date) => {
     let hours = date.getHours();
     const minutes = String(date.getMinutes()).padStart(2, '0');
@@ -270,7 +274,7 @@ export default function Page() {
   const dateToday = today.getDate()+today.getMonth()+today.getFullYear()
   const activitiesToday:Activity[] = []
   uniqueActivity?.forEach(activity => {
-    const date = new Date(activity.activity.createdAt)
+    const date = new Date(activity.activity.updatedAt)
     const daysActivity = date.getDate()+date.getMonth()+date.getFullYear()
     if(daysActivity == dateToday){
       activitiesToday.push(activity)
@@ -280,6 +284,7 @@ export default function Page() {
   const lastLogin = getLastLogin(activitiesToday!==undefined?activitiesToday:[]);
   const activityCount = getUserKeywordActivityCount(activitiesToday!==null?activitiesToday:[]);
   const sessionMinutes = estimateSessionTime(activitiesToday!==undefined?activitiesToday:[]);
+
 
   const healthScore = computeUserHealthScore({
     lastLogin,
@@ -368,6 +373,11 @@ export default function Page() {
               {idType=='admin'&&<Button variant='link'>Download Summary</Button>}
             <div className="py-6">
               <MonthlyActivity links={links} buttons={buttons} submissions={submissions} />
+              <div className="sm:flex justify-between bg-secondary p-2 rounded-lg">
+                <div className="flex justify-between items-center text-xs font-bold tracking-tight"><Dot size={40} className="text-primary"/> Page Visits</div>
+                <div className="flex justify-between items-center text-xs font-bold tracking-tight"><DotIcon size={40} className="text-red-900"/> Button Clicks</div>
+                <div className="flex justify-between items-center text-xs font-bold tracking-tight"><DotIcon size={40} className="text-red-300"/> Form Submissions</div>
+              </div>
               </div>
             </div>
             <div className="text-sm p-6 flex flex-col sm:col-span-4 col-span-12 bg-background text-foreground rounded-lg tracking-tight font-bold ">
@@ -441,16 +451,16 @@ export default function Page() {
               <DashboardHealthGauge score={healthScore} />
               <div className="mt-20 text-xs">Your dashboard health and performance is determined by your daily:</div>
               <div className="grid sm:grid-cols-2 gap-1 mt-6">
-              <div className={dashMetClass}><LogIn/><div className={smallHead}>Last Login</div> {lastLogin!==null?date(lastLogin.toString()):null}</div>
-              <div className={dashMetClass}><ChartColumn/><div className={smallHead}>Activity Count</div> {activityCount}</div>
-              <div className={dashMetClass}><Clock/><div className={smallHead}>Session Minutes</div> {sessionMinutes}</div>
+              <div className={dashMetClass}><LogIn/><div className={smallHead}>Last Login</div> {lastLogin!==null?date(lastLogin.toLocaleString()):null}</div>
+              <div className={dashMetClass}><ChartColumn/><div className={smallHead}>Activity Count</div> {activityCount}/30<div className="text-xs text-primary font-bold tracking-tight my-2">{(activityCount/30*100).toFixed(2)}%</div></div>
+              <div className={dashMetClass}><Clock/><div className={smallHead}>Session Minutes</div> {sessionMinutes.toString()}/{(5*60*60).toString()}<div className="text-xs text-primary font-bold tracking-tight my-2">{((sessionMinutes/(5*60*60))*100).toFixed(2)}%</div></div>
               </div>
             </div>
             </div>
         </div>
       </div>
       <div>
-        <div className="grid sm:grid-cols-12 grid-cols-1 text-lg p-1 gap-2">
+        <div className="grid sm:grid-cols-12 hidden grid-cols-1 text-lg p-1 gap-2">
             {idType=='admin' && <div className="sm:col-span-4">
             <Link href='/admin/dashboard/users' className=" rounded-lg transition-transform duration-300 cursor-pointer hover:scale-105 bg-background flex justify-between">
             <div className="text-sm p-6">{userData?.length} Users</div> 
@@ -470,10 +480,11 @@ export default function Page() {
         </div>
 
       </div>
-      {idType=='admin' && <div className="rounded-lg p-6 p-2 bg-background my-1">
+      {idType=='admin' && <div className="rounded-lg p-6 p-2 bg-background my-2">
         <div className="sm:grid sm:grid-cols-12">
           <div className="sm:col-span-8">
-          <div className="text-xl tracking-tight font-bold text- mb-6">User Activity</div>
+          <div className="text-xl tracking-tight font-bold">User Activity</div>
+          <div className="text-sm my-3">This is to show all user activity on the dashboard, frequency of usage interms of general pages accessibility as well as ticket operations because an open ticket is a new functionality maintained and thereafter progress.</div>
           <div className="sm:hidden">
         <BarChart width={300} height={300} data={chartData} barCategoryGap={8} barGap={0}>
           <XAxis dataKey="userId" tick={<CustomTick />} axisLine={false} tickLine={false} interval={0} height={50} />
@@ -486,7 +497,7 @@ export default function Page() {
           <div className="sm:block hidden">
         <BarChart width={500} height={400} data={chartData} barCategoryGap={8} barGap={0}>
           <XAxis dataKey="userId" tick={<CustomTick />} axisLine={false} tickLine={false} interval={0} height={50} />
-          <YAxis axisLine={false} tickLine={false}/>
+          {/* <YAxis axisLine={true} tickLine={true}/> */}
           <Tooltip />
           <Legend />
           <Bar dataKey="activities" fill="#FFD2C2" label={{ position: "top" }} />

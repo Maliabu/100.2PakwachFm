@@ -29,7 +29,7 @@ export default async function Events() {
         <div className="text-3xl tracking-tight leading-10 font-bold my-4 capitalize">Weekdays (Mon - Fri)</div>
         <div className="grid sm:grid-cols-12 gap-2">
         {weekdays.length > 0 && weekdays.map((weekday, index) => (
-                    <div key={index} className="sm:col-span-4 bg-blue-950 text-white rounded-lg">
+                    <div key={index} className="sm:col-span-3 bg-secondary rounded-lg">
                       <div style={{ position: 'relative', width: '100%', height: '200px' }}>
                       <Image
                           src={weekday.image}
@@ -40,8 +40,8 @@ export default async function Events() {
                           style={{ objectFit: 'cover' }} // or 'contain'
                       />
                       </div>
-                      <div className="p-8">
-                        <div className="text-2xl font-bold tracking-tight capitalize leading-6">{weekday.programme}</div>
+                      <div className="p-4">
+                        <div className="text-xl font-bold tracking-tight capitalize leading-6">{weekday.programme}</div>
                         <div className="flex justify-between text-sm py-3">
                         <div>{weekday.startTime}</div>
                         <div className="font-medium">{weekday.endTime}</div>
@@ -53,7 +53,7 @@ export default async function Events() {
         <div className="text-3xl tracking-tight leading-10 font-bold my-4 mt-8 capitalize">Weekends (Sat & Sun)</div>
         <div className="grid sm:grid-cols-12 gap-2">
         {weekends.length > 0 && weekends.map((weekday, index) => (
-                    <div key={index} className="sm:col-span-4 bg-slate-950 text-white rounded-lg">
+                    <div key={index} className="sm:col-span-3 bg-secondary rounded-lg">
                       <div style={{ position: 'relative', width: '100%', height: '200px' }}>
                       <Image
                           src={weekday.image}
@@ -64,8 +64,8 @@ export default async function Events() {
                           style={{ objectFit: 'cover' }} // or 'contain'
                       />
                       </div>
-                      <div className="p-8">
-                        <div className="text-2xl font-bold tracking-tight capitalize leading-6">{weekday.programme}</div>
+                      <div className="p-4">
+                        <div className="text-xl font-bold tracking-tight capitalize leading-6">{weekday.programme}</div>
                         <div className="flex justify-between text-sm py-3">
                         <div>{weekday.startTime}</div>
                         <div className="font-medium">{weekday.endTime}</div>
@@ -75,10 +75,11 @@ export default async function Events() {
                     ))}
         </div>
       </div>
-        <div className="sm:col-span-3 present rounded-lg p-4">
+        <div className="sm:col-span-3 present rounded-lg p-6">
             {/* <Mic size={150} className="border dark:text-primary rounded-full p-10"/> */}
             {/* <MegaphoneIcon size={70} className="p-4 ml-2 rounded-full border animate-spin"/> */}
             <div className="text-sm text-muted-foreground uppercase">presenters </div>
+            <div className="text-sm text-black my-4">In Studio meet the talent behind your favorite shows and programs bringing you entertainment, culture, music and more on 100.2 Pakwach FM </div>
             {/* <Highlights/> */}
         </div>
     </div>

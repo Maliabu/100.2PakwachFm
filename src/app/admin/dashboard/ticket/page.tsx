@@ -16,8 +16,12 @@ import { tokenise } from "@/services/services"
 import Image from "next/image"
 import Shape from '@/app/images/shape.png'
 import Link from "next/link"
+import { CheckCircle, XCircle } from "lucide-react"
 
 export default function Ticket() {
+  const [buttonText, setButtonText] = React.useState("Add Presenter")
+  const [success, setSuccess] = React.useState(false)
+  
 
     const form = useForm<z.infer<typeof openTicket>>({
       resolver: zodResolver(openTicket),
@@ -32,11 +36,7 @@ export default function Ticket() {
     async function onSubmit(values: z.infer<typeof openTicket>) {
       values.userId = tokenise()[3]
       
-      const app = document.getElementById('submit');
-      const text = 'processing';
-      if(app !== null){
-        app.innerHTML = text;
-      }
+      setButtonText('Processing Ticket...')
 
         const data = await openNewTicket(values)
         if(data?.error){
@@ -44,9 +44,8 @@ export default function Ticket() {
             "message": "Ticket not opened"
           })
         } else {
-          if(app !== null){
-            app.innerHTML = "Successful";
-          }
+          setButtonText('Successful')
+          setSuccess(true)
           window.location.reload()
         }
     }
@@ -77,13 +76,15 @@ export default function Ticket() {
                   />
               </div>
           </div>
-        <Button id="submit" className="my-4" type="submit">Open Ticket</Button>
+          <Button className="my-4 text-white" type="submit">{buttonText}</Button>
         {form.formState.errors.root && (
-          <div className="bg-light p-2 rounded-md">{form.formState.errors.root.message}</div>
-        )}
-        {form.formState.isSubmitSuccessful && (
-          <div className="border border-primary text-primary p-2 text-center rounded-md"> Ticket opened successfully </div>
-        )}
+                <div className="rounded text-sm font-bold bg-red-400/10 flex justify-center gap-4 text-red-600 p-2"><XCircle/> {form.formState.errors.root.message}</div>
+            )}
+            {success && (
+            <div className="rounded text-sm font-bold bg-green-400/10 flex justify-center gap-4 text-green-600 p-2">
+                <CheckCircle className="animate-pulse"/> Ticket opened successfully
+            </div>
+            )}
       </form>
       </Form>
       <div className="w-[350]px p-6">
