@@ -23,12 +23,16 @@ import Articles from "./articles"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { DatePicker } from "../datePicker"
 import { DatePick } from "../datePick"
+import { CheckCircle, XCircle } from "lucide-react"
 
 
 export default function AddArticle() {
   const [value, setValue] = React.useState("")
   const [name, setName] = React.useState("")
   const [id, setId] = React.useState("")
+  const [buttonText, setButtonText] = React.useState("Add Article")
+  const [success, setSuccess] = React.useState(false)
+  
 
   React.useEffect(() => {
     setName(tokenise()[0])
@@ -55,11 +59,7 @@ export default function AddArticle() {
       values.content = value
       values.writer = name
         //create obj
-        const app = document.getElementById('submit');
-        const text = 'processing';
-        if(app !== null){
-          app.innerHTML = text;
-        }
+        setButtonText("Processing Articles...")
         const file = values.image1
 
         const formData = new FormData()
@@ -72,9 +72,8 @@ export default function AddArticle() {
             "message": "Article not added"
           })
         } else {
-          if(app !== null){
-            app.innerHTML = "Successful";
-          }
+          setButtonText("Successful")
+          setSuccess(true)
           window.location.reload()
           // useRouter().refresh()
         }
@@ -243,12 +242,12 @@ export default function AddArticle() {
                   <p className="text-sm">Your username will be attached to this article as <a>{name}</a></p>
               </div></div>
         </div>
-        <Button id="submit" className="my-4 text-white" type="submit">Add Article</Button>
+        <Button id="submit" className="my-4 text-white" type="submit">{buttonText}</Button>
         {form.formState.errors.root && (
-          <div className="bg-light p-2 rounded-md">{form.formState.errors.root.message}</div>
+          <div className="bg-red-400/10 text-primary text-sm p-2 text-center rounded-md"><XCircle/> {form.formState.errors.root.message}</div>
         )}
-        {form.formState.isSubmitSuccessful && (
-          <div className="bg-light p-2 text-center rounded-md"> Article added successfully </div>
+        {success && (
+          <div className=" bg-green-400/10 text-green-600 text-sm p-2 text-center rounded-md"><CheckCircle/> Article added successfully </div>
         )}
       </form>
       </Form>

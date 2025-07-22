@@ -44,7 +44,7 @@ export default function Ticketing(){
         <div className="sm:p-6 p-2 bg-background rounded-lg mt-2">
             <div className="flex justify-between items-center">
             <div className="text-2xl font-bold tracking-tight">Tickets</div>
-            <div className="h-10 w-10 bg-primary text-md text-muted font-bold rounded-full flex justify-center items-center ">{notify.length}</div>
+            <div className="uppercase text-sm p-2 h-8 w-8 border border-black dark:border-white rounded-full flex items-center justify-center">{notify.length}</div>
             </div>
             <div className="bg-secondary rounded-lg sm:p-6 p-4 my-2 admin">
             { notify.length>0?

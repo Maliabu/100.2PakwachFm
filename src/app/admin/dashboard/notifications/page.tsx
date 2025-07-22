@@ -15,8 +15,12 @@ import { addNotificationSchema } from '@/schema/schema'
 import { tokenise } from "@/services/services"
 import Image from "next/image"
 import Shape from '@/app/images/shape.png'
+import Link from "next/link"
+import { CheckCircle, XCircle } from "lucide-react"
 
 export default function Notify() {
+  const [buttonText, setButtonText] = React.useState('Add Notification')
+  const [success, setSuccess] = React.useState(false)
 
     const form = useForm<z.infer<typeof addNotificationSchema>>({
       resolver: zodResolver(addNotificationSchema),
@@ -28,12 +32,7 @@ export default function Notify() {
     })
      
     async function onSubmit(values: z.infer<typeof addNotificationSchema>) {
-      
-      const app = document.getElementById('submit');
-      const text = 'processing';
-      if(app !== null){
-        app.innerHTML = text;
-      }
+      setButtonText('Processing Notification... ')
 
         const data = await addNewNotification(values)
         if(data?.error){
@@ -41,21 +40,19 @@ export default function Notify() {
             "message": "Notification not added"
           })
         } else {
-          if(app !== null){
-            app.innerHTML = "Successful";
-          }
+          setButtonText('Successful')
+          setSuccess(true)
           window.location.reload()
         }
     }
 
   return (
-    <div className="mt-2 sm:flex bg-background justify-between rounded">
+    <div className="mt-2 sm:flex bg-background justify-between rounded-lg">
       <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="p-6 sm:p-8">
       <div className="text-2xl font-bold tracking-tight">Add a Notification</div>
       <div className="text-sm mb-6 text-muted-foreground">This goes out to all users for now.</div>
-          <div className="grid sm:grid-cols-3 gap-2">
-              <div className="flex flex-col space-y-1.5">
+          <div className="">
               <FormField
                   control={form.control}
                   name="notification"
@@ -71,19 +68,20 @@ export default function Notify() {
                       </FormItem>
                   )}
                   />
-              </div>
           </div>
-        <Button id="submit" className="my-4" type="submit">Add Notification</Button>
+        <Button id="submit" className="my-4" type="submit">{buttonText}</Button>
         {form.formState.errors.root && (
-          <div className="bg-light p-2 rounded-md">{form.formState.errors.root.message}</div>
+          <div className="bg-red-400/10 text-primary text-sm p-2 text-center rounded-md"><XCircle/> {form.formState.errors.root.message}</div>
         )}
-        {form.formState.isSubmitSuccessful && (
-          <div className="border border-primary text-primary p-2 text-center rounded-md"> Notification added successfully </div>
+        {success && (
+          <div className=" bg-green-400/10 text-green-600 text-sm p-2 text-center rounded-md"><CheckCircle/> Notification added successfully </div>
         )}
       </form>
       </Form>
       <div className="w-[350]px p-6 sm:block hidden">
-      <Image src={Shape} alt="shape" width={200} height={20}/></div>
+      <Link href='/admin/dashboard/notifications/view'><Button> View Notifications</Button></Link>
+      </div>
+
         </div>
   )
 }

@@ -66,7 +66,7 @@ import Link from "next/link"
           />
         </div>
       <div className="">
-      <div className="sm:text-5xl select-none text-4xl tracking-tight font-bold sm:leading-12 leading-10 hover:text-primary cursor-pointer" onClick={() => handleReadMore(title)}>{title}</div>
+      <div className="text-5xl select-none tracking-tight font-bold leading-11 hover:text-primary cursor-pointer" onClick={() => handleReadMore(title)}>{title}</div>
       </div>
       </Card>
       </div>

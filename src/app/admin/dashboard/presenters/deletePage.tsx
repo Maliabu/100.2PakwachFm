@@ -37,7 +37,7 @@ import { z } from "zod"
     }
     return (
       <div className="">
-        <Button className="text-white rounded-lg" id={props.submitId} onClick={() => onSubmit({"programId": props.id})}><Trash2/> Delete</Button>
+        <Button className="text-white rounded-full" id={props.submitId} onClick={() => onSubmit({"programId": props.id})}><Trash2/></Button>
         {form.formState.errors.root && (
           <div className="bg-light p-2 rounded-md">{form.formState.errors.root.message}</div>
         )}

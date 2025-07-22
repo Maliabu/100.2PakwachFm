@@ -14,11 +14,14 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { addUsers, checkEmailPhone } from "@/server/fetch.actions"
 import { addUserSchema } from '@/schema/schema'
 import { handleEncryption, togglePasswordVisibility2, token, tokenise, username } from "@/services/services"
-import { EyeOff } from "lucide-react"
+import { CheckCircle, EyeOff, XCircle } from "lucide-react"
 
 export default function AddUser() {
   const [id, setId] = React.useState("")
-    React.useEffect(() => {
+  const [buttontext, setButtonText] = React.useState("Sign Up user")
+  const [success, setSuccess] = React.useState(false)
+    
+  React.useEffect(() => {
         setId(tokenise()[3])
     }, [])
 
@@ -48,17 +51,12 @@ export default function AddUser() {
     async function onSubmit(values: z.infer<typeof addUserSchema>) {  
       values.userId = tokenise()[3]
       
-      const app = document.getElementById('submit');
-      const text = 'processing';
-      if(app !== null){
-        app.innerHTML = text;
-      }
+      setButtonText('Processing User Data...')
       const checkUniqueData = await checkEmailPhone(values.email, values.phone)
 
       if(checkUniqueData.message == "good"){
         if(values.encrPass !== "" && values.encrPass === values.confirmPassword){
         // encrypt password
-        console.log(values.encrPass)
         const encr = handleEncryption(values.encrPass)
         values.password = (await encr).encryptedData
         values.decInit = (await encr).initVector
@@ -68,16 +66,16 @@ export default function AddUser() {
 
         const formData = new FormData()
         formData.append("file", values.image)
+        formData.append("folder", 'users')
 
-        const data = await addUsers(values)
+        const data = await addUsers(values, formData)
         if(data?.error){
           form.setError("root", {
             "message": "user not added"
           })
         } else {
-          if(app !== null){
-            app.innerHTML = "Successful";
-          }
+          setButtonText('Successful')
+          setSuccess(true)
           window.location.reload()
         }
       } else {
@@ -220,12 +218,12 @@ export default function AddUser() {
               </div>
           </div>
         </div>
-        <Button id="submit" className="my-4" type="submit">Sign Up User</Button>
+        <Button id="submit" className="my-4" type="submit">{buttontext}</Button>
         {form.formState.errors.root && (
-          <div className="border-2 border-destructive text-destructive p-2 rounded-md">{form.formState.errors.root.message}</div>
+          <div className="bg-red-400/10 text-primary text-sm p-2 text-center rounded-md"><XCircle/> {form.formState.errors.root.message}</div>
         )}
-        {form.formState.isSubmitSuccessful && (
-          <div className="border border-primary text-primary p-2 text-center rounded-md"> User added successfully </div>
+        {success && (
+          <div className=" bg-green-400/10 text-green-600 text-sm p-2 text-center rounded-md"><CheckCircle/> User added successfully </div>
         )}
       </form>
       </Form>

@@ -181,7 +181,29 @@ export const addProgrammingSchema = z.object({
     image: z.string(),
     image1: z.any(),
 })
-
+export const addPresenterSchema = z.object({
+    programmeName: z.string({required_error: "Please atleast a programme.",}).min(2, {
+        message: "title should be atleast a character"
+    }).max(200),
+    name: z.string(),
+    radioName: z.string(),
+    profilePicture: z.string(),
+    profilePicture1: z.any(),
+    userId: z.string(),
+    programme: z.coerce.number(),
+})
+export const editPresenterSchema = z.object({
+    programmeName: z.string(),
+    name: z.string(),
+    radioName: z.string(),
+    profilePicture: z.string(),
+    profilePicture1: z.any()
+    .refine((file) => file instanceof File || file === undefined, {
+      message: "Invalid image file",
+    }),
+    userId: z.string(),
+    programme: z.coerce.number(),
+})
 export const editProgrammingSchema = z.object({
     programme: z.string(),
     startTime: z.string(),
