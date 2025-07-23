@@ -77,14 +77,14 @@ export default function MonthlyActivity(props: {links: Cooky[], buttons: Cooky[]
         <div className="bg-transparent hidden sm:block rounded-lg mt-2">
             <div className="flex justify-between items-center p-1 border-b border-dark-subtle">
                 <div className="text-2xl font-bold tracking-tight">Monthly Activities</div>
-                <div className="text-sm bg-primary text-background rounded p-2 text-center uppercase font-bold tracking-tight">{getMyMonth(today.getMonth()+1)}</div>
+                <div className="text-sm bg-primary text-background rounded p-2 text-center uppercase font-bold tracking-tight">{getMyMonth(today.getMonth())}</div>
             </div>
             <MonthGraph pages={dataForGraph} buttons={dataForGraph1} submissions={dataForGraph2}/>
         </div>
         <div className="bg-transparent sm:hidden rounded-lg mt-2">
         <div className="flex justify-between p-2 border-b border-dark-subtle">
                 <div className="text-2xl font-bold tracking-tight">Monthly Activities</div>
-                <div className="text-sm bg-primary text-background rounded p-2 itens-center uppercase font-bold tracking-tight">{getMyMonth(today.getMonth()+1)}</div>
+                <div className="text-sm bg-primary text-background rounded p-2 itens-center uppercase font-bold tracking-tight">{getMyMonth(today.getMonth())}</div>
             </div>
             <MonthRepGraph pages={dataForGraph} buttons={dataForGraph1} submissions={dataForGraph2}/>
         </div>
