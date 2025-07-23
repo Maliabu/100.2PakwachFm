@@ -6,19 +6,19 @@ import { ReadMoreCard } from "./card"
 import { Metadata } from "next"
 
 export async function generateMetadata({ params }: { params: { article: string } }): Promise<Metadata> {
-  const title = decodeURIComponent(params.article)
+  const title = decodeURIComponent(params.article); // Only decode here
 
   const [article] = await db
     .query
     .articlesTable
     .findMany({
       where: eq(articlesTable.title, title)
-    })
+    });
 
   if (!article) {
     return {
       title: "Article not found | Pakwach FM",
-    }
+    };
   }
 
   return {
@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: { params: { article: string }
     openGraph: {
       title: article.title,
       description: article.content.slice(0, 150).replace(/<[^>]*>/g, ""),
-      url: `https://pakwachfm.com/news/${encodeURIComponent(article.title)}`,
+      url: `https://pakwachfm.com/news/${encodeURIComponent(article.title)}`, // Ensure title is encoded here
       type: "article",
       images: article.image
         ? [
@@ -42,34 +42,30 @@ export async function generateMetadata({ params }: { params: { article: string }
           ]
         : [],
     },
-  }
+  };
 }
 
-export default async function Page({
-    params,
-  }: {
-    params: { article: string }
-  }) {
-    const slug = decodeURIComponent(params.article)
-    const title = decodeURIComponent(slug)
-    const [article] = await db
+
+export default async function Page({ params }: { params: { article: string } }) {
+  const title = decodeURIComponent(params.article);  // Only decode once
+
+  const [article] = await db
     .query
     .articlesTable
     .findMany({
-    where: eq(articlesTable.title, title)
-    })
-    const articles = await db
-    .query
-    .articlesTable
-    .findMany()
+      where: eq(articlesTable.title, title),
+    });
 
-  if (!article) return <div>no articles</div>
+  const articles = await db.query.articlesTable.findMany();
 
-    return <div className="">
-      <div className=" sm:p-8 p-2 rounded-lg bg-background">
+  if (!article) return <div>no articles</div>;
+
+  return (
+    <div className="">
+      <div className="sm:p-8 p-2 rounded-lg bg-background">
         <div className="grid sm:grid-cols-12">
           <div className="sm:col-span-8">
-        <ArticlesCard 
+            <ArticlesCard
               id={article.id}
               title={article.title}
               content={article.content}
@@ -80,23 +76,18 @@ export default async function Page({
               instagramLink={article.instagramLink}
               date={article.date}
               articleType={article.articleType}
-              updatedAt={article.updatedAt} 
-              createdAt={article.createdAt} 
-              /></div>
-              <div className="sm:col-span-4 scroll-y-blog">
-              <div className="text-sm uppercase my-8 text-muted-foreground">Read more articles</div>
-              {
-          articles.map((article: { id: number; title: string; 
-            facebookLink: string | null;
-            twitterLink: string | null;
-            instagramLink: string | null;
-            date: Date;
-            articleType: string; content: string; writer: string, image: string | null, updatedAt: Date, createdAt: Date}
-          ) => (
-            <ReadMoreCard key={article.id} article={article} />
-          ))
-        }
-              </div>
-        </div></div>
+              updatedAt={article.updatedAt}
+              createdAt={article.createdAt}
+            />
+          </div>
+          <div className="sm:col-span-4 scroll-y-blog">
+            <div className="text-sm uppercase my-8 text-muted-foreground">Read more articles</div>
+            {articles.map((article) => (
+              <ReadMoreCard key={article.id} article={article} />
+            ))}
+          </div>
+        </div>
       </div>
-  }
+    </div>
+  );
+}
