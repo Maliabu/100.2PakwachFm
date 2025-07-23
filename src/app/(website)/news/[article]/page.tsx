@@ -6,7 +6,7 @@ import { ReadMoreCard } from "./card"
 import { Metadata } from "next"
 
 export async function generateMetadata({ params }: { params: { article: string } }): Promise<Metadata> {
-  const title = decodeURIComponent(params.article); // Only decode here
+  const title = decodeURIComponent(params.article);
 
   const [article] = await db
     .query

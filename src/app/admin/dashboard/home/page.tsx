@@ -388,7 +388,7 @@ export default function Page() {
               <div className="p-5 my-8 bg-primary text-background rounded-xl">
               <ClockAlert size={60} className=""/>
               <div className="text-5xl font-bold tracking-tight mt-12">{formatTime(today)}</div>
-              <div className="uppercase font-semibold text-xs py-2">{getMyDay(today.getDay())}, {today.getDate()} {getMyMonth(today.getMonth()+1)}</div></div>
+              <div className="uppercase font-semibold text-xs py-2">{getMyDay(today.getDay())}, {today.getDate()} {getMyMonth(today.getMonth())}</div></div>
         <div className="items-center bg-background rounded-lg">
         <Image src={Shape1} alt="shape" height={20} width={80} className="hidden"/>
         <div className="text-xl tracking-tight text- font-bold p-2 bg-secondary rounded-lg">User Statistics</div>

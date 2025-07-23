@@ -95,7 +95,7 @@ import Outline from '@/app/images/outline.png'
       <span className="mt-6 sm:float-right sm:mx-12"> {}</span>
       <p className="py-4 border-b text-xs uppercase text-muted-foreground">By {writer}</p>
       <p className="py-4 float-right text-xs text-muted-foreground uppercase"> { date == null ?
-      getMyDay(updatedAt.getDay()): getMyDay(date.getDay())}, {date == null ? getMyMonth(updatedAt.getMonth()): getMyMonth(date.getMonth()+1)} {date == null ? updatedAt.getDate(): date.getDate()}, {date == null ? updatedAt.getFullYear(): date.getFullYear()
+      getMyDay(updatedAt.getDay()): getMyDay(date.getDay())}, {date == null ? getMyMonth(updatedAt.getMonth()): getMyMonth(date.getMonth())} {date == null ? updatedAt.getDate(): date.getDate()}, {date == null ? updatedAt.getFullYear(): date.getFullYear()
       }</p>
       <div className="text-wrap lh-1 mt-20 prose prose-sm sm:prose-base lg:prose-lg xl:prose-2xl focus:outline-none">{parse(content)}</div>
       </div>

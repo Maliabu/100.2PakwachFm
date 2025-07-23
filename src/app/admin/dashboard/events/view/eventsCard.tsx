@@ -33,7 +33,7 @@ import { getMyDay, getMyMonth } from "@/services/success"
           <p className=" text-md font-bold tracking-tight line-clamp-2">{title}</p>
           <p className="text-muted-foreground text-xs my-2"> {description}</p>
           <p className="text-xs capitalize border-t border-b p-2 rounded"> {
-        getMyDay(date.getDay())}, {getMyMonth(date.getMonth()+1)} {date.getDate()}, {date.getFullYear()
+        getMyDay(date.getDay())}, {getMyMonth(date.getMonth())} {date.getDate()}, {date.getFullYear()
         }</p></div>
         </Card>
         {/* <DeletePage id={id} submitId={title}/>       */}
