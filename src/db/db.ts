@@ -2,6 +2,7 @@
 import { drizzle } from "drizzle-orm/mysql2";
 import mysql from "mysql2/promise";
 import * as schema from "./schema";
+import { dbStats } from "@/lib/dbStats";
 
 if (!process.env.DATABASE_URL) {
     throw new Error('Missing DATABASE_URL');
@@ -21,8 +22,29 @@ function singleton<Value>(name: string, value: () => Value): Value {
 
 // Function to create the database connection and apply migrations if needed
 function createDatabaseConnection() {
-    const poolConnection = mysql.createPool(process.env.DATABASE_URL!);
-    return drizzle(poolConnection, {
+    const pool = mysql.createPool(
+      {
+        uri:process.env.DATABASE_URL!,
+        connectionLimit: 8
+    });
+
+    const originalQuery = pool.query.bind(pool) as (...args: any[]) => Promise<any>;
+    
+    pool.query = async (...args: any[]) => {
+      await dbStats.increment("totalQueries");
+      await dbStats.increment("activeConnections");
+    
+      try {
+        return await originalQuery(...args);
+      } finally {
+        await dbStats.decrement("activeConnections");
+      }
+    };
+    pool.on("enqueue", async () => {
+      await dbStats.increment("queuedEvents");
+    });
+    
+    return drizzle(pool, {
       schema,
       mode: 'default'
     });

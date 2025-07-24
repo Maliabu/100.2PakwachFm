@@ -24,6 +24,7 @@ import { computeUserHealthScore, estimateSessionTime, getLastLogin, getUserKeywo
 import { DashboardHealthGauge } from "./dashboardHealth";
 import { Button } from "@/components/ui/button";
 import AutoLogout from "../../autoLogout";
+import { DbMonitor } from "../database/dbMonitor";
 
 export type Ticketing = {
   tickets: {
@@ -291,8 +292,8 @@ export default function Page() {
     activityCount,
     sessionMinutes
   });
-  const dashMetClass = "p-4 -secondary border-1 rounded-lg border-white-subtle text-center"
-  const smallHead = "text-xs my-3 p-1 bg-secondary rounded"
+  const dashMetClass = "p-4 border text-lg rounded-lg text-center"
+  const smallHead = "text-xs uppercase text-muted-foreground font-normal"
   const activityDiv = "flex mt-4 p-2 border border-black dark:border-white/50 rounded"
   const smallActHead = " mr-2 border-r pr-2"
   const dashSumm = "text-xs p-1 rounded font-bold border dark:border-black text-center"
@@ -373,10 +374,10 @@ export default function Page() {
               {idType=='admin'&&<Button variant='link'>Download Summary</Button>}
             <div className="py-6">
               <MonthlyActivity links={links} buttons={buttons} submissions={submissions} />
-              <div className="sm:flex justify-between bg-secondary p-2 rounded-lg">
-                <div className="flex justify-between items-center text-xs font-bold tracking-tight"><Dot size={40} className="text-primary"/> Page Visits</div>
-                <div className="flex justify-between items-center text-xs font-bold tracking-tight"><DotIcon size={40} className="text-red-900"/> Button Clicks</div>
-                <div className="flex justify-between items-center text-xs font-bold tracking-tight"><DotIcon size={40} className="text-red-300"/> Form Submissions</div>
+              <div className="sm:flex justify-between rounded-lg">
+                <div className="flex justify-between items-center text-sm"><Dot size={40} className="text-primary"/> Page Visits</div>
+                <div className="flex justify-between items-center text-sm"><DotIcon size={40} className="text-red-900"/> Button Clicks</div>
+                <div className="flex justify-between items-center text-sm"><DotIcon size={40} className="text-red-300"/> Form Submissions</div>
               </div>
               </div>
             </div>
@@ -450,10 +451,10 @@ export default function Page() {
               <div className="text-xl leading-6">Dashboard health and performance (DHP)</div>
               <DashboardHealthGauge score={healthScore} />
               <div className="mt-20 text-xs">Your dashboard health and performance is determined by your daily:</div>
-              <div className="grid sm:grid-cols-2 gap-1 mt-6">
+              <div className="grid sm:grid-cols-1 gap-1 mt-6">
               <div className={dashMetClass}><LogIn/><div className={smallHead}>Last Login</div> {lastLogin!==null?date(lastLogin.toLocaleString()):null}</div>
-              <div className={dashMetClass}><ChartColumn/><div className={smallHead}>Activity Count</div> {activityCount}/30<div className="text-xs text-primary font-bold tracking-tight my-2">{(activityCount/30*100).toFixed(2)}%</div></div>
-              <div className={dashMetClass}><Clock/><div className={smallHead}>Session Minutes</div> {sessionMinutes.toString()}/{(5*60*60).toString()}<div className="text-xs text-primary font-bold tracking-tight my-2">{((sessionMinutes/(5*60*60))*100).toFixed(2)}%</div></div>
+              <div className={dashMetClass}><ChartColumn/><div className={smallHead}>Activity Count</div> {activityCount}/30</div>
+              <div className={dashMetClass}><Clock/><div className={smallHead}>Session Minutes</div> {sessionMinutes.toString()}</div>
               </div>
             </div>
             </div>
@@ -482,28 +483,6 @@ export default function Page() {
       </div>
       {idType=='admin' && <div className="rounded-lg p-6 p-2 bg-background my-2">
         <div className="sm:grid sm:grid-cols-12">
-          <div className="sm:col-span-8">
-          <div className="text-xl tracking-tight font-bold">User Activity</div>
-          <div className="text-sm my-3">This is to show all user activity on the dashboard, frequency of usage interms of general pages accessibility as well as ticket operations because an open ticket is a new functionality maintained and thereafter progress.</div>
-          <div className="sm:hidden">
-        <BarChart width={300} height={300} data={chartData} barCategoryGap={8} barGap={0}>
-          <XAxis dataKey="userId" tick={<CustomTick />} axisLine={false} tickLine={false} interval={0} height={50} />
-          {/* <YAxis axisLine={false} tickLine={false}/> */}
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="activities" fill="#FFD2C2" label={{ position: "top" }} />
-          <Bar dataKey="tickets" fill="#fa3c00" label={{ position: "top" }} />
-        </BarChart></div>
-          <div className="sm:block hidden">
-        <BarChart width={500} height={400} data={chartData} barCategoryGap={8} barGap={0}>
-          <XAxis dataKey="userId" tick={<CustomTick />} axisLine={false} tickLine={false} interval={0} height={50} />
-          {/* <YAxis axisLine={true} tickLine={true}/> */}
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="activities" fill="#FFD2C2" label={{ position: "top" }} />
-          <Bar dataKey="tickets" fill="#fa3c00" label={{ position: "top" }} />
-        </BarChart>
-          </div></div>
         <div className="sm:col-span-4 admin rounded-lg">
           {
             uniqueData!==null?uniqueData.map((activity, index) => (
@@ -521,11 +500,36 @@ export default function Page() {
                       /></div>:
                           activity.users_table.name[0].toUpperCase()}
                           </div>
-                        <div className="col-span-9 font-bold text-xs">{activity.activity.activity}</div>
+                        <div className="col-span-9 font-bold tracking-tight text-xs">{activity.activity.activity}</div>
               </div>
             )):null
           }
         </div>
+        
+          <div className="sm:col-span-8 sm:px-8">
+          <div className="text-xl tracking-tight font-bold">User Activity</div>
+          <div className="sm:hidden">
+        <BarChart width={300} height={300} data={chartData} barCategoryGap={8} barGap={0}>
+          <XAxis dataKey="userId" tick={<CustomTick />} axisLine={false} tickLine={false} interval={0} height={50} />
+          {/* <YAxis axisLine={false} tickLine={false}/> */}
+          <Tooltip />
+          <Legend />
+          <Bar dataKey="activities" fill="#FFD2C2" />
+          <Bar dataKey="tickets" fill="#fa3c00" />
+        </BarChart></div>
+          <div className="sm:block hidden mt-8">
+        <BarChart width={600} height={350} data={chartData} barCategoryGap={8} barGap={0}>
+          <XAxis dataKey="userId" tick={<CustomTick />} axisLine={false} tickLine={false} interval={0} height={50} />
+          {/* <YAxis axisLine={true} tickLine={true}/> */}
+          <Tooltip />
+          <Legend />
+          <Bar dataKey="activities" fill="#FFD2C2" />
+          <Bar dataKey="tickets" fill="#fa3c00" />
+        </BarChart>
+          </div></div>
+        </div>
+        <div>
+          <DbMonitor/>
         </div>
       </div>}
     </div>
