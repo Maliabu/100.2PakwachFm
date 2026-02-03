@@ -44,7 +44,7 @@ import DeletePage from "./deletePage"
       getMyDay(date.getDay())}, {getMyMonth(date.getMonth())} {date.getDate()}, {date.getFullYear()
       }</p></div>
       </Card>
-      {/* <DeletePage id={id} submitId={title}/>       */}
+      <DeletePage id={id} submitId={title}/>
       </div>
     )
   }
